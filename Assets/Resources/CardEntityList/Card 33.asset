@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3682d4ec29935439b7e8e9fd523d9d, type: 3}
+  m_Name: Card 33
+  m_EditorClassIdentifier: 
+  cardID: 33
+  advent: 1
+  Hp: 9120
+  at: 41000
+  df: 4120
+  num: 7
+  firstExp: 150
+  stageNum: 14
+  name: "\u30A2\u30FC\u30C6\u30A3\u30D5\u30A1\u30AF\u30C8\u8ECD\u672C\u90E8\u9577"
+  rare: SS
+  icon: {fileID: 21300000, guid: e4a2c0b3b28a33840bf988bd85c750ab, type: 3}
+  ReaderSkill: {fileID: 11400000, guid: 28426c40e0a281c469d0e7ca6cbe0c43, type: 2}
+  AutoSkill: {fileID: 11400000, guid: cb7ba29e5d606524890bfd701272badc, type: 2}

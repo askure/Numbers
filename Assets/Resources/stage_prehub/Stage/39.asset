@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922481ca41d66c540907d367106ee4ae, type: 3}
+  m_Name: 39
+  m_EditorClassIdentifier: 
+  stageid: 39
+  beforestageid: 38
+  stageName: 10F
+  buttleNum: 1
+  enemy:
+  - {fileID: 11400000, guid: 8b9f907dc036523458fc3cd5f32813b2, type: 2}
+  stageinfo:
+  - "2\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u653B\u6483\u529B\u30A2\u30C3\u30D7"
+  - "3\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u9632\u5FA1\u529B\u30A2\u30C3\u30D7"
+  - "5\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306EHP\u30A2\u30C3\u30D7"
+  - "\u6575\u5F37\u5316\u72B6\u614B"
+  fieldEffects:
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 0
+    effectSize: 1.3
+    effectCondition: 0
+  - EnemyOrParty: 1
+    buff: 1
+    ApplicationNum: 0
+    effectSize: 1.2
+    effectCondition: 2
+  - EnemyOrParty: 1
+    buff: 3
+    ApplicationNum: 0
+    effectSize: 2
+    effectCondition: 5
+  - EnemyOrParty: 1
+    buff: 2
+    ApplicationNum: 0
+    effectSize: 1.3
+    effectCondition: 3
+  gifts:
+  - Gift: 0
+    giftNum: 330
+    card: {fileID: 0}
+    drop: 0
+  - Gift: 2
+    giftNum: 330
+    card: {fileID: 11400000, guid: b788c4f14031e954e88ec12fa34eeea5, type: 2}
+    drop: 50

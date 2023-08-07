@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3682d4ec29935439b7e8e9fd523d9d, type: 3}
+  m_Name: Card 23
+  m_EditorClassIdentifier: 
+  cardID: 23
+  Hp: 8429
+  at: 30105
+  df: 4220
+  num: 8
+  firstExp: 30
+  stageNum: 6
+  name: "\u7ADC\u4E8C"
+  rare: S
+  icon: {fileID: 21300000, guid: 36b34416270dd7b44bfa92a232b24bf7, type: 3}
+  ReaderSkill: {fileID: 11400000, guid: 6082ac67d97d51d438c6e4e072eeb5f4, type: 2}
+  AutoSkill: {fileID: 11400000, guid: 7185e010d0d70b749aad6da603fa98c3, type: 2}

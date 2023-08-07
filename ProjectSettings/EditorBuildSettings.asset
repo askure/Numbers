@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Home.unity
+    guid: d27f18699397b8d43a491f348c3ce3d5
+  - enabled: 1
+    path: Assets/Scenes/Battle.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Quest.unity
+    guid: 075ff5a240756ad4a9e6bfba22eee787
+  - enabled: 1
+    path: Assets/Scenes/DeckEdit.unity
+    guid: 286dbad4978171c4099f4a797388339f
+  - enabled: 1
+    path: Assets/Scenes/character.unity
+    guid: 301ec7e3debf2a7499db89e2513182c7
+  - enabled: 1
+    path: Assets/Scenes/Bonus.unity
+    guid: 5db21a92c24a19f4795dd26464d325a2
+  - enabled: 1
+    path: Assets/Scenes/Result.unity
+    guid: 9aa968b742dd161448f378fe89e2391d
+  - enabled: 1
+    path: Assets/Scenes/Gacha.unity
+    guid: 4bcd70ff8dcf6fd43a7199e9a8f26d07
+  m_configObjects: {}

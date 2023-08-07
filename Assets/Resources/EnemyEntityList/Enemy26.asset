@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ee46f2edd560e44bc42687768b706b, type: 3}
+  m_Name: Enemy26
+  m_EditorClassIdentifier: 
+  EnemyId: 26
+  name: "[\u899A\u9192]\u732B\u306E\u53E1\u667A"
+  numba: 51
+  Hp: 3120000
+  at: 7120
+  df: 8500
+  _exp: 230000
+  icon: {fileID: 21300000, guid: e0e07ad51662aab48b38e99129382301, type: 3}
+  skilllist:
+  - {fileID: 11400000, guid: 9e5b15dd64076d54c84e0dc30f8ccfd9, type: 2}
+  - {fileID: 11400000, guid: 9601d5d5dee1ccd4cab9e2ab4058785e, type: 2}
+  - {fileID: 11400000, guid: 9307d387d3a721040834206e02eb1977, type: 2}
+  - {fileID: 11400000, guid: 58d2dcc55dd34e44594424f79b14154d, type: 2}
+  - {fileID: 11400000, guid: d2dee0592d4529941b393e7bbdd886f8, type: 2}
+  - {fileID: 11400000, guid: e37dd430c0ebd1c449f23bc77e595b94, type: 2}
+  - {fileID: 11400000, guid: 0e7b8b3ddb012c846976ffa4101ff5b8, type: 2}
+  SkillTable: 0300000003000000050000000400000000000000060000000200000005000000060000000100000003000000

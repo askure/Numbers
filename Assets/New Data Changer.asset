@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596feff04e06aaa489d1c2ecac5b3d8b, type: 3}
+  m_Name: New Data Changer
+  m_EditorClassIdentifier: 
+  Rank: 1
+  Stone: 1000000
+  Exp: 100000000
+  Multi: 1
+  Diviser: 1
+  Prime: 1
+  CardLv: 3
+  Hpbuf: 0
+  Atbuf: 0
+  Dfbuf: 0
+  convex: 0
+  allCharactor: 35
+  allStage: 40
+  clear: 0
+  pos: 1

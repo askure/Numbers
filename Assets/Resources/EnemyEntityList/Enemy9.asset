@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ee46f2edd560e44bc42687768b706b, type: 3}
+  m_Name: Enemy9
+  m_EditorClassIdentifier: 
+  EnemyId: 9
+  name: "\u86C7\u7ADC"
+  numba: 21
+  Hp: 450000
+  at: 8710
+  df: 5400
+  _exp: 45000
+  icon: {fileID: 21300000, guid: 29df05f80ffc2f14ea20e1d6c538fa62, type: 3}
+  skilllist:
+  - {fileID: 11400000, guid: 9307d387d3a721040834206e02eb1977, type: 2}
+  - {fileID: 11400000, guid: aa42c4a2d72de8845afd6a82f526f94e, type: 2}
+  - {fileID: 11400000, guid: e100a59933e29e143af7086d43d61dc5, type: 2}
+  - {fileID: 11400000, guid: 61014422859244145ae76dbaa2772e80, type: 2}
+  SkillTable: 0100000003000000030000000000000002000000

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922481ca41d66c540907d367106ee4ae, type: 3}
+  m_Name: 6
+  m_EditorClassIdentifier: 
+  stageid: 6
+  stageName: "\u30A2\u30FC\u30C6\u30A3\u30D5\u30A1\u30AF\u30C8\u8ECD\u5E79\u90E8"
+  stageinfo: 
+  buttleNum: 4
+  beforestageid: 5
+  enemy:
+  - {fileID: 11400000, guid: 7691df9c754b7e94b960370bd3638c19, type: 2}
+  - {fileID: 11400000, guid: fa7bfd18a66610d4982592e807a31118, type: 2}
+  - {fileID: 11400000, guid: c9d55cb06f348b64bad8a4ba7d6d1488, type: 2}
+  - {fileID: 11400000, guid: 4a535b4e486d5b74c9ba0751c6527763, type: 2}
+  gifts:
+  - Gift: 0
+    giftNum: 3
+    card: {fileID: 0}
+    drop: 0
+  - Gift: 2
+    giftNum: 1
+    card: {fileID: 11400000, guid: 108dbccf9ef402c49a6749434c6a9025, type: 2}
+    drop: 30

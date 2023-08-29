@@ -8,23 +8,28 @@ public class HomeManeger : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] Text rankeText,expText,stoneText,rankExpText;
-    GameManger gameManger;
-    string filepath,mapfilepath;
+    DataManager dmanager;
+    CharacterDataManager cmanager;
+    string filepath,mapfilepath,cfilepath;
     void Start()
     {
         filepath = Application.persistentDataPath + "/" + ".savedata.json";
         mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        gameManger = new GameManger();
-        if (!File.Exists(mapfilepath) || !File.Exists(filepath))
+        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        dmanager = new DataManager();
+        cmanager = new CharacterDataManager(cfilepath);
+        if (!File.Exists(mapfilepath) || !File.Exists(filepath) || !File.Exists(cfilepath))
         {
-            gameManger.DataInit(filepath);
-            gameManger.MapDataInit(mapfilepath, 40, false);
+            dmanager.DataInit(filepath);
+            dmanager.MapDataInit(mapfilepath, 40, false);
+            cmanager.DataInit(cfilepath);
         }
-        gameManger.Dataload(filepath);
-        rankeText.text = gameManger.rank.ToString();
-        expText.text = GameManger.Exp.ToString("N0");
-        stoneText.text = GameManger.Stone.ToString();
-        int rankExp = (gameManger.rank + 1) * (gameManger.rank + 1) * 100 - gameManger.rankExp;
+        dmanager.DataLoad(filepath);
+        cmanager.Dataload(cfilepath);
+        rankeText.text = dmanager.rank.ToString();
+        expText.text = dmanager.Exp.ToString("N0");
+        stoneText.text = dmanager.Stone.ToString();
+        int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;
         rankExpText.text = "ŽŸ‚Ìƒ‰ƒ“ƒN‚Ü‚Å" + rankExp.ToString("N0");
         
 

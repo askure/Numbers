@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: 7
   m_EditorClassIdentifier: 
   stageid: 7
-  stageName: "\u81EA\u7136\u306B\u6E80\u3061\u6EA2\u308C\u3066\u3044\u308B\u5730"
-  stageinfo: 
-  buttleNum: 2
   beforestageid: 6
+  stageName: "\u81EA\u7136\u306B\u6E80\u3061\u6EA2\u308C\u3066\u3044\u308B\u5730"
+  buttleNum: 2
   enemy:
   - {fileID: 11400000, guid: 3a0549a88c16f6b48ada0bd81625f9d4, type: 2}
   - {fileID: 11400000, guid: 616934b07e546be4ba5603f573048902, type: 2}
+  stageinfo: []
+  fieldEffects: []
   gifts:
   - Gift: 0
     giftNum: 3
     card: {fileID: 0}
     drop: 0
+  BackGraunds: {fileID: 21300000, guid: d06728a897adf2f4caad4fe247fa8d12, type: 3}

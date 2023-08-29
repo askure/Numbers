@@ -63,7 +63,7 @@ public class CardModel : MonoBehaviour
     public double  CardHp(int cardId,int lv,int hpuf)
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
-        return (cardEntity.Hp * (double)lv / 99 + (99 * 30 - lv * 30) ) * (1 + hpuf * 0.05f);
+        return (cardEntity.Hp * (double)lv / 99 + (99 * 30 - lv * 30) ) * (1 + hpuf * 0.1f);
     }
 
     public int CardNum(int cardId)

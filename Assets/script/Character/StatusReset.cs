@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class StatusReset : MonoBehaviour
 {
-    GameManger gameManger;
+    //GameManger gameManger;
     public void PanelView()
     {
-        string filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        gameManger = new GameManger();
-        gameManger.Dataload(filepath);
-       
-        var  card = gameManger.cardLvs[CharacterManager.SerctedCard.model.cardID];
+        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        var cmanager = new CharacterDataManager(cfilepath);
+
+        var  card = cmanager.cardLvs[CharacterManager.SerctedCard.model.cardID];
         var  bufSum = card.atbuf +
                  card.dfbuf +
                  card.hpbuf;
@@ -24,22 +23,23 @@ public class StatusReset : MonoBehaviour
 
     public void StatusResetScript()
     {
-        string filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        gameManger = new GameManger();
-        gameManger.Dataload(filepath);
-        var card = gameManger.cardLvs[CharacterManager.SerctedCard.model.cardID];
+        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        var cmanager = new CharacterDataManager(cfilepath);
+        var dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
+        var dmanager = new DataManager(dfilepath);
+        var card = cmanager.cardLvs[CharacterManager.SerctedCard.model.cardID];
 
         var bufSum = card.atbuf +
                  card.dfbuf +
                  card.hpbuf;
 
 
-        GameManger.Stone += ( (bufSum*4) + 1) / 3;
+        dmanager.Stone += ( (bufSum*4) + 1) / 3;
       
         card.hpbuf = 0;
         card.atbuf = 0;
         card.dfbuf = 0;
-        gameManger.Datasave(filepath);
+        cmanager.Datasave(cfilepath);
         CharacterManager character = new CharacterManager();
         character.SetText();
 

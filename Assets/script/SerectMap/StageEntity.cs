@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName ="StageEntity",menuName ="Create StageEntity")]
 public class StageEntity : ScriptableObject
@@ -54,6 +55,11 @@ public class StageEntity : ScriptableObject
 
     }
     public List<Gifts> gifts;
+
+    public Sprite BackGraunds;
+
+    public AudioClip[] intro = new AudioClip[2];
+    public AudioClip[] loop = new AudioClip[2];
 
     
   

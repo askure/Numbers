@@ -13,17 +13,19 @@ MonoBehaviour:
   m_Name: 9
   m_EditorClassIdentifier: 
   stageid: 9
-  stageName: "\u6728\u3092\u7E8F\u3046\u7ADC"
-  stageinfo: 
-  buttleNum: 4
   beforestageid: 8
+  stageName: "\u6728\u3092\u7E8F\u3046\u7ADC"
+  buttleNum: 4
   enemy:
   - {fileID: 11400000, guid: 616934b07e546be4ba5603f573048902, type: 2}
   - {fileID: 11400000, guid: 3a0549a88c16f6b48ada0bd81625f9d4, type: 2}
   - {fileID: 11400000, guid: 7691df9c754b7e94b960370bd3638c19, type: 2}
   - {fileID: 11400000, guid: 5341c74657ffaa14596c92e693b28757, type: 2}
+  stageinfo: []
+  fieldEffects: []
   gifts:
   - Gift: 0
     giftNum: 3
     card: {fileID: 0}
     drop: 0
+  BackGraunds: {fileID: 21300000, guid: a4dd4363eaf7ab847822a96493bdf448, type: 3}

@@ -18,6 +18,13 @@ public class GameManger : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Transform gameOverPanelTrance;
     [SerializeField] Animator damageAnimation;
+    [SerializeField] SpriteRenderer back;
+    [SerializeField] AudioClip[] DefaultAudioClipIntro;
+    [SerializeField] AudioClip[] DefaultAudioClipLoop;
+    [SerializeField] GameObject OptionPanel;
+    [SerializeField] GameObject SoundSettingPanel;
+    BGMManager BGMManager;
+    Slider volumeslider;
     
      //numbers
     public static int sum;
@@ -33,18 +40,16 @@ public class GameManger : MonoBehaviour
     
 
     //playerstatus
-    public int prime_lv;
-    public int divisor_lv;
-    public int multi_lv;
-    public int ALLCHARCTOR;
-    public Playerstatus.CardLv[] cardLvs;
-    public List<Playerstatus.DeckCard> deck;
-    public int rank;
-    public int rankExp;
-    public bool FirstGame;
+    private int prime_lv;
+    private int divisor_lv;
+    private int multi_lv;
+    private int ALLCHARCTOR;
+    private CharacterData.CardLv[] cardLvs;
+    private List<CharacterData.DeckCard> deck;
     static public int hpSum;
     public int partyDf = 0;
     static  private int MAX_HP;
+    private float volume;
     EnemyContoller _enemy;
     public List<CardController> _hand = new List<CardController>();
     public List<int> decklist;
@@ -67,14 +72,11 @@ public class GameManger : MonoBehaviour
 
 
     //Savedata
-    string filepath;
-    string mapfilepath;
-    Playerstatus playerstatus_save;
-    StageData stageData;
+    string filepath,cfilepath;
+    DataManager dmanager;
+    CharacterDataManager cmanager;
     //staic 
     public static bool Myturn = true;
-    public static int Stone = 1000;
-    public static int Exp = 9999999+1;
     static int ButtleNum = 0;
     public static GameManger instnce;
     public static int maxDamage;
@@ -88,9 +90,9 @@ public class GameManger : MonoBehaviour
     //StartGame
     public GameManger()
     {
-        playerstatus_save = new Playerstatus();
-        cardLvs = new Playerstatus.CardLv[ALLCHARCTOR];
-        deck = new List<Playerstatus.DeckCard>();
+        
+        cardLvs = new CharacterData.CardLv[ALLCHARCTOR];
+        deck = new List<CharacterData.DeckCard>();
 
     }
     private void Awake()
@@ -100,15 +102,19 @@ public class GameManger : MonoBehaviour
             instnce = this;
         }
         filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        playerstatus_save = new Playerstatus();
-        deck = new List<Playerstatus.DeckCard>();
+        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+      
+        deck = new List<CharacterData.DeckCard>();
+        
 
     }
     void Start()
     {
-        Dataload(filepath);
-       // DataInit(Application.persistentDataPath + "/" + ".savemapdata.json");
+        Dataload();
+        // DataInit(Application.persistentDataPath + "/" + ".savemapdata.json");
+        BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
+        OptionPanel.SetActive(false);
+        SoundSettingPanel.SetActive(false);
         StartGame();
        
     }
@@ -158,6 +164,12 @@ public class GameManger : MonoBehaviour
 
         //
 
+        //
+        //BackGround
+        back.sprite = CrectmapManager.BackGrounds;
+
+
+
         //SystemSetUp
         var trigger = GameObject.Find("Trigger");
         trigger.SetActive(false);
@@ -168,18 +180,34 @@ public class GameManger : MonoBehaviour
         OnlyOneReaderSkill = false;
         TurnNum = 1;
         //buttleAnimatoin.SetActive(false);
-
+        buttleNumText.GetComponent<Text>().text = "Buttle " + ButtleNum.ToString();
         if (ButtleNum  != CrectmapManager.enemy.Count)
         {
-            buttleNumText.GetComponent<Animator>().enabled = true;
-            buttleNumText.GetComponent<Text>().text = "Buttle " + ButtleNum .ToString() + "/" + CrectmapManager.enemy.Count.ToString();
+           // buttleNumText.GetComponent<Animator>().enabled = true;
+          
             GameObject.Find("Enemys").GetComponent<Animator>().enabled = true;
+            if(ButtleNum == 1)
+            {   
+                if(CrectmapManager.intro[0] == null || CrectmapManager.loop[0] == null)
+                    BGMManager.SetBGM(DefaultAudioClipIntro[0], DefaultAudioClipLoop[0],volume);
+                else 
+                    BGMManager.SetBGM(CrectmapManager.intro[0], CrectmapManager.loop[0], volume);
+                BGMManager.Play();
+            }
+
            
         }
         else
         {
-            GameObject.Find("BossAnimation").GetComponent<Animator>().enabled = true;
             
+            GameObject.Find("BossAnimation").GetComponent<Animator>().enabled = true;
+
+            if (CrectmapManager.intro[1] == null || CrectmapManager.loop[1] == null)
+                BGMManager.SetBGM(DefaultAudioClipIntro[1], DefaultAudioClipLoop[1], volume);
+            else
+                BGMManager.SetBGM(CrectmapManager.intro[1], CrectmapManager.loop[1], volume);
+            BGMManager.Play();
+
         }
         if(ButtleNum == 1)
         {
@@ -208,8 +236,6 @@ public class GameManger : MonoBehaviour
         hpSum +=(int) j ;
         if (hpSum > MAX_HP) hpSum = MAX_HP;
         ReaderSkill(ReaderCard, _hand);
-
-        partyDf = 0;
         partyDf = Df(_hand);
         gameView.Init(MAX_HP, hpSum,partyDf);
         CardShowUpdate(_hand);
@@ -220,8 +246,33 @@ public class GameManger : MonoBehaviour
 
         LogTextView("Turn:" + TurnNum.ToString());
         //
+
+       
+        
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (OptionPanel.activeInHierarchy)
+            {
+                OptionPanel.SetActive(false);
+                SoundSettingPanel.SetActive(false);
+            }
+            else
+            {
+                OptionPanel.SetActive(true);
+            }
+        }
+
+        if (SoundSettingPanel.activeInHierarchy)
+        {
+            volume = volumeslider.value;
+            BGMManager.ChangeVolume(volume);
+            dmanager.volume = volume;
+        }
+    }
     void FieldEffectParty( List<CardController> hand,  List<StageEntity.FieldEffect> fieldEffects )
     {
        
@@ -286,304 +337,40 @@ public class GameManger : MonoBehaviour
         }
     }
   
-
-    //Data
-    public void Datasave(string s)
+    public void Dataload()
     {
-        TextAsset textAsset = Resources.Load<TextAsset>("CardData");
-        StringReader reader = new StringReader(textAsset.text);
-        var ac = -1;
-        while (reader.Peek() != -1)
-        {
-            ac++;
-            reader.ReadLine();
-        }
-        playerstatus_save.FirstGame = FirstGame;
-        playerstatus_save.divisor_lv = divisor_lv;
-        playerstatus_save.multi_lv = multi_lv;
-        playerstatus_save.prime_lv = prime_lv;
-        playerstatus_save.rank = rank;
-        playerstatus_save.stone = Stone;
-        playerstatus_save.exp = Exp;
-        playerstatus_save.rankexp = rankExp;
-        playerstatus_save.allCharactor = ac;
-        playerstatus_save.cardLvs = new Playerstatus.CardLv[ac];
-        playerstatus_save.cards = new Playerstatus.DeckCard[7];
-        playerstatus_save.sortiePartyNum = sortiePartyNum;
-        for (int i = 0; i < ac; i++)
-        {
-            playerstatus_save.cardLvs[i] = new Playerstatus.CardLv
+        dmanager = new DataManager(filepath);
+        cmanager = new CharacterDataManager(cfilepath);    
+        divisor_lv = dmanager.divisor_lv;
+        multi_lv = dmanager.multi_lv;
+        prime_lv = dmanager.prime_lv;
+        ALLCHARCTOR = cmanager.ALLCHARCTOR;
+        cardLvs = new CharacterData.CardLv[ALLCHARCTOR];
+        for (int i = 0; i < ALLCHARCTOR; i++)
+        {  
+          if (i >= cmanager.cardLvs.Length)
             {
-                Id = i,
-                Lv = cardLvs[i].Lv,
-                pos = cardLvs[i].pos,
-                expSum = cardLvs[i].expSum,
-                atbuf = cardLvs[i].atbuf,
-                dfbuf = cardLvs[i].dfbuf,
-                hpbuf = cardLvs[i].hpbuf,
-                convex = cardLvs[i].convex
+               cardLvs[i] = new CharacterData.CardLv();
+               cardLvs[i].Set(i, 1, 0, false,0,0,0,0);
+             }
+          else
+             {
+                var card = cmanager.cardLvs[i];
+                cardLvs[i] = new CharacterData.CardLv();
+                cardLvs[i].Set(card.Id, card.Lv, card.expSum, card.pos,card.atbuf,card.dfbuf,card.hpbuf,card.convex);
+               }
 
-            };
-           
         }
-
         for (int i = 0; i < 7; i++)
         {
-            playerstatus_save.cards[i] = deck[i];
+           deck.Add(cmanager.deck[i]);
         }
-
-        string json = JsonUtility.ToJson(playerstatus_save, true);
-        StreamWriter streamWriter = new StreamWriter(s);
-        streamWriter.Write(json); streamWriter.Flush();
-        streamWriter.Close();
+        sortiePartyNum = cmanager.sortiePartyNum;
+         volume = dmanager.volume;
     }
-    public void DataInit(string s)
-    {
-        TextAsset textAsset = Resources.Load<TextAsset>("CardData");
-        StringReader reader = new StringReader(textAsset.text);
-        var ac = -1;
-        while (reader.Peek() != -1)
-        {
-            ac++;
-            reader.ReadLine();
-        }
-        playerstatus_save.divisor_lv = 1;
-        playerstatus_save.multi_lv = 1;
-        playerstatus_save.prime_lv = 1;
-        playerstatus_save.rank = 1;
-        playerstatus_save.stone = 0;
-        playerstatus_save.exp = 10000;
-        playerstatus_save.rankexp = 0;
-        playerstatus_save.allCharactor = ac;
-        playerstatus_save.cardLvs = new Playerstatus.CardLv[ac];
-        playerstatus_save.cards = new Playerstatus.DeckCard[7];
-        playerstatus_save.sortiePartyNum = sortiePartyNum;
-        for (int i = 0; i < 11; i++)
-        {
-            playerstatus_save.cardLvs[i] = new Playerstatus.CardLv
-            {
-                Id = i,
-                Lv = 1,
-                pos = true,
-                expSum = 0,
-                atbuf = 0,
-                dfbuf = 0,
-                hpbuf = 0,
-                convex = 0
+    
 
-            };
-
-        }
-        for (int i = 11; i < ac; i++)
-        {
-            playerstatus_save.cardLvs[i] = new Playerstatus.CardLv
-            {
-                Id = i,
-                Lv = 1,
-                pos = false,
-                expSum = 0,
-                atbuf = 0,
-                dfbuf = 0,
-                hpbuf = 0,
-                convex = 0
-
-            };
-
-        }
-        for(int i=0; i< 7; i++)
-        {
-
-            playerstatus_save.cards[i] = new Playerstatus.DeckCard();
-            playerstatus_save.cards[i].deckId = i;
-            playerstatus_save.cards[i].deckName = "パーティ" + i;
-            if(i == 0)
-            {   
-                playerstatus_save.cards[i].cardId = new List<int>();
-                for(int j = 0; j < 11; j++)
-                    playerstatus_save.cards[i].cardId.Add(j);
-            }
-        }
-        playerstatus_save.FirstGame = true;
-        playerstatus_save.sortiePartyNum = 0;
-        
-        string json = JsonUtility.ToJson(playerstatus_save, true);
-        StreamWriter streamWriter = new StreamWriter(s);
-        streamWriter.Write(json); streamWriter.Flush();
-        streamWriter.Close();
-    }
-
-    public void StageDataSave(string s)
-    {
-        stageData.allstage = allStage;
-        stageData.stage = stages;
-        string json = JsonUtility.ToJson(stageData);
-        StreamWriter streamWriter = new StreamWriter(s);
-        streamWriter.Write(json); streamWriter.Flush();
-        streamWriter.Close();
-    }
-    public void StageDataLoad(string s)
-    {
-        if (File.Exists(s))
-        {
-
-            StreamReader streamReader;
-            streamReader = new StreamReader(s);
-            string data = streamReader.ReadToEnd();
-            streamReader.Close();
-            stageData = JsonUtility.FromJson<StageData>(data);
-            allStage = stageData.allstage;
-            stages = new StageData.Stage[allStage];
-            
-                for(int i = 0; i< stages.Length; i++)
-                {
-                    if(i >= stageData.stage.Length)
-                    {
-                        stages[i] = new StageData.Stage();
-                        stages[i].clear = false;
-                        stages[i].Hiscore = 0;
-                        stages[i].stageid = i;
-                    }
-                    else
-                    {
-                        stages[i] = new StageData.Stage();
-                        stages[i] = stageData.stage[i];
-                        
-                    }
-                }
-            
-        }
-    }
-    public void MapDataInit(string s,int Allstage,bool clear)
-    {
-        stageData = new StageData();
-        stageData.allstage = Allstage;
-        stageData.stage =new StageData.Stage[Allstage];
-        for(int i = 0; i< Allstage; i++)
-        {
-            stageData.stage[i] = new StageData.Stage();
-            stageData.stage[i].stageid = i;
-            stageData.stage[i].clear = clear;
-            stageData.stage[i].Hiscore = 0;
-        }
-        string json = JsonUtility.ToJson(stageData,true);
-        StreamWriter streamWriter = new StreamWriter(s);
-        streamWriter.Write(json); streamWriter.Flush();
-        streamWriter.Close();
-    }
-    public void GachaSave(string s)
-    {
-        playerstatus_save.cardLvs = new Playerstatus.CardLv[ALLCHARCTOR];
-
-        for (int i = 0; i < ALLCHARCTOR; i++)
-        {
-            playerstatus_save.cardLvs[i] = new Playerstatus.CardLv
-            {
-                pos = cardLvs[i].pos,
-                Id = cardLvs[i].Id,
-                Lv = cardLvs[i].Lv
-            };
-
-        }
-        string json = JsonUtility.ToJson(playerstatus_save, true);
-        StreamWriter streamWriter = new StreamWriter(s);
-        streamWriter.Write(json); streamWriter.Flush();
-        streamWriter.Close();
-    }
-
-    public void Dataload(string s)
-    {
-        if (File.Exists(s))
-        {
-
-            StreamReader streamReader;
-            streamReader = new StreamReader(s);
-            string data = streamReader.ReadToEnd();
-            streamReader.Close();
-            playerstatus_save = JsonUtility.FromJson<Playerstatus>(data);
-            FirstGame = playerstatus_save.FirstGame;
-            divisor_lv = playerstatus_save.divisor_lv;
-            multi_lv = playerstatus_save.multi_lv;
-            prime_lv = playerstatus_save.prime_lv;
-            rank = playerstatus_save.rank;
-            Stone = playerstatus_save.stone;
-            Exp = playerstatus_save.exp;
-            ALLCHARCTOR = playerstatus_save.allCharactor;
-            rankExp = playerstatus_save.rankexp;
-            cardLvs = new Playerstatus.CardLv[ALLCHARCTOR];
-            for (int i = 0; i < ALLCHARCTOR; i++)
-            {
-                
-                
-                if (i >= playerstatus_save.cardLvs.Length)
-                {
-                    cardLvs[i] = new Playerstatus.CardLv();
-                    cardLvs[i].Set(i, 1, 0, false,0,0,0,0);
-                }
-                else
-                {
-                    var card = playerstatus_save.cardLvs[i];
-                    cardLvs[i] = new Playerstatus.CardLv();
-                    cardLvs[i].Set(card.Id, card.Lv, card.expSum, card.pos,card.atbuf,card.dfbuf,card.hpbuf,card.convex);
-                }
-
-            }
-            for (int i = 0; i < 7; i++)
-            {
-                deck.Add(playerstatus_save.cards[i]);
-            }
-            sortiePartyNum = playerstatus_save.sortiePartyNum;
-        }
-
-
-    }
-    public Playerstatus.CardLv[] GetCardLvs()
-    {
-        if (playerstatus_save == null)
-        {
-            return null;
-        }
-        return cardLvs;
-    }
-    public void SetGachaData(int cardId, bool pos)
-    {
-        cardLvs[cardId].pos = pos;
-        cardLvs[cardId].Id = cardId;
-        cardLvs[cardId].Lv = 1;
-        cardLvs[cardId].expSum = 0;
-    }
-
-    public int[] GetBonusLv()
-    {
-        int[] x = { divisor_lv, multi_lv, prime_lv };
-        return x;
-    }
-    public void SetBonusLv(int div,int multi,int prime)
-    {
-        divisor_lv = div;
-        multi_lv = multi;
-        prime_lv = prime;
-    }
-    public void SetCharacterData(int cardid,int expSum,int lv)
-    {
-        cardLvs[cardid].expSum = expSum;
-       
-        cardLvs[cardid].Lv = lv;
-    }
-    public void SetDeck(int index, string partyname,List<int> cardid)
-    {
-       
-        deck[index].cardId = cardid;
-        deck[index].deckName = partyname;
-       
-    }
-    public Playerstatus.DeckCard GetDeck(int index)
-    {
-        if (index >= deck.Count || index < 0)
-        {
-            return null;
-        }
-        return deck[index];
-    }
+   
 
 
     //ButtleSystem
@@ -1025,10 +812,10 @@ public class GameManger : MonoBehaviour
             } 
             var id = card.model.cardID;
             //attackBuf
-            var tenv = card.model.at * (1 + (cardLvs[id].atbuf*0.05f) );
+            var tenv = card.model.at * (1 + (cardLvs[id].atbuf*0.1f) );
             card.model.at = (int)tenv;
             //dfBuf
-            tenv = card.model.df * (1 + (cardLvs[id].dfbuf * 0.05f));
+            tenv = card.model.df * (1 + (cardLvs[id].dfbuf * 0.1f));
             card.model.df = (int)tenv;
             card.model.onBuf = true;
             temp.Add(card);
@@ -1219,7 +1006,7 @@ public class GameManger : MonoBehaviour
             var auto = card.model.PublicSkill;
             var cardNum = card.model.num;
             var skillOrigin = auto.magic_Conditon_Origins;
-            Debug.Log(auto._Priority);
+           
             bool autoInvocation = false; 
             foreach (Skill_origin.magic_conditon_origin _Origin in skillOrigin)
             {
@@ -1485,7 +1272,7 @@ public class GameManger : MonoBehaviour
                 ats += card.model.at;
 
         }
-        double bounus = (1 + (-0.1) * (_enemy.model.numba - sum) );
+        double bounus = 1 + 0.3*(sum - _enemy.model.numba);
 
 
         ats *= bounus;
@@ -1576,6 +1363,14 @@ public class GameManger : MonoBehaviour
 
     }
 
+
+    public void OpenSoundSetting()
+    {
+        
+        SoundSettingPanel.SetActive(true);
+        if (volumeslider == null) volumeslider = SoundSettingPanel.transform.GetChild(1).GetComponent<Slider>();
+        volumeslider.value = volume;
+    }
    
    
     //Animation
@@ -1632,13 +1427,17 @@ public class GameManger : MonoBehaviour
                     break;
 
                 case (int)AnimationType.gameover:
-                   // Debug.Log("gameover");
+                    // Debug.Log("gameover");
+                    
                     yield return StartCoroutine(GameOverAnimation());
+                    dmanager.DataSave(filepath);
                     break;
                 case (int)AnimationType.win:
                    // Debug.Log("WIN");
                     Destroy(_enemy.gbj);
-                    yield return new WaitForSeconds(0.5f);
+                    BGMManager.FadeOut();
+                    yield return new WaitForSeconds(1f);
+                    dmanager.DataSave(filepath);
                     SceneManager.LoadScene("Result");
                     break;
                 case (int)AnimationType.block:
@@ -1650,8 +1449,13 @@ public class GameManger : MonoBehaviour
 
                     break;
                 case (int)AnimationType.nextStage:
-                   // Debug.Log("NextStage");
-                    yield return new WaitForSeconds(0.5f);
+                    // Debug.Log("NextStage");
+                    if ((ButtleNum+1) == CrectmapManager.enemy.Count)
+                    {
+                        BGMManager.FadeOut();
+                    }
+                    yield return new WaitForSeconds(1f);
+                    dmanager.DataSave(filepath);
                     SceneManager.LoadScene("Battle");
                     break;
                 case (int)AnimationType.numProtect:
@@ -1678,9 +1482,19 @@ public class GameManger : MonoBehaviour
 
     IEnumerator GameOverAnimation()
     {
+        BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
+        BGMManager.FadeOut();
         var panel = Instantiate(gameOverPanel, gameOverPanelTrance);
         panel.GetComponent<Animator>().enabled = true;
         yield return new WaitForSeconds(panel.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length);
+    }
+
+    public void ENDAnimation()
+    {
+       // BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
+        BGMManager.FadeOut();
+        var panel = Instantiate(gameOverPanel, gameOverPanelTrance);
+        panel.GetComponent<Animator>().enabled = true;
     }
 
  

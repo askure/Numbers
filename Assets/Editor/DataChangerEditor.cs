@@ -10,20 +10,21 @@ public class DataChangerEditor : Editor {
     {   
         string filepath = Application.persistentDataPath + "/" + ".savedata.json";
         string mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
+        string chafilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
         DrawDefaultInspector();
         var dataChanger = target as DataChanger;
-        GameManger gameManger = new GameManger();
-        gameManger.Dataload(filepath);
+        DataManager gameManger = new DataManager(filepath);
+        CharacterDataManager characterData = new CharacterDataManager(chafilepath);
         if (GUILayout.Button("ランク変更"))
         {
             gameManger.rank = dataChanger.Rank;
-            gameManger.Datasave(filepath);
+            gameManger.DataSave(filepath);
         }
         if (GUILayout.Button("EXPとStone変更"))
         {
-            GameManger.Exp = dataChanger.Exp;
-            GameManger.Stone = dataChanger.Stone;
-            gameManger.Datasave(filepath);
+            gameManger.Exp = dataChanger.Exp;
+            gameManger.Stone = dataChanger.Stone;
+            gameManger.DataSave(filepath);
         }
 
         if (GUILayout.Button("ボーナス変更"))
@@ -31,14 +32,14 @@ public class DataChangerEditor : Editor {
             gameManger.divisor_lv = dataChanger.Diviser;
             gameManger.multi_lv = dataChanger.Multi;
             gameManger.prime_lv = dataChanger.Prime;
-            gameManger.Datasave(filepath);
+            gameManger.DataSave(filepath);
         }
 
         if (GUILayout.Button("キャラクターステータス変更"))
         {
            
 
-            foreach (Playerstatus.CardLv card in gameManger.cardLvs)
+            foreach (CharacterData.CardLv card in characterData.cardLvs)
             {
                 card.Lv = dataChanger.CardLv;
                 card.atbuf = dataChanger.Atbuf;
@@ -47,7 +48,7 @@ public class DataChangerEditor : Editor {
                 card.convex = dataChanger.convex;
                 card.pos = dataChanger.pos;
             }
-            gameManger.Datasave(filepath);
+            characterData.Datasave(chafilepath);
 
 
         }

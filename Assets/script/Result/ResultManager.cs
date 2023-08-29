@@ -6,20 +6,29 @@ public class ResultManager : MonoBehaviour
 {
     [SerializeField] Text mapNameText,stageNameText,expText, MaxDamageText, MaxNumText, AveTurnText, ScoreText,GiftText,rankExpText;
     [SerializeField] GameObject rankup, newRecord;
-    string filepath,mapfilepath;
-    GameManger gameManger;
+    
+    string mapfilepath;
+    string cfilepath ;
+    string dfilepath;
+    CharacterDataManager cmanager ;
+    DataManager dmanager ;
     void Start()
     {
-        gameManger = new GameManger();
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
+        cmanager = new CharacterDataManager(cfilepath);
+        dmanager = new DataManager(dfilepath);
+        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
         mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
+        cmanager = new CharacterDataManager(cfilepath);
+        dmanager = new DataManager(dfilepath);
+
         rankup.SetActive(false);
         newRecord.SetActive(false);
-        gameManger.Dataload(filepath);
-        gameManger.StageDataLoad(mapfilepath);
+        dmanager.StageDataLoad(mapfilepath);
+        GameObject.Find("ResultBGM").GetComponent<AudioSource>().volume =dmanager.volume ;
         SetText();
-        gameManger.Datasave(filepath);
-        gameManger.StageDataSave(mapfilepath);
+        dmanager.DataSave(dfilepath);
+        dmanager.StageDataSave(mapfilepath);
  
         
     }
@@ -28,7 +37,7 @@ public class ResultManager : MonoBehaviour
         mapNameText.text = CrectmapManager.MapManager.stageName;
         stageNameText.text = CrectmapManager.stage.stageName;
         expText.text = "経験値:"+GameManger.enemysexp.ToString("N0");
-        GameManger.Exp += GameManger.enemysexp;
+        dmanager.Exp += GameManger.enemysexp;
         MaxDamageText.text = "最大ダメージ:"+GameManger.maxDamage.ToString("N0");
         MaxNumText.text = "最大数値:"+GameManger.maxNum.ToString("N0");
         var averageTurn = (GameManger.aveTurn / CrectmapManager.enemy.Count);
@@ -40,15 +49,15 @@ public class ResultManager : MonoBehaviour
             GiftText.text = GiftTostring(CrectmapManager.Gift);
         
         else GiftText.text = "";
-        if (gameManger.stages[CrectmapManager.stage.stageid].Hiscore < score) {
-            gameManger.stages[CrectmapManager.stage.stageid].Hiscore = score;
+        if (dmanager.stages[CrectmapManager.stage.stageid].Hiscore < score) {
+            dmanager.stages[CrectmapManager.stage.stageid].Hiscore = score;
             newRecord.SetActive(true);
         }
 
         
-        gameManger.stages[CrectmapManager.stage.stageid].clear = true;
+        dmanager.stages[CrectmapManager.stage.stageid].clear = true;
         CheckRankUp(score / 100);
-        int rankExp = (gameManger.rank + 1) * (gameManger.rank + 1) * 100 - gameManger.rankExp;
+        int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;
         rankExpText.text = "次のランクまで" + rankExp.ToString("N0");
 
     }
@@ -61,7 +70,7 @@ public class ResultManager : MonoBehaviour
             {
                 case 0:
                     s += "ストーン*" + gift.giftNum + "\n";
-                    GameManger.Stone += gift.giftNum;
+                    dmanager.Stone += gift.giftNum;
                     break;
                 case 1:
                     s += "Item*" + gift.giftNum + "\n";
@@ -70,9 +79,13 @@ public class ResultManager : MonoBehaviour
                     var x = Random.Range(0, 1001);
                     
                     if (x > gift.drop) break;
-                    if (gameManger.cardLvs[gift.card.cardID].pos) break;
+                    if (cmanager.cardLvs[gift.card.cardID].pos) break;
                     s += gift.card.name + "\n";
-                    gameManger.SetGachaData(gift.card.cardID, true);
+                    var cardId = gift.card.cardID;
+                    cmanager.cardLvs[gift.card.cardID].pos = true;
+                    cmanager.cardLvs[cardId].Id = cardId;
+                    cmanager.cardLvs[cardId].Lv = 1;
+                    cmanager.cardLvs[cardId].expSum = 0;
                     break;
                 default:
                     break;
@@ -84,24 +97,24 @@ public class ResultManager : MonoBehaviour
 
     void RankUp()
     {
-        gameManger.rank++;
+        dmanager.rank++;
         rankup.SetActive(true);
     }
     void CheckRankUp(int exp)
     {
         while (true)
         {
-            int needExp = (gameManger.rank + 1) * (gameManger.rank + 1) * 100;
-            if (gameManger.rankExp + exp < needExp)
+            int needExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100;
+            if (dmanager.rankExp + exp < needExp)
             {
-                gameManger.rankExp += exp;
+                dmanager.rankExp += exp;
                 return;
             }
             exp -= needExp;
             RankUp();
             if(exp < 0)
             {
-               gameManger.rankExp =  exp + needExp;
+               dmanager.rankExp =  exp + needExp;
                 return;
             }
         }

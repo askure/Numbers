@@ -24,14 +24,17 @@ MonoBehaviour:
   - "\u6575\u5F37\u5316\u72B6\u614B"
   fieldEffects:
   - EnemyOrParty: 0
+    buff: 0
     ApplicationNum: 0
     effectSize: 1.3
     effectCondition: 0
   - EnemyOrParty: 0
+    buff: 0
     ApplicationNum: 1
     effectSize: 1.2
     effectCondition: 0
   - EnemyOrParty: 0
+    buff: 0
     ApplicationNum: 2
     effectSize: 1.7
     effectCondition: 0
@@ -40,3 +43,4 @@ MonoBehaviour:
     giftNum: 20
     card: {fileID: 0}
     drop: 0
+  BackGraunds: {fileID: 21300000, guid: 43fdcd38a685ed84889ff999d102908b, type: 3}

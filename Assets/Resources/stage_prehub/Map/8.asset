@@ -15,5 +15,6 @@ MonoBehaviour:
   stageNum: 8
   beforeStageid: 28
   stageName: "\u7570\u6B21\u5143"
+  Back: {fileID: 21300000, guid: 632e1f6bc37a315489cb1b3ce18098a4, type: 3}
   maps:
   - {fileID: 11400000, guid: 98759e6ae00d7914e9a7cbb56d54db96, type: 2}

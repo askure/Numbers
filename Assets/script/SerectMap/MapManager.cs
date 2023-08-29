@@ -8,5 +8,6 @@ public class MapManager : ScriptableObject
    public int stageNum;
    public int beforeStageid;
    public string stageName;
+   public Sprite Back;
    public List<StageEntity> maps;
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
-    [SerializeField] Text maxHp, nowHp,TurnNum,logText,Numpower,BounusNum,NowDf;
+    [SerializeField] Text maxHp, nowHp,logText,Numpower,NowDf;
     [SerializeField] Slider hpbar;
     public void Init(int max,int now,int df)
     {
@@ -22,7 +22,6 @@ public class GameView : MonoBehaviour
     {
         nowHp.text = now.ToString();
         hpbar.value = now;
-        TurnNum.text = Turn.ToString();
         NowDf.text = "Now Df:" + df.ToString();
     }
 
@@ -41,7 +40,6 @@ public class GameView : MonoBehaviour
 
     public void NumPowerText(int[] x)
     {
-        Numpower.text = x[0].ToString();
-        BounusNum.text =  "(+" + x[1].ToString() +")";
+        Numpower.text = x[0].ToString() + "(+" + x[1].ToString() + ")";
     }
 }

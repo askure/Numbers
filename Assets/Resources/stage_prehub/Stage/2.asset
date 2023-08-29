@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   stageid: 2
-  stageName: "\u65B0\u305F\u306A\u5F37\u6575"
-  stageinfo: 
-  buttleNum: 2
   beforestageid: 1
+  stageName: "\u65B0\u305F\u306A\u5F37\u6575"
+  buttleNum: 2
   enemy:
   - {fileID: 11400000, guid: cbb2646692dc6264080b3098ce91066f, type: 2}
   - {fileID: 11400000, guid: bf9a357e724a4b843bb05a544ca2e544, type: 2}
+  stageinfo: []
+  fieldEffects: []
   gifts:
   - Gift: 0
     giftNum: 2
@@ -29,3 +30,10 @@ MonoBehaviour:
     giftNum: 0
     card: {fileID: 11400000, guid: 6b743294ace54a14581db01879f4b370, type: 2}
     drop: 30
+  BackGraunds: {fileID: 21300000, guid: db9cf0eaf87d97b42b557074d48a8f56, type: 3}
+  intro:
+  - {fileID: 8300000, guid: e7766ea109d1e1a41861f40e4823efa1, type: 3}
+  - {fileID: 8300000, guid: 60d46997e4e621c499c3d4b06c92f56f, type: 3}
+  loop:
+  - {fileID: 8300000, guid: bc192dfc74280dd4aaa350f3586895d0, type: 3}
+  - {fileID: 8300000, guid: 61e249e901c602646866b5a57b31c745, type: 3}

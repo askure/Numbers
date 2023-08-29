@@ -14,7 +14,8 @@ public class CrectmapManager : MonoBehaviour
     [SerializeField] Text MapName;
     [SerializeField] GameObject BeforeStageButton;
     [SerializeField] GameObject AfterStageButton;
-    
+    [SerializeField] SpriteRenderer back;
+
     Animator anime;
     GameObject gameobj;
     static GameObject sortiePartyPanel,notSortiePartyPanel;
@@ -25,7 +26,10 @@ public class CrectmapManager : MonoBehaviour
     string filepath;
     public static List<EnemyEntity> enemy;
     public static List<StageEntity.Gifts> Gift;
-    
+    public static Sprite BackGrounds;
+    public static AudioClip[] intro;
+    public static AudioClip[] loop;
+
 
 
 
@@ -35,7 +39,7 @@ public class CrectmapManager : MonoBehaviour
         filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         sortiePartyPanel = GameObject.Find("SortiePartyPanel");
         notSortiePartyPanel = GameObject.Find("NotSortiePartyPanel");
-        GameManger manger = new GameManger();
+        DataManager manger = new DataManager();
         manger.StageDataLoad(filepath);
         sortiePartyPanel.SetActive(false);
         notSortiePartyPanel.SetActive(false);
@@ -62,7 +66,7 @@ public class CrectmapManager : MonoBehaviour
     public void Onclick()
     {
         filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        GameManger manger = new GameManger();
+        DataManager manger = new DataManager();
         manger.StageDataLoad(filepath);
         
         eventSystem = EventSystem.current;
@@ -115,6 +119,9 @@ public class CrectmapManager : MonoBehaviour
         scene = GameObject.Find("SceneChange").GetComponent<SceneAnimation>();
         enemy = stage.enemy;
         Gift = stage.gifts;
+        BackGrounds = stage.BackGraunds;
+        intro = stage.intro;
+        loop = stage.loop;
         AfterStageButton.SetActive(false);
         BeforeStageButton.SetActive(false);
         GameObject.Find("Tohome").SetActive(false);
@@ -129,8 +136,9 @@ public class CrectmapManager : MonoBehaviour
         var g = eventSystem.currentSelectedGameObject;
         var buttonui = g.GetComponent<ButtonUi>();
         stage = buttonui.GetStage();       
-        GameManger manger = new GameManger();
-        var filepath = Application.persistentDataPath + "/" + ".savedata.json";
+       
+        var filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        CharacterDataManager manger = new CharacterDataManager(filepath);
         manger.Dataload(filepath);
         if(manger.sortiePartyNum == -1)
         {
@@ -151,6 +159,8 @@ public class CrectmapManager : MonoBehaviour
         MapManager = Resources.Load<MapManager>("stage_prehub/Map/" + Mapid.ToString());
         if (MapManager == null) return;
         MapName.text = MapManager.stageName;
+        back.sprite = MapManager.Back;
+
     }
     private string GiftTostring(List<StageEntity.Gifts> gifts) {
         string s = "";

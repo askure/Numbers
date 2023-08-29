@@ -125,13 +125,13 @@ public class Onclick : MonoBehaviour
             Text.text = card.GetComponent<CardController>().model.name;
             var auto = AutoSKillFlag(GameManger.instnce.GetUpCard(), card.GetComponent<CardController>());
 
-            if (color == 0.5f && auto) Text.color = new Color(255, 0, 0);
-            else if(color == 0.5f && !auto) Text.color = new Color(0, 255, 0);
+            if (color == 0.5f && auto) Text.color = new Color(0, 0, 255);
+            else if(color == 0.5f && !auto) Text.color = new Color(255, 0, 0);
             else Text.color = new Color(0, 0, 0);
             Text = cardText.transform.GetChild(1).GetComponent<Text>();
             Text.text = card.GetComponent<CardController>().model.PublicSkill.skill_infomatin;
-            if (color == 0.5f && auto) Text.color = new Color(255, 0, 0);
-            else if (color == 0.5f && !auto) Text.color = new Color(0, 255, 0);
+            if (color == 0.5f && auto) Text.color = new Color(0, 0, 255);
+            else if (color == 0.5f && !auto) Text.color = new Color(255, 0, 0);
             else Text.color = new Color(0, 0, 0);
             index++;
         }

@@ -56,3 +56,4 @@ MonoBehaviour:
     giftNum: 20
     card: {fileID: 0}
     drop: 0
+  BackGraunds: {fileID: 21300000, guid: 6f5ad7c172289a946978c88bc2e55d5c, type: 3}

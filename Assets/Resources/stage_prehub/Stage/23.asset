@@ -24,10 +24,12 @@ MonoBehaviour:
   - "\u4E00\u90E8\u306E\u6575\u5F37\u5316\u72B6\u614B"
   fieldEffects:
   - EnemyOrParty: 0
+    buff: 0
     ApplicationNum: 0
     effectSize: 2.5
     effectCondition: 0
   - EnemyOrParty: 0
+    buff: 0
     ApplicationNum: 1
     effectSize: 1.5
     effectCondition: 0
@@ -36,3 +38,4 @@ MonoBehaviour:
     giftNum: 12
     card: {fileID: 0}
     drop: 0
+  BackGraunds: {fileID: 21300000, guid: f7e3eae6f7619414898c54725ca37a68, type: 3}

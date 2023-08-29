@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class ConvexUp : MonoBehaviour
 {
-    GameManger gameManger;
     string filepath;
 
     public void  Convex()
     {
 
-        gameManger = new GameManger();
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        gameManger.Dataload(filepath);
+        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+        var cmanager = new CharacterDataManager(cfilepath);
         var id = CharacterManager.SerctedCard.model.cardID;
-        var card = gameManger.cardLvs[id];
+        var card = cmanager.cardLvs[id];
         card.convex++;
         card.atbuf = 0;
         card.dfbuf = 0;
         card.hpbuf = 0;
-        gameManger.Datasave(filepath);
+        cmanager.Datasave(filepath);
         CharacterManager character = new CharacterManager();
         character.SetText();
         Destroy(gameObject);

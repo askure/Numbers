@@ -23,44 +23,65 @@ public class CrectmapManager : MonoBehaviour
     SceneAnimation scene;
     public static StageEntity stage;
     static int Mapid;
-    string filepath;
+    string filepath,mapfilepath;
     public static List<EnemyEntity> enemy;
     public static List<StageEntity.Gifts> Gift;
     public static Sprite BackGrounds;
     public static AudioClip[] intro;
     public static AudioClip[] loop;
-
+    private AudioClip mapintro,maploop;
 
 
 
     void Start()
     {
-        
-        filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
+        filepath = Application.persistentDataPath + "/" + ".savedata.json";
+        mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         sortiePartyPanel = GameObject.Find("SortiePartyPanel");
         notSortiePartyPanel = GameObject.Find("NotSortiePartyPanel");
-        DataManager manger = new DataManager();
-        manger.StageDataLoad(filepath);
+        DataManager manger = new DataManager(filepath);
+        manger.StageDataLoad(mapfilepath);
         sortiePartyPanel.SetActive(false);
         notSortiePartyPanel.SetActive(false);
         
         InitMap(Mapid);
         if (MapManager == null) return;
-        if(manger.stages[MapManager.maps.Count -1].clear) AfterStageButton.SetActive(true);
-        else AfterStageButton.SetActive(false);
+        
        
         if (Mapid != 0) BeforeStageButton.SetActive(true);
         else BeforeStageButton.SetActive(false);
+
+        var flag = false;
+        var index = 0;
         foreach (StageEntity stage in MapManager.maps)
         {   
             if(stage.beforestageid != -1 && !manger.stages[stage.beforestageid].clear )
             {
+                flag = true;
+                index++;
                 continue;
             }
+            
             var map = Instantiate(Button, Stagetransform);
             map.InitButton(stage.stageid);
+            if (manger.stages[stage.stageid].clear)
+            {
+                map.GetComponent<Image>().color = Color.yellow;
+            }
+            index++;
+                
         }
-        
+
+        if (!flag && manger.stages[MapManager.maps.Count-1].clear) AfterStageButton.SetActive(true);
+        else AfterStageButton.SetActive(false);
+        var bgmobj = GameObject.Find("BGM");
+        if (bgmobj != null && maploop != null && mapintro != null)
+        {
+            bgmobj.GetComponent<BGMManager>().SetBGM(mapintro,maploop, manger.volume);
+            //bgmobj.GetComponent<BGMManager>().Play();
+
+        }
+
     }
 
     public void Onclick()
@@ -124,7 +145,13 @@ public class CrectmapManager : MonoBehaviour
         loop = stage.loop;
         AfterStageButton.SetActive(false);
         BeforeStageButton.SetActive(false);
+        GameObject.Find("Panel").SetActive(false);
         GameObject.Find("Tohome").SetActive(false);
+        var bgmobj = GameObject.Find("BGM");
+        if (bgmobj != null)
+        {
+            bgmobj.GetComponent<BGMManager>().FadeOut();
+        }
         //SceneManager.LoadScene("Battle");
         scene.LoadScene("Battle",MapManager.stageName,stage.stageName);
         Debug.Log("ステージをロードしました");
@@ -160,6 +187,8 @@ public class CrectmapManager : MonoBehaviour
         if (MapManager == null) return;
         MapName.text = MapManager.stageName;
         back.sprite = MapManager.Back;
+        mapintro = MapManager._intro;
+        maploop = MapManager.loop;
 
     }
     private string GiftTostring(List<StageEntity.Gifts> gifts) {
@@ -183,21 +212,39 @@ public class CrectmapManager : MonoBehaviour
     }
 
     public void ToAfterStage()
-    {   
-        MapManager = Resources.Load<MapManager>("stage_prehub/Map/" + (Mapid+1).ToString());
-        if(MapManager == null)
-        {
-            MapManager = Resources.Load<MapManager>("stage_prehub/Map/" + (Mapid).ToString());
-            return;
-        }
+    {
+
+        if (Mapid == 9) return;
         Mapid++;
-        SceneManager.LoadScene("Quest");
+        LoadSecne();
     }
     public void ToBeforeStage()
     {
         if (Mapid == 0) return;
         Mapid--;
-        SceneManager.LoadScene("Quest");
+        LoadSecne();
+    }
+
+    public void LoadSecne()
+    {
+
+        var gameObject = Resources.Load<GameObject>("LoadPanel");
+        var canva = GameObject.Find("Canvas").transform;
+        var pane = Instantiate(gameObject, canva);
+        var _slider = pane.transform.GetChild(1).GetComponent<Slider>();
+        StartCoroutine(LoadSceneUI(_slider));
+
+    }
+
+
+    IEnumerator LoadSceneUI(Slider _slider)
+    {
+        AsyncOperation async = SceneManager.LoadSceneAsync("Quest");
+        while (!async.isDone)
+        {
+            _slider.value = async.progress;
+            yield return null;
+        }
     }
 
 

@@ -99,11 +99,14 @@ public class ResultManager : MonoBehaviour
     {
         dmanager.rank++;
         rankup.SetActive(true);
+        dmanager.Exp += 100000;
+        dmanager.Stone += 10;
     }
     void CheckRankUp(int exp)
     {
         while (true)
-        {
+        {   
+
             int needExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100;
             if (dmanager.rankExp + exp < needExp)
             {

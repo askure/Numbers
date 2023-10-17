@@ -19,8 +19,12 @@ public class EnemyContoller : MonoBehaviour
        
 
     }
+    public void Update()
+    {
+        Show_update(model.numba.ToString(),model.Hp,model.initHp);
+    }
 
-  
+
 
     public void Init(int EnemyID)
     {

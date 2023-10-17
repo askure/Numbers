@@ -8,6 +8,7 @@ TagManager:
   - One
   - ten
   - more
+  - status
   layers:
   - Default
   - TransparentFX

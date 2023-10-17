@@ -15,14 +15,14 @@ MonoBehaviour:
   Rank: 1
   Stone: 1000000
   Exp: 100000000
-  Multi: 99
-  Diviser: 99
-  Prime: 99
+  Multi: 70
+  Diviser: 70
+  Prime: 70
   CardLv: 120
-  Hpbuf: 99
-  Atbuf: 99
-  Dfbuf: 99
-  convex: 4
+  Hpbuf: 0
+  Atbuf: 0
+  Dfbuf: 0
+  convex: 1
   allCharactor: 35
   allStage: 40
   clear: 1

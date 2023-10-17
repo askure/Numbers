@@ -10,4 +10,5 @@ public class MapManager : ScriptableObject
    public string stageName;
    public Sprite Back;
    public List<StageEntity> maps;
+    public AudioClip _intro, loop;
 }

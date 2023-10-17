@@ -28,7 +28,7 @@ MonoBehaviour:
   BackGraunds: {fileID: 21300000, guid: 0da475a677c5cb54489aac6b7af0b350, type: 3}
   intro:
   - {fileID: 8300000, guid: e7766ea109d1e1a41861f40e4823efa1, type: 3}
-  - {fileID: 8300000, guid: bc192dfc74280dd4aaa350f3586895d0, type: 3}
+  - {fileID: 8300000, guid: a7e8d46291ef11747a8340b8eecbeef9, type: 3}
   loop:
   - {fileID: 8300000, guid: bc192dfc74280dd4aaa350f3586895d0, type: 3}
   - {fileID: 8300000, guid: 55dee74ee93904843b0371c242619bd5, type: 3}

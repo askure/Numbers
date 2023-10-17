@@ -76,6 +76,7 @@ public class Skill_origin : ScriptableObject
         public int conditons; //Z‘ÌˆÈã‚ÌğŒ 0‚ÍğŒ‚È‚µ
         public MagicKind  magic_kind;
         public double effect_size;
+        public int effect_turn; //ƒoƒtŒn‚Ì‚İ
 
         
     }

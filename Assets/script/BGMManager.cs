@@ -8,8 +8,8 @@ public class BGMManager : MonoBehaviour
 
     private AudioClip AudioClipIntro;
     [SerializeField] private float volume;
-    private static  AudioSource _introAudioSource;
-    private static AudioSource _loopAudioSource;
+    private   AudioSource _introAudioSource;
+    private  AudioSource _loopAudioSource;
     private AudioSource _introAudioSourcetmp;
     private AudioSource _loopAudioSourcetmp;
     private bool _isPause;
@@ -53,10 +53,28 @@ public class BGMManager : MonoBehaviour
     }
     public void SetBGM(AudioClip AudioClipIntro, AudioClip AudioClipLoop,float volume)
    {
+        if(AudioClipIntro == null || AudioClipLoop == null)
+        {
 
+            Debug.Log("BGMÇ™ê›íËÇ≥ÇÍÇƒÇ»Ç¢ÇÊ");
+            return;
+        }
+        if (_introAudioSource != null && _loopAudioSource != null)
+            if ((AudioClipIntro == _introAudioSource.clip) && (AudioClipLoop == _loopAudioSource.clip)) return;
         // AudioSource Çé©êgÇ…í«â¡
+        if (_introAudioSource != null && _loopAudioSource != null)
+        {
+            if (_introAudioSource.isPlaying || _loopAudioSource.isPlaying)
+            {
+                Stop();
+                Destroy(GetComponent<AudioSource>());
+                Destroy(GetComponent<AudioSource>());
+            }
+        }
+        
         _introAudioSource = gameObject.AddComponent<AudioSource>();
         _loopAudioSource = gameObject.AddComponent<AudioSource>();
+      
         _introAudioSource.clip = AudioClipIntro;
         _introAudioSource.loop = false;
         _introAudioSource.playOnAwake = false;
@@ -68,10 +86,12 @@ public class BGMManager : MonoBehaviour
         this.volume = volume;
         this.AudioClipIntro = AudioClipIntro;
         FadeInSecond = 1.0;
+        Play();
 
 
 
    }
+
 
     public void ChangeBGM(AudioClip AudioClipIntro, AudioClip AudioClipLoop, float volume)
     {

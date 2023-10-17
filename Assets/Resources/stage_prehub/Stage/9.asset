@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageid: 9
   beforestageid: 8
-  stageName: "\u6728\u3092\u7E8F\u3046\u7ADC"
+  stageName: "\u68EE\u5965\u306E\u9F8D"
   buttleNum: 4
   enemy:
   - {fileID: 11400000, guid: 616934b07e546be4ba5603f573048902, type: 2}
@@ -29,3 +29,9 @@ MonoBehaviour:
     card: {fileID: 0}
     drop: 0
   BackGraunds: {fileID: 21300000, guid: a4dd4363eaf7ab847822a96493bdf448, type: 3}
+  intro:
+  - {fileID: 0}
+  - {fileID: 0}
+  loop:
+  - {fileID: 0}
+  - {fileID: 0}

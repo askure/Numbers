@@ -19,7 +19,7 @@ MonoBehaviour:
   at: 8710
   df: 5400
   _exp: 45000
-  icon: {fileID: 21300000, guid: 29df05f80ffc2f14ea20e1d6c538fa62, type: 3}
+  icon: {fileID: 21300000, guid: f06e851b614975d46954175cad9a883c, type: 3}
   skilllist:
   - {fileID: 11400000, guid: 9307d387d3a721040834206e02eb1977, type: 2}
   - {fileID: 11400000, guid: aa42c4a2d72de8845afd6a82f526f94e, type: 2}

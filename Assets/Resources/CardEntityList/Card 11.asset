@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Card 11
   m_EditorClassIdentifier: 
   cardID: 11
-  advent: 1
-  Hp: 7000
+  advent: 0
+  Hp: 21000
   at: 30500
   df: 1777
   num: 7

@@ -37,6 +37,7 @@ public class SerectCard : MonoBehaviour
         CardEditManager cardEdit = new CardEditManager();
         var x = GetComponent<CardController>();
         var y = Resources.Load<CardController>("DeckEditPrehub/DeckCard");
+        gameObject.transform.Find("Serected").gameObject.SetActive(true);
         if (CardEditManager.decklistTemp.IndexOf(x.model.cardID) != -1)
         {
            

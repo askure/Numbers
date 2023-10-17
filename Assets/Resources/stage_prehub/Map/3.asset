@@ -22,3 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1fed84dcdc08ec44481b68b7566ad81d, type: 2}
   - {fileID: 11400000, guid: 95b9f705e1bf1144e9ae170f88f2bc55, type: 2}
   - {fileID: 11400000, guid: 6f68ed13c8397bc41b79f431daf224c9, type: 2}
+  _intro: {fileID: 8300000, guid: cc7a0cd3eed3e7e4fa8b53c3db82ebf5, type: 3}
+  loop: {fileID: 8300000, guid: 27e8ee728404e42498b8a64ef54d857f, type: 3}

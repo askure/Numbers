@@ -29,11 +29,11 @@ public class CardModel : MonoBehaviour
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
         cardID = cardEntity.cardID;
-        var tenav = cardEntity.Hp * (double)lv / 100 + (100 * 30 - lv * 30);
+        var tenav = cardEntity.Hp * (double)lv / 99 + (99 * 10 - lv * 10);
         BeforeHp =  Hp = (int)tenav;
-        tenav = cardEntity.at * (double)lv / 100 + (100 * 8 - lv * 8);
+        tenav = cardEntity.at * (double)lv / 99 + (99 * 4 - lv * 4);
         BeforeAt = at = (int)tenav;
-        tenav = cardEntity.df * (double)lv / 100 + (100 * 10 - lv * 10);
+        tenav = cardEntity.df * (double)lv / 99 + (99 * 5 - lv * 5);
         BeforeDf =  df = (int) tenav;
         num = cardEntity.num;
         name = cardEntity.name;
@@ -63,7 +63,7 @@ public class CardModel : MonoBehaviour
     public double  CardHp(int cardId,int lv,int hpuf)
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
-        return (cardEntity.Hp * (double)lv / 99 + (99 * 30 - lv * 30) ) * (1 + hpuf * 0.1f);
+        return (cardEntity.Hp * (double)lv / 99 + (99 * 10 - lv * 10) ) * (1 + hpuf * 0.1f);
     }
 
     public int CardNum(int cardId)
@@ -74,6 +74,6 @@ public class CardModel : MonoBehaviour
     public double CardDf(int cardId,int lv)
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
-        return cardEntity.df * (double)lv / 99 + (99 * 10 - lv * 10);
+        return cardEntity.df * (double)lv / 99 + (99 * 5 - lv * 5);
     }
 }

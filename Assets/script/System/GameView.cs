@@ -18,13 +18,18 @@ public class GameView : MonoBehaviour
         int[] x = { 0, 0 };
         NumPowerText(x);
     }
+
+    private void Update()
+    {
+        updateView(GameManger.hpSum,0, 0);
+    }
     public void updateView(int now,int Turn,int df)
     {
         nowHp.text = now.ToString();
         hpbar.value = now;
         NowDf.text = "Now Df:" + df.ToString();
     }
-
+    
     public void LogTextView(List<string> s)
     {
         logText.text = "";
@@ -40,6 +45,6 @@ public class GameView : MonoBehaviour
 
     public void NumPowerText(int[] x)
     {
-        Numpower.text = x[0].ToString() + "(+" + x[1].ToString() + ")";
+        Numpower.text = x[0].ToString();
     }
 }

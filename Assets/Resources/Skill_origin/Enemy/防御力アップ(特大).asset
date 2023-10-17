@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill_name: "\u7279\u5927\u9632\u5FA1\u529B\u30A2\u30C3\u30D7"
   skill_infomatin: "\u9632\u5FA1\u529B\u30922.5\u500D\u3059\u308B"
+  _Priority: 3
   magic_Conditon_Origins:
   - type: 7
     condition_kind: 7
@@ -21,3 +22,4 @@ MonoBehaviour:
     conditons: 0
     magic_kind: 1
     effect_size: 2.5
+    effect_turn: 2

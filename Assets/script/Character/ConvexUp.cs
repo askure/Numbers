@@ -17,7 +17,7 @@ public class ConvexUp : MonoBehaviour
         card.atbuf = 0;
         card.dfbuf = 0;
         card.hpbuf = 0;
-        cmanager.Datasave(filepath);
+        cmanager.Datasave(cfilepath);
         CharacterManager character = new CharacterManager();
         character.SetText();
         Destroy(gameObject);

@@ -13,9 +13,10 @@ public class GameManger : MonoBehaviour
     [SerializeField] Transform Hand;
     [SerializeField] EnemyContoller Enemy;
     [SerializeField] Transform Enemys;
-    [SerializeField] EnemyAttackStatus statusat;
-    [SerializeField] EnemyDfStatus statusdf;
-    [SerializeField] PartyStatusManager pstatusdf;
+    [SerializeField] EnemyAttackStatus estatusat;
+    [SerializeField] EnemyDfStatus estatusdf;
+    [SerializeField] PartyDfStatusManager pstatusdf;
+    [SerializeField] PartyAtManager pstatusat;
     [SerializeField] GameView gameView;
     [SerializeField] GameObject buttleNumText;
     [SerializeField] GameObject gameOverPanel;
@@ -266,7 +267,7 @@ public class GameManger : MonoBehaviour
 
         LogTextView("Turn:" + TurnNum.ToString());
         //
-
+       
         
 
 
@@ -726,23 +727,20 @@ public class GameManger : MonoBehaviour
         {
             var _Origin = Skill.magic_Conditon_Origins[i];
             var effect = _Origin.effect_size;
+            bool check = EnemySkillCheck(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
+            if (!check) continue;
             switch (_Origin.type)
             {
                 case Skill_origin.Skill_type.constantAttack:
-                    double damage = OutPutEnemySkill(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
-                    if (effect < partydf && damage != 0) damage = 1;
-                    //partyHp -= (int)damage;
-                    PartyDamage = (int)damage;
-                   
-                    
+                     
+                    if (effect < partydf) PartyDamage = 1;
+                    else PartyDamage = (int) effect - partydf;       
                     break;
                 case Skill_origin.Skill_type.referenceAttack:
 
-                    damage = OutPutEnemySkill(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
-                    //enemyat = _enemy.model.initAt;
-                    if (damage < partydf && damage != 0) damage = 1;
-                    //partyHp -= (int)damage;
-                    PartyDamage = (int)damage;
+                    double damage = effect * enemyat;
+                    if (damage < partydf) PartyDamage = 1;
+                    else  PartyDamage = (int)damage - partydf;
 
 
                     break;
@@ -767,35 +765,51 @@ public class GameManger : MonoBehaviour
 
                 case Skill_origin.Skill_type.Heal_num:
                     var num = enemyNum;
-                    var e = OutPutEnemySkill(_Origin, enemyNum, effect, _Origin.condition_num, enemyHp, enemyNum);
-                    NotificationButtle.GetInstance().PutInQueue("<color=blue>" + (int)(e-num )+ "</color>");
-                    enemyNum = (int)e;
+                   
+                    NotificationButtle.GetInstance().PutInQueue("<color=blue>" + (int)(effect)+ "</color>");
+                    enemyNum +=(int)effect;
                     break;
                 case Skill_origin.Skill_type.damage:
                    
                     enemyHp -= (int)effect;
                     break;
                 case Skill_origin.Skill_type.IncreaseAttack:
-                     e = OutPutEnemySkill(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
+                    
                     //enemyat = (int)e;
+                    
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "攻撃力アップ!" + "</color>");
-                    var s = Instantiate(statusat);
-                    s.SetStatus((int)e,_Origin.effect_turn);
+                    var s = Instantiate(estatusat);
+                    if (_Origin.magic_kind == Skill_origin.MagicKind.add)
+                    {
+                        s.SetStatus(effect, _Origin.effect_turn, "Add");
+                    }
+                    else if (_Origin.magic_kind == Skill_origin.MagicKind.multi)
+                    {
+                        s.SetStatus(effect, _Origin.effect_turn, "Multi");
+                    }
 
 
                     break;
 
                     
                 case Skill_origin.Skill_type.IncreaseDefence:
-                     e = OutPutEnemySkill(_Origin, enemyDf, effect, _Origin.condition_num, enemyHp, enemyNum);
+                     
                     //enemyDf = (int)e;
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "防御力アップ!" + "</color>");
-                    var df = Instantiate(statusdf);
-                    df.SetStatus((int)e, _Origin.effect_turn);      
+                    var df = Instantiate(estatusdf);
+                    if(_Origin.magic_kind == Skill_origin.MagicKind.add)
+                    {
+                        df.SetStatus(effect, _Origin.effect_turn,"Add");
+                    }
+                    else if(_Origin.magic_kind == Skill_origin.MagicKind.multi)
+                    {
+                        df.SetStatus(effect, _Origin.effect_turn, "Multi");
+                    }
+                    
                     break;
                 case Skill_origin.Skill_type.NumDamage:
-                    e = OutPutEnemySkill(_Origin, enemyNum, effect, _Origin.condition_num, enemyHp, enemyNum);
-                    enemyNum = (int)e;
+
+                    enemyNum -= (int)effect;
                     if (enemyNum <= 0) enemyNum = 1;
                     break;
 
@@ -806,40 +820,31 @@ public class GameManger : MonoBehaviour
 
     }
 
-    double OutPutEnemySkill(Skill_origin.magic_conditon_origin _Origin, int param,double effect,int conditionNum,int enemyHp,int enemyNum)
+    bool EnemySkillCheck(Skill_origin.magic_conditon_origin _Origin, int param,double effect,int conditionNum,int enemyHp,int enemyNum)
     {
         var conditonKind = _Origin.condition_kind;
-        switch ((int)conditonKind)
+        switch (conditonKind)
         {
-            case 5:
-                if (enemyHp < conditionNum) return param;
+            case Skill_origin.Magic_condition_kind.Hp_up :
+                if (enemyHp < conditionNum) return false;
                 break;
-            case 6:
-                if (enemyHp >= conditionNum) return param;
+            case Skill_origin.Magic_condition_kind.Hp_down:
+                if (enemyHp >= conditionNum) return false;
                 break;
-            case (int)Skill_origin.Magic_condition_kind.none:
+            case Skill_origin.Magic_condition_kind.none:
 
                 break;
-            case 9:
-                if (enemyNum < (double) MAX_NUMBA*conditionNum/100) return param;
+            case Skill_origin.Magic_condition_kind.Num_up:
+                if (enemyNum < (double) MAX_NUMBA*conditionNum/100) return false;
 
                 break;
-            case 10:
-                if (enemyNum >= (double)MAX_NUMBA * conditionNum / 100) return param;
+            case Skill_origin.Magic_condition_kind.Num_down:
+                if (enemyNum >= (double)MAX_NUMBA * conditionNum / 100) return false;
                 break;
-            default: return 0;
+            default: return false;
         }
-        switch ((int)_Origin.magic_kind)
-        {
-            case 0:
-                return  param + effect;
-            case 1:
-                var x = param * (effect);
-                return x;
-            case 2:
-                return  param-effect;
-        }
-        return 0;
+        return true;
+        
     }
     
     List<CardController> BufApplication(List<CardController> cards)
@@ -1034,7 +1039,7 @@ public class GameManger : MonoBehaviour
         return 0;
     }
 
-    void AutoSkill(List<CardController> cards,ref double persuit,ref double enemyNum,ref double enemyDf,ref int teamHeal)
+    void AutoSkill(List<CardController> cards,ref double persuit,ref EnemyModel enemy,ref int teamHeal)
     {   
         List<int> nums = new List<int>();
         foreach(CardController card in cards)
@@ -1058,49 +1063,76 @@ public class GameManger : MonoBehaviour
                 var conditionNum = _Origin.condition_num;
                 var conditons = _Origin.conditons;
                 var effect = _Origin.effect_size;
-                
-                switch ((int)type)
+                autoInvocation = AutoSkillCheck(conditonKind, conditionNum, conditons, nums, hpSum, sum);
+                if (!autoInvocation) continue;
+                switch (type)
                 {
 
-                    case 2: // NumDamage
-                        autoInvocation = OutPutAutoSkillEffect(ref enemyNum, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
-                       
+                    case Skill_origin.Skill_type.NumDamage: // NumDamage
+                        if(magicKind == Skill_origin.MagicKind.add)
+                        {
+                            enemy.numba -= (int)effect;
+                        }
+                        else if(magicKind == Skill_origin.MagicKind.multi)
+                        {
+                            double temp = enemy.numba * effect;
+                            enemy.numba = (int)temp;
+                        }
                         break;
-                    case 3: // Heal_Hp
-                        double x =0;
-                        autoInvocation = OutPutAutoSkillEffect(ref x, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
+                    case Skill_origin.Skill_type.Heal_Hp: // Heal_Hp
                         var heal =  effect * Mathf.Log(card.model.at,8)/3;
-                        if (autoInvocation) teamHeal = (int)heal;
+                        teamHeal = (int)heal;
                      
 
                        // StartCoroutine ( ButtleAnimation(0));
                         break;
-                    case 6: //IncreaceAttack
+                    case Skill_origin.Skill_type.IncreaseAttack: //IncreaceAttack
                         double at = card.model.at;
-                        autoInvocation = OutPutAutoSkillEffect(ref at, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
                         card.model.at = (int)at;
-                        //int effectsizeat = (int)(at * effect);
-                        //Instantiate(pstatusdf).SetStatus(effectsizeat, 1, "A");
+                        if (magicKind == Skill_origin.MagicKind.add)
+                        {
+                            Instantiate(pstatusat).SetStatusAt(effect, 1, "Add");
+                        }
+                        else if (magicKind == Skill_origin.MagicKind.multi)
+                        {
+                            Instantiate(pstatusat).SetStatusAt(effect, 1, "Multi");
+                        }
 
                         break;
-                    case 7: // IncreaceDefence
-                        double df = card.model.df;
-                        autoInvocation = OutPutAutoSkillEffect(ref df, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
-                        //int effectsizedf = (int)(df * effect);
-                        //Instantiate(pstatusdf).SetStatus(effectsizedf, 1, "D");
-                        card.model.df = (int)df;
+                    case Skill_origin.Skill_type.IncreaseDefence: // IncreaceDefence
+                        if (magicKind == Skill_origin.MagicKind.add)
+                        {
+                            Instantiate(pstatusdf).SetStatusDf(effect, 1, "Add");
+                        }
+                        else if (magicKind == Skill_origin.MagicKind.multi)
+                        {
+                            Instantiate(pstatusdf).SetStatusDf(effect, 1, "Multi");
+                        }
                         break;
-                    case 10: //Pursuit
-                        autoInvocation = OutPutAutoSkillEffect(ref persuit, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
-
+                    case Skill_origin.Skill_type.Pursuit: //Pursuit
+                        persuit += effect;
                         break;
-                    case 11: //Num up
-                        double num = sum;                  
-                        autoInvocation = OutPutAutoSkillEffect(ref num, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
-                        sum = (int)num;
+                    case Skill_origin.Skill_type.NumUp: //Num up
+                        if (magicKind == Skill_origin.MagicKind.add)
+                        {
+                            sum += (int)effect;
+                        }
+                        else if (magicKind == Skill_origin.MagicKind.multi)
+                        {
+                            double temp = sum * effect;
+                            sum = (int)temp;
+                        }
                         break;
-                    case 12:
-                        autoInvocation = OutPutAutoSkillEffect(ref enemyDf, magicKind, effect, conditonKind, conditionNum, conditons, nums, hpSum, sum);
+                    case Skill_origin.Skill_type.decreaseDefence :
+                        if (magicKind == Skill_origin.MagicKind.add)
+                        {
+                            Instantiate(estatusdf).SetStatus(effect, 1,"Add");
+                        }
+                        else if (magicKind == Skill_origin.MagicKind.multi)
+                        {
+                            Instantiate(estatusdf).SetStatus(effect, 1,"Multi");
+                        }
+                        
                         break;
                     default:
                         break;
@@ -1142,7 +1174,7 @@ public class GameManger : MonoBehaviour
         temps.AddRange(attack);
         return temps;
     }
-    public bool OutPutAutoSkillEffect(ref double param, Skill_origin.MagicKind magicKind, double effrct, Skill_origin.Magic_condition_kind condition_Kind, int conditionNum,int conditons, List<int> cardNums, int hpSum,int numSum)
+    public bool AutoSkillCheck( Skill_origin.Magic_condition_kind condition_Kind, int conditionNum,int conditons, List<int> cardNums, int hpSum,int numSum)
     {
         int x = 0;
        
@@ -1212,19 +1244,7 @@ public class GameManger : MonoBehaviour
             }
             if (x < conditons) return false;
         }
-        switch((int)magicKind)
-        {
-            case 0:
-                param += effrct;
-                break;
-            case 1:
-                param *= effrct;
-                break;
-            case 2:
-                param -= effrct;
-                break;
-
-        }
+        
         return true;
     }
     //ButtleMain
@@ -1240,7 +1260,7 @@ public class GameManger : MonoBehaviour
         int damage = 0;
         int teamHeal = 0;
         int teamDamage = 0;
-        AutoSkill(cardlist, ref pesuit, ref enemyNum,ref enemyDf,ref teamHeal);
+        AutoSkill(cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
         partyDf = Df(_hand);
         if (teamHeal != 0) animations.Add(1);
         _enemy.model.numba = (int)enemyNum;
@@ -1361,7 +1381,7 @@ public class GameManger : MonoBehaviour
             AddLogText("YOU WIN");
             aveTurn += TurnNum;
             enemysexp += _enemy.model._exp;
-            if (ButtleNum != CrectmapManager.enemy.Count)
+            if ((CrectmapManager.enemy != null) && ButtleNum != CrectmapManager.enemy.Count)
             {
                 animations.Add(8); //NextStage
                 StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal));

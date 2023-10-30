@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class CharacterDataManager : MonoBehaviour
+public class CharacterDataManager 
 {
     public CharacterData.CardLv[] cardLvs { set; get; } = null;
     public List<CharacterData.DeckCard> deck { set; get; } = new List<CharacterData.DeckCard>();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyModel : MonoBehaviour
+public class EnemyModel 
 {
     public int enemyID;
     public int Hp;
@@ -13,7 +13,7 @@ public class EnemyModel : MonoBehaviour
     public int initDf;
     public int numba;
     public int _exp;
-    public new string name;
+    public string name;
     public Sprite icon;
     public List<Skill_origin> skilllist;
     public List<int> skillTable;

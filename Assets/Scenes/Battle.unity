@@ -2314,9 +2314,10 @@ MonoBehaviour:
   Hand: {fileID: 641450681}
   Enemy: {fileID: 4838628577706830281, guid: 46096faf41bf31d4b90baf23cf3b68fa, type: 3}
   Enemys: {fileID: 536003707}
-  statusat: {fileID: 6718781753898081121, guid: e0846789fabb7414e965d8f5a9609ddc, type: 3}
-  statusdf: {fileID: 2996137943319480217, guid: 5f6f8c0d26608f6489d5cfbe8dae478b, type: 3}
-  pstatusdf: {fileID: -6647460910322374154, guid: af26c22e4ccf58849a9ac31bfda212b5, type: 3}
+  estatusat: {fileID: 6718781753898081121, guid: e0846789fabb7414e965d8f5a9609ddc, type: 3}
+  estatusdf: {fileID: 2996137943319480217, guid: 5f6f8c0d26608f6489d5cfbe8dae478b, type: 3}
+  pstatusdf: {fileID: 631297557387908583, guid: af26c22e4ccf58849a9ac31bfda212b5, type: 3}
+  pstatusat: {fileID: 4138772669648189265, guid: 9112230db161cce47a9d63ef972baee5, type: 3}
   gameView: {fileID: 814453525}
   buttleNumText: {fileID: 2073113328}
   gameOverPanel: {fileID: 5627129285687246129, guid: 9b80574a834a9ef4f8b76b93ca09abc2, type: 3}

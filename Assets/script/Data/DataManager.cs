@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class DataManager
 {
 
     public DataManager(string s)

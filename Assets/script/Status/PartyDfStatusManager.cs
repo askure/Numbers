@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyStatusManager : MonoBehaviour
+public class PartyDfStatusManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    int EffectTurn = 3;
     int FinishTurn;
-    int effect;
+    double effect;
     int index;
     static public int statusNum = 0;
     string mode;
     bool flag = false;
     Transform parent;
-    [SerializeField] GameObject UpAtImage, UpDfImage, DownAtImage,DownDfImage;
+    [SerializeField] GameObject UpDfImage,DownDfImage;
     GameObject ImageGameObject;
+    [SerializeField]PartyDfStatus partyDf;
 
 
     // Update is called once per frame
@@ -32,12 +32,7 @@ public class PartyStatusManager : MonoBehaviour
             {
                 var child = parent.GetChild(i);
                 if (child.gameObject.CompareTag("status")) continue;
-                var model = child.GetComponent<CardController>().model;
-               
-                if (mode == "D")
-                    model.df += effect;
-                else if (mode == "A")
-                    model.at += effect;
+                Instantiate(partyDf).SetStatus(effect, FinishTurn, child.gameObject,mode);
             }
         }
         
@@ -45,10 +40,11 @@ public class PartyStatusManager : MonoBehaviour
     }
 
 
-    public void SetStatus(int effect, int turn,string mode)
+    public void SetStatusDf(double effect, int turn,string mode)
     {   
         this.effect = effect;
         this.mode = mode;
+        this.FinishTurn = GameManger.TurnNum + turn;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
@@ -57,35 +53,28 @@ public class PartyStatusManager : MonoBehaviour
             var child = parent.GetChild(i);
             if (child.gameObject.CompareTag("status")) {
                 continue;
-            } 
-            var  model = child.GetComponent<CardController>().model;
-            
-            if (mode == "D")
-                model.df += effect;
-            else if (mode == "A")
-                model.at += effect;
+            }
+            Instantiate(partyDf).SetStatus(effect, FinishTurn, child.gameObject, mode);
         }
         
-        EffectTurn = turn;
-        FinishTurn = GameManger.TurnNum + EffectTurn;
+   
         var pos = GameObject.Find("StatusList").transform;
-        if(mode == "D" && effect > 0)
+        if(mode == "Multi" && effect >1)
         {
             ImageGameObject = Instantiate(UpDfImage, pos);
         }
-        if(mode == "D" && effect < 0)
+        if(mode == "Multi" && effect < 1)
         {
             ImageGameObject = Instantiate(DownDfImage, pos);
         }
-        if(mode == "A" &&effect > 0)
+        if(mode == "Add" &&effect > 0)
         {
-            ImageGameObject = Instantiate(UpAtImage, pos);
+            ImageGameObject = Instantiate(UpDfImage, pos);
         }
-        if(mode == "A" && effect < 0)
+        if(mode == "Add" && effect < 0)
         {
-            ImageGameObject = Instantiate(DownAtImage, pos);
+            ImageGameObject = Instantiate(DownDfImage, pos);
         }
-        Debug.Log(effect);
         flag = true;
         statusNum++;
         index = parent.childCount - statusNum;
@@ -93,7 +82,7 @@ public class PartyStatusManager : MonoBehaviour
     }
     public void StatusReset()
     {
-        for (int i = 0; i < parent.childCount; i++)
+        /*for (int i = 0; i < parent.childCount; i++)
         {
         
             var child = parent.GetChild(i);
@@ -104,7 +93,7 @@ public class PartyStatusManager : MonoBehaviour
                 model.df -= effect;
             else if (mode == "A")
                 model.at -= effect;
-        }
+        }*/
         statusNum--;
         Destroy(ImageGameObject);
         Destroy(gameObject);

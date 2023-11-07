@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardModel : MonoBehaviour
+
+public class CardModel 
 {
     public int cardID;
     public bool advent;
@@ -15,7 +16,7 @@ public class CardModel : MonoBehaviour
     public int num;
     public int firstExp;
     public int stageNum;
-    public new string name;
+    public string name;
     public string rare;
     public int Lv;
     public Sprite icon;

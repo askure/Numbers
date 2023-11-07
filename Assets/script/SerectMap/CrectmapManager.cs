@@ -89,16 +89,15 @@ public class CrectmapManager : MonoBehaviour
         filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         DataManager manger = new DataManager();
         manger.StageDataLoad(filepath);
-        
         eventSystem = EventSystem.current;
         panel = GameObject.Find("Panel");
         anime = panel.GetComponent<Animator>();
         var g = eventSystem.currentSelectedGameObject;
-        var buttonui = g.transform.parent.GetComponent<ButtonUi>();
+        var buttonui = g.GetComponent<ButtonUi>();
         var stage = buttonui.GetStage();
-        var stagenameText = panel.transform.GetChild(0).GetComponent<Text>();
+        var stagenameText = panel.transform.GetChild(1).GetComponent<Text>();
         panel.transform.GetChild(1).GetComponent<Text>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
-        var stageinfoText = panel.transform.GetChild(2).GetComponent<Text>();
+        var stageinfoText = panel.transform.GetChild(3).GetComponent<Text>();
         stagenameText.text = stage.stageName;
         var gifts = stage.gifts;
         var giftText = GiftTostring(gifts);
@@ -108,14 +107,15 @@ public class CrectmapManager : MonoBehaviour
             stageinfo += s + "\n";
         }
         stageinfoText.text =   "[バトル数]" + stage.buttleNum.ToString() + "\n[情報]\n" + stageinfo +  "[報酬]\n"  + giftText + "\n" ;
-
-
-        if (gameobj == g)
+        anime.SetBool("flag", true);
+        anime.SetBool("Infoanimebl", false);
+        /*if (gameobj == g)
         {
             anime.SetBool("Infoanimebl", true);
             anime.SetBool("x", false);
             anime.SetBool("flag", false);
             gameobj = null;
+      
         }
         else if(gameobj == null)
         {
@@ -130,8 +130,16 @@ public class CrectmapManager : MonoBehaviour
             anime.SetBool("x", false);
             anime.SetBool("Infoanimebl", false);
             gameobj = g;
-        }
+        }*/
 
+    }
+
+    public void ClosePanel()
+    {   
+        anime = GameObject.Find("Panel").GetComponent<Animator>();
+        anime.SetBool("Infoanimebl", true);
+        anime.SetBool("x", false);
+        anime.SetBool("flag", false);
     }
 
     public void StartStage()

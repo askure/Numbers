@@ -36,8 +36,9 @@ public class Onclick : MonoBehaviour
 
     public void UpCard()
     {
-       
-        if(Color_obj.alpha == 0f)
+        if (!GameManger.Myturn) return;
+
+        if (Color_obj.alpha == 0f)
         {
             if (GameManger.decide_num == 4) return;
             var x =transform.position.x;
@@ -124,7 +125,7 @@ public class Onclick : MonoBehaviour
             var color = card.transform.GetChild(2).GetComponent<CanvasGroup>().alpha;
             var Text = cardText.transform.GetChild(0).GetComponent<Text>();
             Text.text = card.GetComponent<CardController>().model.name;
-            var auto = AutoSKillFlag(GameManger.instnce.GetUpCard(), card.GetComponent<CardController>());
+            bool auto = AutoSKillFlag(GameManger.instnce.GetUpCard(), card.GetComponent<CardController>());
 
             if (color == 0.5f && auto) Text.color = new Color(0, 0, 255);
             else if(color == 0.5f && !auto) Text.color = new Color(255, 0, 0);
@@ -151,7 +152,6 @@ public class Onclick : MonoBehaviour
             nums.Add(x.model.num);
         }
         var auto = card.model.PublicSkill;
-        var cardNum = card.model.num;
         var skillOrigin = auto.magic_Conditon_Origins;
         var SkillLength = skillOrigin.Count;
         if (SkillLength == 0) return false;
@@ -165,7 +165,7 @@ public class Onclick : MonoBehaviour
             var conditionNum = _Origin.condition_num;
             var conditons = _Origin.conditons;
             var effect = _Origin.effect_size;
-            autoInvocation[index] = gameManger.OutPutAutoSkillEffect(ref effect, magicKind, 0, conditonKind, conditionNum, conditons, nums, GameManger.hpSum, GameManger.sum);
+            autoInvocation[index] = gameManger.AutoSkillCheck( conditonKind, conditionNum, conditons, nums, GameManger.hpSum, GameManger.sum);
             index++;
 
         }

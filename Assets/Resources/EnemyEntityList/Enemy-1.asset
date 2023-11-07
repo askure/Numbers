@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyId: -1
   name: "\u30C6\u30B9\u30C8"
-  numba: 17
-  Hp: 650000
+  numba: 1
+  Hp: 999999999
   at: 1
   df: 1
   _exp: 1

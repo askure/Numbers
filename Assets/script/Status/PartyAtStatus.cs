@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyDfStatus : MonoBehaviour
-{   
-   
+public class PartyAtStatus : MonoBehaviour
+{
+
     int FinishTurn;
     double effect;
     string mode;
@@ -13,32 +13,32 @@ public class PartyDfStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        if(GameManger.TurnNum >=FinishTurn)
+
+        if (GameManger.TurnNum >= FinishTurn)
         {
             StatusReset();
         }
-        
+
     }
 
-    //防御力アップ(引数は効果量)
-    public void SetStatus(double effect,int turn,GameObject card,string mode)
+    //攻撃力アップ
+    public void SetStatus(double effect, int turn, GameObject card, string mode)
     {
         if (card == null) return;
         transform.parent = card.transform;
-       
+
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
         this.mode = mode;
-        if(mode == "Multi")
+        if (mode == "Multi")
         {
-            double temp = model.df * effect;
-            model.df *= (int)temp;
+            double temp = model.at * effect;
+            model.at *= (int)temp;
         }
-        else if(mode == "Add")
+        else if (mode == "Add")
         {
-            double temp = model.df + effect;
-            model.df += (int)temp;
+            double temp = model.at + effect;
+            model.at += (int)temp;
         }
         FinishTurn = turn;
     }
@@ -47,13 +47,13 @@ public class PartyDfStatus : MonoBehaviour
         Debug.Log("end");
         if (mode == "Multi")
         {
-            double temp = model.df / effect;
-            model.df = (int)temp;
+            double temp = model.at / effect;
+            model.at = (int)temp;
         }
         else if (mode == "Add")
         {
-            double temp = model.df - effect;
-            model.df = (int)temp;
+            double temp = model.at - effect;
+            model.at = (int)temp;
         }
         Destroy(gameObject);
     }

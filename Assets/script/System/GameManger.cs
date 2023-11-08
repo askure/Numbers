@@ -1554,6 +1554,7 @@ public class GameManger : MonoBehaviour
 
     IEnumerator GameOverAnimation()
     {
+        
         BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         BGMManager.FadeOut();
         var panel = Instantiate(gameOverPanel, gameOverPanelTrance);
@@ -1565,6 +1566,7 @@ public class GameManger : MonoBehaviour
     {
        // BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         BGMManager.FadeOut();
+        ButtleNum = 0;
         var panel = Instantiate(gameOverPanel, gameOverPanelTrance);
         panel.GetComponent<Animator>().enabled = true;
     }

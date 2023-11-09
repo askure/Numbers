@@ -6,6 +6,7 @@ public class PartyDfStatus : MonoBehaviour
 {   
    
     int FinishTurn;
+    int beforebuf;
     double effect;
     string mode;
     CardModel model;
@@ -30,22 +31,24 @@ public class PartyDfStatus : MonoBehaviour
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
         this.mode = mode;
+        this.beforebuf = model.df;
         if(mode == "Multi")
         {
             double temp = model.df * effect;
-            model.df *= (int)temp;
+            model.df = (int)temp;
         }
         else if(mode == "Add")
         {
             double temp = model.df + effect;
-            model.df += (int)temp;
+            model.df = (int)temp;
         }
         FinishTurn = turn;
     }
     public void StatusReset()
     {
         Debug.Log("end");
-        if (mode == "Multi")
+        model.df = beforebuf;
+        /*if (mode == "Multi")
         {
             double temp = model.df / effect;
             model.df = (int)temp;
@@ -54,7 +57,7 @@ public class PartyDfStatus : MonoBehaviour
         {
             double temp = model.df - effect;
             model.df = (int)temp;
-        }
+        }*/
         Destroy(gameObject);
     }
 }

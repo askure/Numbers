@@ -6,6 +6,7 @@ public class PartyAtStatus : MonoBehaviour
 {
 
     int FinishTurn;
+    int beforebuf;
     double effect;
     string mode;
     CardModel model;
@@ -30,22 +31,24 @@ public class PartyAtStatus : MonoBehaviour
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
         this.mode = mode;
+        this.beforebuf = model.at;
         if (mode == "Multi")
         {
             double temp = model.at * effect;
-            model.at *= (int)temp;
+            model.at = (int)temp;
         }
         else if (mode == "Add")
         {
             double temp = model.at + effect;
-            model.at += (int)temp;
+            model.at = (int)temp;
         }
         FinishTurn = turn;
     }
     public void StatusReset()
     {
         Debug.Log("end");
-        if (mode == "Multi")
+        model.at = beforebuf;
+        /*if (mode == "Multi")
         {
             double temp = model.at / effect;
             model.at = (int)temp;
@@ -54,7 +57,7 @@ public class PartyAtStatus : MonoBehaviour
         {
             double temp = model.at - effect;
             model.at = (int)temp;
-        }
+        }*/
         Destroy(gameObject);
     }
 }

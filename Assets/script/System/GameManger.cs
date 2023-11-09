@@ -1260,7 +1260,9 @@ public class GameManger : MonoBehaviour
         int damage = 0;
         int teamHeal = 0;
         int teamDamage = 0;
+       
         AutoSkill(cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
+       
         partyDf = Df(_hand);
         if (teamHeal != 0) animations.Add(1);
         _enemy.model.numba = (int)enemyNum;

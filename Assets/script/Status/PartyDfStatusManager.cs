@@ -25,7 +25,7 @@ public class PartyDfStatusManager : MonoBehaviour
         {
             StatusReset();
         }
-        if (parent.childCount > (index+statusNum) && flag)
+        /*if (parent.childCount > (index+statusNum) && flag)
         {
             var addCount = parent.childCount - statusNum - index;
             for(int i = parent.childCount-addCount; i< parent.childCount; i++)
@@ -34,8 +34,22 @@ public class PartyDfStatusManager : MonoBehaviour
                 if (child.gameObject.CompareTag("status")) continue;
                 Instantiate(partyDf).SetStatus(effect, FinishTurn, child.gameObject,mode);
             }
+        }*/
+        if (GameManger.handchange)
+        {
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                var child = parent.GetChild(i);
+                if (child.gameObject.CompareTag("status")) continue;
+                if (child.Find("partydf") == null)
+                {
+                    var g = Instantiate(partyDf);
+                    g.SetStatus(effect, FinishTurn, child.gameObject, mode);
+                    g.name = "partydf";
+                }
+            }
+            
         }
-        
        
     }
 
@@ -54,7 +68,10 @@ public class PartyDfStatusManager : MonoBehaviour
             if (child.gameObject.CompareTag("status")) {
                 continue;
             }
-            Instantiate(partyDf).SetStatus(effect, FinishTurn, child.gameObject, mode);
+
+            var g = Instantiate(partyDf);
+            g.SetStatus(effect, FinishTurn, child.gameObject, mode);
+            g.name = "partydf";
         }
         
    

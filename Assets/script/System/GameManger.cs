@@ -89,6 +89,7 @@ public class GameManger : MonoBehaviour
     public static int aveTurn;
     public static int enemysexp;
     public static bool finish;
+    public static bool handchange = false;
      
     
 
@@ -666,7 +667,7 @@ public class GameManger : MonoBehaviour
         }
 
         decide_num = 0;
-        
+        handchange = true;
         return _card;
     }
 
@@ -1063,6 +1064,7 @@ public class GameManger : MonoBehaviour
                 var conditionNum = _Origin.condition_num;
                 var conditons = _Origin.conditons;
                 var effect = _Origin.effect_size;
+                var effectturn = _Origin.effect_turn;
                 autoInvocation = AutoSkillCheck(conditonKind, conditionNum, conditons, nums, hpSum, sum);
                 if (!autoInvocation) continue;
                 switch (type)
@@ -1091,22 +1093,22 @@ public class GameManger : MonoBehaviour
                         card.model.at = (int)at;
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(pstatusat).SetStatusAt(effect, 1, "Add");
+                            Instantiate(pstatusat).SetStatusAt(effect, effectturn, "Add");
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(pstatusat).SetStatusAt(effect, 1, "Multi");
+                            Instantiate(pstatusat).SetStatusAt(effect, effectturn, "Multi");
                         }
 
                         break;
                     case Skill_origin.Skill_type.IncreaseDefence: // IncreaceDefence
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(pstatusdf).SetStatusDf(effect, 1, "Add");
+                            Instantiate(pstatusdf).SetStatusDf(effect, effectturn, "Add");
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(pstatusdf).SetStatusDf(effect, 1, "Multi");
+                            Instantiate(pstatusdf).SetStatusDf(effect, effectturn, "Multi");
                         }
                         break;
                     case Skill_origin.Skill_type.Pursuit: //Pursuit

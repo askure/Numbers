@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class PartyManager : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] CardController deckCard;
-    [SerializeField] GameObject newDeck,go;
+    [SerializeField] GameObject newDeck,go,toquest;
     [SerializeField] Transform lineUp, lineDown;
     [SerializeField] Text mapname, stagename, rskill, rskillinfo,pagetext;
     CharacterDataManager manager;
     bool first = false;
     string filepath;
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         var filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
@@ -27,8 +32,10 @@ public class PartyManager : MonoBehaviour
     }
 
     public void Init(string mapname,string stagename)
-    {   
+    {
+    
         ALLDestory();
+        toquest.SetActive(false);
         if (!first)
         {
            filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
@@ -114,10 +121,30 @@ public class PartyManager : MonoBehaviour
     {
         manager.Datasave(filepath);
         GameObject.Find("QuestManager").GetComponent<CrectmapManager>().StartStage();
+        CardEditManager.toqest = false;
         Destroy(gameObject);
     }
+    public void OpenToQuestPanel()
+    {
+        manager.Datasave(filepath);
+        CardEditManager.toqest = true;
+        toquest.SetActive(true);
+    }
+
+    public void LoadDeckEdit()
+    {
+        
+        SceneManager.LoadSceneAsync("DeckEdit");
+    }
+    public void CloseToQuestPanel()
+    {
+        CardEditManager.toqest = false;
+        toquest.SetActive(false);
+    }
+
     public void ClosePanel()
     {
+        CardEditManager.toqest = false;
         Destroy(gameObject);
     }
 }

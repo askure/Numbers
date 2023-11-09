@@ -82,6 +82,10 @@ public class CrectmapManager : MonoBehaviour
             //bgmobj.GetComponent<BGMManager>().Play();
 
         }
+        if (CardEditManager.toqest)
+        {
+            CreatePartyList();
+        }
 
     }
 

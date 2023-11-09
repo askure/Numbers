@@ -120,7 +120,8 @@ public class Onclick : MonoBehaviour
         int index = 0;
         var sum = GameManger.sum;
         foreach (GameObject card in _hand)
-        {
+        {   
+            if(card.CompareTag("status")) continue;
             var cardText = Panel.transform.GetChild(index);
             var color = card.transform.GetChild(2).GetComponent<CanvasGroup>().alpha;
             var Text = cardText.transform.GetChild(0).GetComponent<Text>();

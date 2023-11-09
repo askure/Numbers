@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CardEditManager : MonoBehaviour
@@ -23,7 +24,7 @@ public class CardEditManager : MonoBehaviour
     static public  List<CardController> nowDeckCard;
     static CharacterDataManager cmanager;
     static DataManager dmanager;
-    
+    public static bool toqest;
     PopupCardView popup;
    
     string cfilepath,dfilepath;
@@ -47,6 +48,7 @@ public class CardEditManager : MonoBehaviour
         string  mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         dmanager.StageDataLoad(mapfilepath);
         cardLv = cmanager.cardLvs;
+        partyNum = cmanager.sortiePartyNum;
        // partyNum = 0;
        // cardListNum = 0;
         Setupobject();
@@ -55,6 +57,11 @@ public class CardEditManager : MonoBehaviour
         stopCheckpanel.SetActive(false);
         deleteChackPanel.SetActive(false);
         Edit = false;
+        if (toqest)
+        {
+            EditButton();
+        }
+
     }
 
     void Setupobject()
@@ -164,11 +171,15 @@ public class CardEditManager : MonoBehaviour
         cmanager.Datasave(cfilepath);
         InitDaeckData();
         cmanager = new CharacterDataManager(cfilepath);
-  
         CreateDeck(partyNum);
         CheckSerected();
         Notification.GetInstance().PutInQueue("•Û‘¶‚µ‚Ü‚µ‚½");
         Edit = false;
+        if (toqest)
+        {
+            SceneManager.LoadSceneAsync("Quest");
+        }
+
     }
     public void NextPage()
     {

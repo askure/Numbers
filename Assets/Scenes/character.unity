@@ -990,6 +990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Bonus
+  changeBGM: 0
 --- !u!114 &637668785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,6 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Home
+  changeBGM: 0
 --- !u!114 &1056515181
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class CrectmapManager : MonoBehaviour
     [SerializeField] GameObject BeforeStageButton;
     [SerializeField] GameObject AfterStageButton;
     [SerializeField] SpriteRenderer back;
+    [SerializeField] PartyManager party;
 
     Animator anime;
     GameObject gameobj;
@@ -81,6 +82,10 @@ public class CrectmapManager : MonoBehaviour
             //bgmobj.GetComponent<BGMManager>().Play();
 
         }
+        if (CardEditManager.toqest)
+        {
+            CreatePartyList();
+        }
 
     }
 
@@ -94,7 +99,7 @@ public class CrectmapManager : MonoBehaviour
         anime = panel.GetComponent<Animator>();
         var g = eventSystem.currentSelectedGameObject;
         var buttonui = g.GetComponent<ButtonUi>();
-        var stage = buttonui.GetStage();
+        stage = buttonui.GetStage();
         var stagenameText = panel.transform.GetChild(1).GetComponent<Text>();
         panel.transform.GetChild(1).GetComponent<Text>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
         var stageinfoText = panel.transform.GetChild(3).GetComponent<Text>();
@@ -141,7 +146,12 @@ public class CrectmapManager : MonoBehaviour
         anime.SetBool("x", false);
         anime.SetBool("flag", false);
     }
-
+    public void CreatePartyList()
+    {
+        var canvas = GameObject.Find("Canvas");
+        var g = Instantiate(party, canvas.transform);
+        g.Init(MapManager.stageName, stage.stageName);
+    }
     public void StartStage()
     {
         sortiePartyPanel.SetActive(false);

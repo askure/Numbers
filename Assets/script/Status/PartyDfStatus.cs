@@ -47,8 +47,8 @@ public class PartyDfStatus : MonoBehaviour
     public void StatusReset()
     {
         Debug.Log("end");
-        model.df = beforebuf;
-        /*if (mode == "Multi")
+        
+        if (mode == "Multi")
         {
             double temp = model.df / effect;
             model.df = (int)temp;
@@ -57,7 +57,7 @@ public class PartyDfStatus : MonoBehaviour
         {
             double temp = model.df - effect;
             model.df = (int)temp;
-        }*/
+        }
         Destroy(gameObject);
     }
 }

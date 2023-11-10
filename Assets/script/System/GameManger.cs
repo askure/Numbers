@@ -729,6 +729,7 @@ public class GameManger : MonoBehaviour
             var _Origin = Skill.magic_Conditon_Origins[i];
             var effect = _Origin.effect_size;
             bool check = EnemySkillCheck(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
+            var magicKind = _Origin.magic_kind;
             if (!check) continue;
             switch (_Origin.type)
             {
@@ -814,7 +815,37 @@ public class GameManger : MonoBehaviour
                     if (enemyNum <= 0) enemyNum = 1;
                     break;
 
-               
+                case Skill_origin.Skill_type.decreaseDefence:
+                    if (magicKind == Skill_origin.MagicKind.add)
+                    {
+                        var g = Instantiate(pstatusdf);
+                        g.SetStatusDf(effect,_Origin.effect_turn, "Add", _enemy.model.name);
+                        g.name = "DfManager";
+                    }
+                    else if (magicKind == Skill_origin.MagicKind.multi)
+                    {
+                        var g = Instantiate(pstatusdf);
+                        g.SetStatusDf(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
+                        g.name = "DfManager";
+                    }
+                    break;
+
+                case Skill_origin.Skill_type.decreaseAttack:
+                    
+                    if (magicKind == Skill_origin.MagicKind.add)
+                    {
+                        var g = Instantiate(pstatusat);
+                        g.SetStatusAt(effect, _Origin.effect_turn, "Add", _enemy.model.name);
+                        g.name = "AtManager";
+                    }
+                    else if (magicKind == Skill_origin.MagicKind.multi)
+                    {
+                        var g = Instantiate(pstatusat);
+                        g.SetStatusAt(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
+                        g.name = "AtManager";
+                    }
+                    break;
+
 
             }
         }

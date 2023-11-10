@@ -46,7 +46,7 @@ public class EnemyDfStatus : MonoBehaviour
     }
     public void StatusReset()
     {
-        /*if (mode == "Multi")
+        if (mode == "Multi")
         {
             double temp = model.df / effect;
             model.df = (int)temp;
@@ -56,8 +56,7 @@ public class EnemyDfStatus : MonoBehaviour
             double temp = model.df - effect;
             model.df = (int)temp;
         }
-        if (model.df < 1) model.df = 1;*/
-        model.df = beforbuf;
+        if (model.df < 1) model.df = 1;
         Destroy(gameObject);
     }
 }

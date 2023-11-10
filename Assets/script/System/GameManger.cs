@@ -1093,22 +1093,30 @@ public class GameManger : MonoBehaviour
                         card.model.at = (int)at;
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(pstatusat).SetStatusAt(effect, effectturn, "Add");
+                            var g = Instantiate(pstatusat);
+                            g.SetStatusAt(effect, effectturn, "Add", card.model.name);
+                            g.name = "AtManager";
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(pstatusat).SetStatusAt(effect, effectturn, "Multi");
+                            var g = Instantiate(pstatusat);
+                            g.SetStatusAt(effect, effectturn, "Multi", card.model.name);
+                            g.name = "AtManager";
                         }
 
                         break;
                     case Skill_origin.Skill_type.IncreaseDefence: // IncreaceDefence
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(pstatusdf).SetStatusDf(effect, effectturn, "Add");
+                            var g = Instantiate(pstatusdf);
+                            g.SetStatusDf(effect, effectturn, "Add",card.model.name);
+                            g.name = "DfManager";
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(pstatusdf).SetStatusDf(effect, effectturn, "Multi");
+                            var g = Instantiate(pstatusdf);
+                            g.SetStatusDf(effect, effectturn, "Multi",card.model.name);
+                            g.name = "DfManager";
                         }
                         break;
                     case Skill_origin.Skill_type.Pursuit: //Pursuit

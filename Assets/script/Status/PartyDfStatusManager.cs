@@ -9,11 +9,11 @@ public class PartyDfStatusManager : MonoBehaviour
     double effect;
     int index;
     static public int statusNum = 0;
-    string mode;
+    string mode,cname, effecttext;
     bool flag = false;
     Transform parent;
     [SerializeField] GameObject UpDfImage,DownDfImage;
-    GameObject ImageGameObject;
+    GameObject ImageGameObject,node;
     [SerializeField]PartyDfStatus partyDf;
 
 
@@ -54,10 +54,11 @@ public class PartyDfStatusManager : MonoBehaviour
     }
 
 
-    public void SetStatusDf(double effect, int turn,string mode)
+    public void SetStatusDf(double effect, int turn,string mode,string cname)
     {   
         this.effect = effect;
         this.mode = mode;
+        this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
@@ -79,23 +80,38 @@ public class PartyDfStatusManager : MonoBehaviour
         if(mode == "Multi" && effect >1)
         {
             ImageGameObject = Instantiate(UpDfImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
+
         }
         if(mode == "Multi" && effect < 1)
         {
             ImageGameObject = Instantiate(DownDfImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
         }
         if(mode == "Add" &&effect > 0)
         {
             ImageGameObject = Instantiate(UpDfImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分増やす。";
+
         }
-        if(mode == "Add" && effect < 0)
+        if (mode == "Add" && effect < 0)
         {
             ImageGameObject = Instantiate(DownDfImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分減らす。";
         }
         flag = true;
         statusNum++;
         index = parent.childCount - statusNum;
       
+    }
+
+    public string SkillInfo()
+    {
+        return "-" + cname + "-\n防御力を" + effecttext;
+    }
+    public void GetNode(GameObject node)
+    {
+        this.node = node;
     }
     public void StatusReset()
     {
@@ -112,6 +128,7 @@ public class PartyDfStatusManager : MonoBehaviour
                 model.at -= effect;
         }*/
         statusNum--;
+        Destroy(node);
         Destroy(ImageGameObject);
         Destroy(gameObject);
         

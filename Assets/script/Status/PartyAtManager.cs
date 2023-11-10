@@ -6,13 +6,14 @@ public class PartyAtManager : MonoBehaviour
 {
     int FinishTurn;
     double effect;
+
     int index;
     static public int statusNum = 0;
-    string mode;
+    string mode,cname,effecttext;
     bool flag = false;
     Transform parent;
     [SerializeField] GameObject UpAtImage, DownAtImage;
-    GameObject ImageGameObject;
+    GameObject ImageGameObject,node;
     [SerializeField] PartyAtStatus partyat;
 
 
@@ -56,10 +57,11 @@ public class PartyAtManager : MonoBehaviour
     }
 
 
-    public void SetStatusAt(double effect, int turn, string mode)
+    public void SetStatusAt(double effect, int turn, string mode,string cname)
     {
         this.effect = effect;
         this.mode = mode;
+        this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
@@ -81,27 +83,41 @@ public class PartyAtManager : MonoBehaviour
         if (mode == "Multi" && effect > 1)
         {
             ImageGameObject = Instantiate(UpAtImage, pos);
+            effecttext =  turn.ToString() + "ターンの間"+ effect.ToString() + "倍する。";
         }
         if (mode == "Multi" && effect < 1)
         {
             ImageGameObject = Instantiate(DownAtImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
         }
         if (mode == "Add" && effect > 0)
         {
             ImageGameObject = Instantiate(UpAtImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分増やす。";
         }
         if (mode == "Add" && effect < 0)
         {
             ImageGameObject = Instantiate(DownAtImage, pos);
+            effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分減らす。";
         }
         flag = true;
         statusNum++;
         index = parent.childCount - statusNum;
 
     }
+
+    public string SkillInfo()
+    {
+        return "-" + cname + "-\n攻撃力を" + effecttext  ;
+    }
+    public void GetNode(GameObject node)
+    {
+        this.node = node;
+    }
     public void StatusReset()
     {   
         statusNum--;
+        Destroy(node);
         Destroy(ImageGameObject);
         Destroy(gameObject);
 

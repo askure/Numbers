@@ -30,7 +30,8 @@ public class Skill_origin : ScriptableObject
         Pursuit, // Only MagicKind add
         NumUp, // Only MagicKind add
         decreaseDefence,
-        decreaseNum,//Only Enemy
+        decreaseNum,//Only Enemy.
+        decreaseAttack,
         Length
     }
 

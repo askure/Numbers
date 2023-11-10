@@ -47,8 +47,8 @@ public class PartyAtStatus : MonoBehaviour
     public void StatusReset()
     {
         Debug.Log("end");
-        model.at = beforebuf;
-        /*if (mode == "Multi")
+
+        if (mode == "Multi")
         {
             double temp = model.at / effect;
             model.at = (int)temp;
@@ -57,7 +57,7 @@ public class PartyAtStatus : MonoBehaviour
         {
             double temp = model.at - effect;
             model.at = (int)temp;
-        }*/
+        }
         Destroy(gameObject);
     }
 }

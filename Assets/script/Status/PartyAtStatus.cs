@@ -7,9 +7,10 @@ public class PartyAtStatus : MonoBehaviour
 
     int FinishTurn;
     int beforebuf;
-    [SerializeField] double effect;
+    double effect;
     string mode;
     CardModel model;
+
 
     // Update is called once per frame
     void Update()

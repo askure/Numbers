@@ -16,6 +16,7 @@ public class PartyAtManager : MonoBehaviour
     [SerializeField] GameObject UpAtImage, DownAtImage;
     GameObject ImageGameObject,node;
     [SerializeField] PartyAtStatus partyat;
+    StatusListManager StatusList;
 
 
     // Update is called once per frame
@@ -58,7 +59,11 @@ public class PartyAtManager : MonoBehaviour
 
 
     public void SetStatusAt(double effect, int turn, string mode,string cname)
-    {
+    {   
+        if(StatusList == null)
+        {
+            StatusList = GameObject.Find("StatusList").GetComponent<StatusListManager>();
+        }
         this.effect = effect;
         this.mode = mode;
         this.cname = cname;
@@ -78,34 +83,32 @@ public class PartyAtManager : MonoBehaviour
             g.SetStatus(effect, FinishTurn, child.gameObject, mode);
             g.name = "partyat" + MystatusNum.ToString();
         }
-
-
-        var pos = GameObject.Find("StatusList").transform;
         if (mode == "Multi" && effect > 1)
         {
-            ImageGameObject = Instantiate(UpAtImage, pos);
+            ImageGameObject =UpAtImage;
+
             effecttext =  turn.ToString() + "ターンの間"+ effect.ToString() + "倍する。";
         }
         if (mode == "Multi" && effect < 1)
         {
-            ImageGameObject = Instantiate(DownAtImage, pos);
+            ImageGameObject = DownAtImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
         }
         if (mode == "Add" && effect > 0)
         {
-            ImageGameObject = Instantiate(UpAtImage, pos);
+            ImageGameObject = UpAtImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分増やす。";
         }
         if (mode == "Add" && effect < 0)
         {
-            ImageGameObject = Instantiate(DownAtImage, pos);
+            ImageGameObject = DownAtImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分減らす。";
         }
         flag = true;
        
         statusNum++;
         index = parent.childCount - statusNum;
-
+        StatusList.Add(ImageGameObject);
     }
 
     public string SkillInfo()
@@ -117,9 +120,10 @@ public class PartyAtManager : MonoBehaviour
         this.node = node;
     }
     public void StatusReset()
-    {   
+    {
+        StatusList.Remove(ImageGameObject);
         Destroy(node);
-        Destroy(ImageGameObject);
+        //Destroy(ImageGameObject);
         Destroy(gameObject);
 
     }

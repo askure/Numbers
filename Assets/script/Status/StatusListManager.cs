@@ -5,23 +5,25 @@ using UnityEngine;
 public class StatusListManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    static private List<GameObject> status;
+    [SerializeField] private List<GameObject> status;
     [SerializeField] private float changeTime;
-    [SerializeField] private List<GameObject> test;
+     private List<GameObject> tmp;
     private float time;
     private int page;
     Transform pos;
     void Start()
     {
         status = new List<GameObject>();
+        tmp = new List<GameObject>();
         page = 0;
-        pos = GameObject.Find("StatusList").transform;
+        pos = this.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
         time += Time.deltaTime;
+        if (status.Count <= 4) time = 0;
         if(time > changeTime)
         {   
 
@@ -30,15 +32,17 @@ public class StatusListManager : MonoBehaviour
             if (status.Count <= page * 4)
                 page = 0;
 
-            for (int i = 0; i < pos.childCount; i++)
+            while (tmp.Count != 0)
             {
-                var g = gameObject.transform.GetChild(i);
-                Destroy(g.gameObject);
+                var g =tmp[0];
+                tmp.RemoveAt(0);
+                Destroy(g);
             }
             for (int i = page * 4; i < page * 4 + 4; i++)
             {
                 if (i == status.Count) break;
-                Instantiate(status[i], pos);
+                var g = Instantiate(status[i], pos);
+                tmp.Add(g);
             }
             page++;
             
@@ -46,17 +50,24 @@ public class StatusListManager : MonoBehaviour
         }
     }
 
-    public static void Add(GameObject g)
-    {
+    public  void Add(GameObject g)
+    {   
+        if(status.Count < 4)
+        {
+            var G = Instantiate(g, pos);
+            tmp.Add(G);
+        }
+
         status.Add(g);
+     
     }
-    public static void Remove(GameObject g)
+    public  void Remove(GameObject g)
     {
         int index = status.IndexOf(g);
         if (index == -1) return;
         status.RemoveAt(index);
     }
-    public static int Count()
+    public  int Count()
     {
         return status.Count;
     }

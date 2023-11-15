@@ -16,8 +16,10 @@ public class PartyDfStatusManager : MonoBehaviour
     [SerializeField] GameObject UpDfImage,DownDfImage;
     GameObject ImageGameObject,node;
     [SerializeField]PartyDfStatus partyDf;
+    StatusListManager StatusList;
 
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -55,7 +57,12 @@ public class PartyDfStatusManager : MonoBehaviour
 
 
     public void SetStatusDf(double effect, int turn,string mode,string cname)
-    {   
+    {
+
+        if (StatusList == null)
+        {
+            StatusList = GameObject.Find("StatusList").GetComponent<StatusListManager>();
+        }
         this.effect = effect;
         this.mode = mode;
         this.cname = cname;
@@ -80,30 +87,30 @@ public class PartyDfStatusManager : MonoBehaviour
         var pos = GameObject.Find("StatusList").transform;
         if(mode == "Multi" && effect >1)
         {
-            ImageGameObject = Instantiate(UpDfImage, pos);
+            ImageGameObject = UpDfImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
 
         }
         if(mode == "Multi" && effect < 1)
         {
-            ImageGameObject = Instantiate(DownDfImage, pos);
+            ImageGameObject = DownDfImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "倍する。";
         }
         if(mode == "Add" &&effect > 0)
         {
-            ImageGameObject = Instantiate(UpDfImage, pos);
+            ImageGameObject = UpDfImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分増やす。";
 
         }
         if (mode == "Add" && effect < 0)
         {
-            ImageGameObject = Instantiate(DownDfImage, pos);
+            ImageGameObject = DownDfImage;
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分減らす。";
         }
         flag = true;
         statusNum++;
         index = parent.childCount - statusNum;
-      
+        StatusList.Add(ImageGameObject);
     }
 
     public string SkillInfo()
@@ -128,8 +135,9 @@ public class PartyDfStatusManager : MonoBehaviour
             else if (mode == "A")
                 model.at -= effect;
         }*/
+        StatusList.Remove(ImageGameObject);
         Destroy(node);
-        Destroy(ImageGameObject);
+        //Destroy(ImageGameObject);
         Destroy(gameObject);
         
     }

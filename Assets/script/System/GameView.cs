@@ -21,6 +21,7 @@ public class GameView : MonoBehaviour
 
     private void Update()
     {
+        if (GameManger.hpSum < 0) GameManger.hpSum = 0;
         updateView(GameManger.hpSum,0, 0);
     }
     public void updateView(int now,int Turn,int df)

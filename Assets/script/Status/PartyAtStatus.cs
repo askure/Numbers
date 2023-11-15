@@ -59,6 +59,7 @@ public class PartyAtStatus : MonoBehaviour
             double temp = model.at - effect;
             model.at = (int)temp;
         }
+        if (model.at < model.BeforeAt) model.at = model.BeforeAt;
         Destroy(gameObject);
     }
 }

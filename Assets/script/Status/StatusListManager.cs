@@ -31,19 +31,8 @@ public class StatusListManager : MonoBehaviour
 
             if (status.Count <= page * 4)
                 page = 0;
-
-            while (tmp.Count != 0)
-            {
-                var g =tmp[0];
-                tmp.RemoveAt(0);
-                Destroy(g);
-            }
-            for (int i = page * 4; i < page * 4 + 4; i++)
-            {
-                if (i == status.Count) break;
-                var g = Instantiate(status[i], pos);
-                tmp.Add(g);
-            }
+            InitView();
+            
             page++;
             
 
@@ -66,9 +55,26 @@ public class StatusListManager : MonoBehaviour
         int index = status.IndexOf(g);
         if (index == -1) return;
         status.RemoveAt(index);
+        InitView();
     }
     public  int Count()
     {
         return status.Count;
+    }
+
+    void InitView()
+    {
+        while (tmp.Count != 0)
+        {
+            var g = tmp[0];
+            tmp.RemoveAt(0);
+            Destroy(g);
+        }
+        for (int i = page * 4; i < page * 4 + 4; i++)
+        {
+            if (i == status.Count) break;
+            var g = Instantiate(status[i], pos);
+            tmp.Add(g);
+        }
     }
 }

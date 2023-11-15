@@ -55,16 +55,15 @@ public class UnlockCard : MonoBehaviour
         var gameObject = Resources.Load<GameObject>("DeckEditPrehub/CharacterUnlock");
         var canvas = GameObject.Find("Canvas").transform;
         var panel = Instantiate(gameObject,canvas);
-        if (nowExp < NeedExp)
+        if (i)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text += "\n 消費EXP" + NeedExp + "\n不足しています。現在のEXP:"+nowExp;
+            panel.transform.GetChild(0).GetComponent<Text>().text = "このキャラは解放できません\n\nクエスト報酬にあるキャラはドロップ入手！";
             var x = panel.transform.GetChild(1).gameObject;
             Destroy(x.transform.GetChild(0).gameObject);
-        }
-        else if(i)
+        }else  if (nowExp < NeedExp)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text = "このキャラは解放できません";
-             var x =  panel.transform.GetChild(1).gameObject;
+            panel.transform.GetChild(0).GetComponent<Text>().text += "\n 消費EXP" + NeedExp + "\n不足しています。\n現在のEXP:" + nowExp;
+            var x = panel.transform.GetChild(1).gameObject;
             Destroy(x.transform.GetChild(0).gameObject);
         }
         else panel.transform.GetChild(0).GetComponent<Text>().text += "\n 消費EXP" + NeedExp + "/" + nowExp;

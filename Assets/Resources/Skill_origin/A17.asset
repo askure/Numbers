@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: A17
   m_EditorClassIdentifier: 
   skill_name: AUTO
-  skill_infomatin: "HP\u304C9\u4E07\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B"
+  skill_infomatin: "\u6570\u5024\u304C15\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B"
+  _Priority: 3
   magic_Conditon_Origins:
   - type: 10
-    condition_kind: 5
-    condition_num: 90000
+    condition_kind: 0
+    condition_num: 15
     conditons: 0
     magic_kind: 0
     effect_size: 100000
+    effect_turn: 0

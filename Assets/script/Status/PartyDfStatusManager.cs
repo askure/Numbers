@@ -9,6 +9,7 @@ public class PartyDfStatusManager : MonoBehaviour
     double effect;
     int index;
     static public int statusNum = 0;
+    int mystatusNum;
     string mode,cname, effecttext;
     bool flag = false;
     Transform parent;
@@ -35,21 +36,20 @@ public class PartyDfStatusManager : MonoBehaviour
                 Instantiate(partyDf).SetStatus(effect, FinishTurn, child.gameObject,mode);
             }
         }*/
-        if (GameManger.handchange)
-        {
+       
             for (int i = 0; i < parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
                 if (child.gameObject.CompareTag("status")) continue;
-                if (child.Find("partydf") == null)
+                if (child.Find("partydf" + mystatusNum.ToString()) == null)
                 {
                     var g = Instantiate(partyDf);
                     g.SetStatus(effect, FinishTurn, child.gameObject, mode);
-                    g.name = "partydf";
+                    g.name = "partydf" + mystatusNum.ToString();
                 }
             }
             
-        }
+        
        
     }
 
@@ -60,6 +60,7 @@ public class PartyDfStatusManager : MonoBehaviour
         this.mode = mode;
         this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
+        mystatusNum = statusNum;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
@@ -72,7 +73,7 @@ public class PartyDfStatusManager : MonoBehaviour
 
             var g = Instantiate(partyDf);
             g.SetStatus(effect, FinishTurn, child.gameObject, mode);
-            g.name = "partydf";
+            g.name = "partydf" + mystatusNum.ToString();
         }
         
    
@@ -127,7 +128,6 @@ public class PartyDfStatusManager : MonoBehaviour
             else if (mode == "A")
                 model.at -= effect;
         }*/
-        statusNum--;
         Destroy(node);
         Destroy(ImageGameObject);
         Destroy(gameObject);

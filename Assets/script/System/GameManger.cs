@@ -730,21 +730,20 @@ public class GameManger : MonoBehaviour
             var effect = _Origin.effect_size;
             bool check = EnemySkillCheck(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
             var magicKind = _Origin.magic_kind;
+            
             if (!check) continue;
-            switch (_Origin.type)
+             switch (_Origin.type)
             {
                 case Skill_origin.Skill_type.constantAttack:
                      
-                    if (effect < partydf) PartyDamage = 1;
-                    else PartyDamage = (int) effect - partydf;       
+                    if (effect < partydf) PartyDamage += 1;
+                    else PartyDamage += (int) effect - partydf;       
                     break;
                 case Skill_origin.Skill_type.referenceAttack:
 
                     double damage = effect * enemyat;
-                    if (damage < partydf) PartyDamage = 1;
-                    else  PartyDamage = (int)damage - partydf;
-
-
+                    if (damage < partydf) PartyDamage += 1;
+                    else  PartyDamage += (int)damage - partydf;
                     break;
                 
                 case Skill_origin.Skill_type.Heal_Hp:

@@ -1733,7 +1733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: character
-  changeBGM: 0
+  changeBGM: 1
   se: {fileID: 8300000, guid: 6238b4728608eb94b96c4ba95d318b8d, type: 3}
 --- !u!1 &873790638
 GameObject:
@@ -2930,7 +2930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: DeckEdit
-  changeBGM: 0
+  changeBGM: 1
   se: {fileID: 8300000, guid: 6238b4728608eb94b96c4ba95d318b8d, type: 3}
 --- !u!1 &1500441387
 GameObject:

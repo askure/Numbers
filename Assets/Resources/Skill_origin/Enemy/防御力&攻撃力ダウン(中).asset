@@ -21,12 +21,12 @@ MonoBehaviour:
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 0.5
+    effect_size: 0
     effect_turn: 10
   - type: 14
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 0.5
+    effect_size: 0
     effect_turn: 10

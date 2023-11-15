@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: A23
   m_EditorClassIdentifier: 
   skill_name: AUTO
-  skill_infomatin: "HP\u304C4\u4E07\u4EE5\u4E0B\u306A\u3089\u6570\u5024\u30921.1\u500D\u3059\u308B"
+  skill_infomatin: "\u6570\u5024\u304C20\u4EE5\u4E0A\u306A\u3089\u6570\u5024\u30921.1\u500D\u3059\u308B"
   _Priority: 4
   magic_Conditon_Origins:
   - type: 11
-    condition_kind: 6
-    condition_num: 40000
+    condition_kind: 0
+    condition_num: 20
     conditons: 0
     magic_kind: 1
     effect_size: 1.1
+    effect_turn: 0

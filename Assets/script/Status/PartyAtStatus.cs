@@ -7,7 +7,7 @@ public class PartyAtStatus : MonoBehaviour
 
     int FinishTurn;
     int beforebuf;
-    double effect;
+    [SerializeField] double effect;
     string mode;
     CardModel model;
 

@@ -9,6 +9,7 @@ public class PartyAtManager : MonoBehaviour
 
     int index;
     static public int statusNum = 0;
+    int MystatusNum;
     string mode,cname,effecttext;
     bool flag = false;
     Transform parent;
@@ -35,22 +36,21 @@ public class PartyAtManager : MonoBehaviour
                 Instantiate(partyat).SetStatus(effect, FinishTurn, child.gameObject, mode);
             }
         }*/
-        if (GameManger.handchange)
-        {
+      
             
             for(int i=0; i<parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
                 if (child.gameObject.CompareTag("status")) continue;
-                if(child.Find("partyat") == null)
+                if(child.Find("partyat" + MystatusNum.ToString()) == null)
                 {
                     var g = Instantiate(partyat);
                     g.SetStatus(effect, FinishTurn, child.gameObject, mode);
-                    g.name = "partyat";
+                    g.name = "partyat" + MystatusNum.ToString();
                 }
             }
-            
-        }
+           
+        
         
 
 
@@ -63,6 +63,7 @@ public class PartyAtManager : MonoBehaviour
         this.mode = mode;
         this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
+        MystatusNum = statusNum;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
@@ -75,7 +76,7 @@ public class PartyAtManager : MonoBehaviour
             }
             var g = Instantiate(partyat);
             g.SetStatus(effect, FinishTurn, child.gameObject, mode);
-            g.name = "partyat";
+            g.name = "partyat" + MystatusNum.ToString();
         }
 
 
@@ -101,6 +102,7 @@ public class PartyAtManager : MonoBehaviour
             effecttext = turn.ToString() + "ƒ^[ƒ“‚ÌŠÔ" + effect.ToString() + "•ªŒ¸‚ç‚·B";
         }
         flag = true;
+       
         statusNum++;
         index = parent.childCount - statusNum;
 
@@ -116,7 +118,6 @@ public class PartyAtManager : MonoBehaviour
     }
     public void StatusReset()
     {   
-        statusNum--;
         Destroy(node);
         Destroy(ImageGameObject);
         Destroy(gameObject);

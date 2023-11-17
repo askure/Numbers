@@ -6,9 +6,8 @@ public class PartyAtManager : MonoBehaviour
 {
     int FinishTurn;
     double effect;
-
-    int index;
     static public int statusNum = 0;
+    static public int statusSum = 0;
     int MystatusNum;
     string mode,cname,effecttext;
     bool flag = false;
@@ -42,8 +41,8 @@ public class PartyAtManager : MonoBehaviour
             for(int i=0; i<parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
-                if (child.gameObject.CompareTag("status")) continue;
-                if(child.Find("partyat" + MystatusNum.ToString()) == null)
+            if (child.gameObject.CompareTag("status")) continue;
+            if (child.Find("partyat" + MystatusNum.ToString()) == null)
                 {
                     var g = Instantiate(partyat);
                     g.SetStatus(effect, FinishTurn, child.gameObject, mode);
@@ -68,7 +67,7 @@ public class PartyAtManager : MonoBehaviour
         this.mode = mode;
         this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
-        MystatusNum = statusNum;
+        MystatusNum = statusSum;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
@@ -107,8 +106,8 @@ public class PartyAtManager : MonoBehaviour
         flag = true;
        
         statusNum++;
-        index = parent.childCount - statusNum;
-        StatusList.Add(ImageGameObject);
+        statusSum++;
+        StatusList.SetGameObjct(ImageGameObject);
     }
 
     public string SkillInfo()
@@ -121,10 +120,12 @@ public class PartyAtManager : MonoBehaviour
     }
     public void StatusReset()
     {
+        statusNum--;
         StatusList.Remove(ImageGameObject);
         Destroy(node);
         //Destroy(ImageGameObject);
         Destroy(gameObject);
 
     }
+    
 }

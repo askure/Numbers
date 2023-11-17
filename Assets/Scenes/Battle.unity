@@ -2320,6 +2320,7 @@ MonoBehaviour:
   SoundSettingPanel: {fileID: 107134638}
   tutorial:
   - {fileID: 21300000, guid: ced721bb8ec376c49b6f462a598da9d3, type: 3}
+  statusManager: {fileID: 979810123}
   _hand: []
   decklist: 
   UpCard: []

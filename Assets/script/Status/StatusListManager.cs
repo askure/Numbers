@@ -8,6 +8,7 @@ public class StatusListManager : MonoBehaviour
     [SerializeField] private List<GameObject> status;
     [SerializeField] private float changeTime;
      private List<GameObject> tmp;
+    private List<GameObject> beforeAnimationtmp;
     private float time;
     private int page;
     Transform pos;
@@ -26,16 +27,9 @@ public class StatusListManager : MonoBehaviour
         if (status.Count <= 4) time = 0;
         if(time > changeTime)
         {   
-
             time = 0;
-
-            if (status.Count <= page * 4)
-                page = 0;
-            InitView();
-            
+            InitView();      
             page++;
-            
-
         }
     }
 
@@ -72,9 +66,26 @@ public class StatusListManager : MonoBehaviour
         }
         for (int i = page * 4; i < page * 4 + 4; i++)
         {
-            if (i == status.Count) break;
+            if (i >= status.Count) {
+                page = 0;
+                break;
+            }
             var g = Instantiate(status[i], pos);
             tmp.Add(g);
         }
+    }
+
+    public void SetGameObjct(GameObject g)
+    {
+        if (beforeAnimationtmp == null) beforeAnimationtmp = new List<GameObject>();
+        beforeAnimationtmp.Add(g);
+    }
+    public void SetGameObject()
+    {
+        for(int i=0; i< beforeAnimationtmp.Count; i++)
+        {
+            Add(beforeAnimationtmp[i]);
+        }
+        beforeAnimationtmp.Clear();
     }
 }

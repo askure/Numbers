@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card 32
   m_EditorClassIdentifier: 
   cardID: 32
-  advent: 0
+  advent: 1
   Hp: 12600
   at: 31000
   df: 2100

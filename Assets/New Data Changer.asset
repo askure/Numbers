@@ -18,12 +18,12 @@ MonoBehaviour:
   Multi: 70
   Diviser: 70
   Prime: 70
-  CardLv: 120
+  CardLv: 10
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0
   convex: 1
   allCharactor: 35
   allStage: 40
-  clear: 1
-  pos: 1
+  clear: 0
+  pos: 0

@@ -279,7 +279,6 @@ public class GameManger : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         var tuto = Resources.Load<GameObject>("tutorial");
-        Debug.Log("tu");
         var canva = GameObject.Find("Canvas").transform;
         Instantiate(tuto, canva);
         tuto.GetComponent<Tutorial>().SetUpTutorial(tutorial);
@@ -548,9 +547,10 @@ public class GameManger : MonoBehaviour
         }
         for(int i =0; i < dfs.Count; i++)
         {
-            df += dfs[i] * (i*0.85+1);
+            //df += dfs[i] * (i*0.85+1);
+            df += dfs[i];
         }
-        Debug.Log(df);
+        Debug.Log("Df:" + df);
         return (int)df;
 
     }
@@ -1291,7 +1291,7 @@ public class GameManger : MonoBehaviour
 
     public void Buttle(List<CardController> cardlist)
     {
-        
+        Debug.Log("-Turn Start-");
         List<int> animations = new List<int>();
         double ats = 0;
         double pesuit = 0;
@@ -1377,11 +1377,12 @@ public class GameManger : MonoBehaviour
                 ats += card.model.at;
 
         }
+        Debug.Log("At(BeforeBounus):" + ats);
         double bounus = 1 + 0.3*(sum - _enemy.model.numba);
-
-
+        Debug.Log("Bounus:" + bounus);
         ats *= bounus;
-       
+        Debug.Log("At(AfterBounus):" + ats);
+
         damage = ((int)ats - _enemy.model.df);
         if (damage <= 0) damage = 1;
         AddLogText("“G‚É" + damage + "ƒ_ƒ[ƒW");
@@ -1462,7 +1463,7 @@ public class GameManger : MonoBehaviour
         TurnNum++;
         //gameView.updateView(hpSum, TurnNum);
         // LogTextView("Turn:" + TurnNum.ToString());
-
+        Debug.Log("-Turn End-");
 
     }
 

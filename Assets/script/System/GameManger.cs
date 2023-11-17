@@ -32,6 +32,7 @@ public class GameManger : MonoBehaviour
     [SerializeField] GameObject OptionPanel;
     [SerializeField] GameObject SoundSettingPanel;
     [SerializeField] List<Sprite> tutorial;
+    [SerializeField] StatusListManager statusManager;
 
     BGMManager BGMManager;
     Slider volumeslider;
@@ -815,6 +816,7 @@ public class GameManger : MonoBehaviour
                         g.SetStatusDf(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
                         g.name = "DfManager";
                     }
+                    animations.Add(AnimationType.decrease);
                     break;
 
                 case Skill_origin.Skill_type.decreaseAttack:
@@ -831,6 +833,7 @@ public class GameManger : MonoBehaviour
                         g.SetStatusAt(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
                         g.name = "AtManager";
                     }
+                    animations.Add(AnimationType.decrease);
                     break;
 
 
@@ -1460,8 +1463,7 @@ public class GameManger : MonoBehaviour
         enemyIncreaseDf,
         enemyHeal,
         healNum,
-        decreaseAt,
-        decreaseDf
+        decrease
         
     }
 
@@ -1560,15 +1562,15 @@ public class GameManger : MonoBehaviour
                     break;
                 case AnimationType.enemyIncreaseAt:
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "攻撃力アップ!" + "</color>");
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.3f);
                     break;
                 case AnimationType.enemyIncreaseDf:
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "防御力アップ!" + "</color>");
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.3f);
                     break;
-                case AnimationType.decreaseAt:
-                    break;
-                case AnimationType.decreaseDf:
+                case AnimationType.decrease:
+                    statusManager.SetGameObject();
+                    yield return new WaitForSeconds(0.3f);
                     break;
 
 

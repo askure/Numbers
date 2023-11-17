@@ -9,6 +9,7 @@ public class PartyDfStatusManager : MonoBehaviour
     double effect;
     int index;
     static public int statusNum = 0;
+    static public int statusSum = 0;
     int mystatusNum;
     string mode,cname, effecttext;
     bool flag = false;
@@ -67,7 +68,7 @@ public class PartyDfStatusManager : MonoBehaviour
         this.mode = mode;
         this.cname = cname;
         this.FinishTurn = GameManger.TurnNum + turn;
-        mystatusNum = statusNum;
+        mystatusNum = statusSum;
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
@@ -109,8 +110,9 @@ public class PartyDfStatusManager : MonoBehaviour
         }
         flag = true;
         statusNum++;
+        statusSum++;
         index = parent.childCount - statusNum;
-        StatusList.Add(ImageGameObject);
+        StatusList.SetGameObjct(ImageGameObject);
     }
 
     public string SkillInfo()
@@ -123,21 +125,9 @@ public class PartyDfStatusManager : MonoBehaviour
     }
     public void StatusReset()
     {
-        /*for (int i = 0; i < parent.childCount; i++)
-        {
-        
-            var child = parent.GetChild(i);
-            if (child.gameObject.CompareTag("status")) continue;
-            var model = child.GetComponent<CardController>().model;
-        
-            if (mode == "D")
-                model.df -= effect;
-            else if (mode == "A")
-                model.at -= effect;
-        }*/
+        statusNum--;
         StatusList.Remove(ImageGameObject);
         Destroy(node);
-        //Destroy(ImageGameObject);
         Destroy(gameObject);
         
     }

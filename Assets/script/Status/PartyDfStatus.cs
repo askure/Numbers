@@ -42,6 +42,7 @@ public class PartyDfStatus : MonoBehaviour
             double temp = model.df + effect;
             model.df = (int)temp;
         }
+        if (model.df < 1) model.df = 1;
         FinishTurn = turn;
     }
     public void StatusReset()
@@ -58,7 +59,7 @@ public class PartyDfStatus : MonoBehaviour
             double temp = model.df - effect;
             model.df = (int)temp;
         }
-        if (model.df < model.BeforeDf) model.df = model.BeforeDf;
+        if (model.df < model.BeforeDf && PartyDfStatusManager.statusNum == 1) model.df = model.BeforeDf;
         Destroy(gameObject);
     }
 }

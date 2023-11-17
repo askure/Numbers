@@ -43,6 +43,7 @@ public class PartyAtStatus : MonoBehaviour
             double temp = model.at + effect;
             model.at = (int)temp;
         }
+        if (model.at < 1) model.at = 1;
         FinishTurn = turn;
     }
     public void StatusReset()
@@ -59,7 +60,7 @@ public class PartyAtStatus : MonoBehaviour
             double temp = model.at - effect;
             model.at = (int)temp;
         }
-        if (model.at < model.BeforeAt) model.at = model.BeforeAt;
+        if (model.at < model.BeforeAt && PartyAtManager.statusNum == 1) model.at = model.BeforeAt;
         Destroy(gameObject);
     }
 }

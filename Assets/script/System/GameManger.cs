@@ -130,7 +130,9 @@ public class GameManger : MonoBehaviour
         SoundSettingPanel.SetActive(false);
  
         StartGame();
-        
+        StatusNumReset();
+
+
 
     }
 
@@ -322,7 +324,8 @@ public class GameManger : MonoBehaviour
                 foreach (CardController card in hand)
                 {
                     if (fieldEffect.effectCondition == 0 || Multi_check(card.model.num, fieldEffect.effectCondition))
-                    {   
+                    {
+                        
                         if(fieldEffect.buff == StageEntity.Buff.at)
                         {
                             var temp = card.model.at * fieldEffect.effectSize;
@@ -343,9 +346,21 @@ public class GameManger : MonoBehaviour
                             var temp = card.model.num + fieldEffect.effectSize;
                             card.model.num = (int)temp;
                         }
+                        if(fieldEffect.buff == StageEntity.Buff.all_not_num)
+                        {
+                            var temp = card.model.at * fieldEffect.effectSize;
+                                card.model.at = (int)temp;
+
+                                temp = card.model.df * fieldEffect.effectSize;
+                                card.model.df = (int)temp;
+
+                                temp = card.model.Hp * fieldEffect.effectSize;
+                                card.model.Hp = (int)temp;
+                        }
 
 
                     }
+                    card.model.CopyStatus();
                     
                 }
             }
@@ -516,7 +531,7 @@ public class GameManger : MonoBehaviour
     }
 
     bool Multi_check(int card, int enemynum)
-    {
+    {   
         for (int i = 1; i <= card; i++) if (enemynum * i == card) return true;
         return false;
     }
@@ -1117,12 +1132,14 @@ public class GameManger : MonoBehaviour
                             var g = Instantiate(pstatusat);
                             g.SetStatusAt(effect, effectturn, "Add", card.model.name);
                             g.name = "AtManager";
+                            g.SetStatusList();
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
                             var g = Instantiate(pstatusat);
                             g.SetStatusAt(effect, effectturn, "Multi", card.model.name);
                             g.name = "AtManager";
+                            g.SetStatusList();
                         }
 
                         break;
@@ -1132,12 +1149,14 @@ public class GameManger : MonoBehaviour
                             var g = Instantiate(pstatusdf);
                             g.SetStatusDf(effect, effectturn, "Add",card.model.name);
                             g.name = "DfManager";
+                            g.SetStatusList();
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
                             var g = Instantiate(pstatusdf);
                             g.SetStatusDf(effect, effectturn, "Multi",card.model.name);
                             g.name = "DfManager";
+                            g.SetStatusList();
                         }
                         break;
                     case Skill_origin.Skill_type.Pursuit: //Pursuit
@@ -1440,6 +1459,14 @@ public class GameManger : MonoBehaviour
    
    
     //Animation
+
+    public void StatusNumReset()
+    {
+        PartyDfStatusManager.statusNum = 0;
+        PartyDfStatusManager.statusSum = 0;
+        PartyAtManager.statusSum = 0;
+        PartyAtManager.statusNum = 0;
+    }
     public void EnemyEntryAnimation()
     {
         GameObject.Find("Enemys").GetComponent<Animator>().enabled = true;

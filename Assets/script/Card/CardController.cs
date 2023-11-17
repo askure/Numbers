@@ -42,4 +42,6 @@ public class CardController : MonoBehaviour
         model = new CardModel(cardID,lv);
         view.CardListView(model);
     }
+
+    
 }

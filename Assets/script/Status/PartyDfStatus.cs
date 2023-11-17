@@ -5,7 +5,7 @@ using UnityEngine;
 public class PartyDfStatus : MonoBehaviour
 {   
    
-    int FinishTurn;
+    [SerializeField]int FinishTurn;
     int beforebuf;
     double effect;
     string mode;
@@ -59,7 +59,8 @@ public class PartyDfStatus : MonoBehaviour
             double temp = model.df - effect;
             model.df = (int)temp;
         }
-        if (model.df < model.BeforeDf && PartyDfStatusManager.statusNum == 1) model.df = model.BeforeDf;
+        Debug.Log(model.name + ":" + model.BeforeDf);
+        if (model.df < model.BeforeDf && PartyDfStatusManager.statusNum <= 1) model.df = model.BeforeDf;
         Destroy(gameObject);
     }
 }

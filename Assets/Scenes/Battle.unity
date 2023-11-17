@@ -1933,7 +1933,7 @@ RectTransform:
   m_Children:
   - {fileID: 1254818620}
   m_Father: {fileID: 1239435168}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2262,101 +2262,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &587656216
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 587656217}
-  - component: {fileID: 587656220}
-  - component: {fileID: 587656219}
-  - component: {fileID: 587656218}
-  m_Layer: 5
-  m_Name: DamageAnimation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &587656217
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587656216}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1239435168}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6, y: 4}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &587656218
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587656216}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 18621b41e140bd141b5a3c2a6668ba9b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &587656219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587656216}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &587656220
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587656216}
-  m_CullTransparentMesh: 1
 --- !u!1 &601542883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,6 +2292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2191f5ef50ee76c4aa400a46785a0d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvaspos: {fileID: 1239435168}
   Card: {fileID: 6183310653914326617, guid: 80d63f1aafe6b9e4187cf74c8024ccd7, type: 3}
   Hand: {fileID: 641450681}
   Enemy: {fileID: 4838628577706830281, guid: 46096faf41bf31d4b90baf23cf3b68fa, type: 3}
@@ -2399,7 +2305,10 @@ MonoBehaviour:
   buttleNumText: {fileID: 2073113328}
   gameOverPanel: {fileID: 5627129285687246129, guid: 9b80574a834a9ef4f8b76b93ca09abc2, type: 3}
   gameOverPanelTrance: {fileID: 1239435168}
-  damageAnimation: {fileID: 587656218}
+  damageAnimation: {fileID: 1027952961049578990, guid: 4c915a521801c264d981bc38913a8bdc, type: 3}
+  enemyturnAnimation: {fileID: 20961028091804597, guid: ed0597378e0914042b6adf4e638a801d, type: 3}
+  partyturnAnimation: {fileID: 2162195748323905902, guid: ec47ead9902d17245860df3a3c26e2e3, type: 3}
+  skillnameAnimation: {fileID: 5915852630524475512, guid: 4aed48cfd2fcb3341af999ee23d6b393, type: 3}
   back: {fileID: 2007350215}
   DefaultAudioClipIntro:
   - {fileID: 8300000, guid: e7766ea109d1e1a41861f40e4823efa1, type: 3}
@@ -4247,7 +4156,6 @@ RectTransform:
   - {fileID: 375958633}
   - {fileID: 2036254453}
   - {fileID: 976824790}
-  - {fileID: 587656217}
   - {fileID: 1429723538}
   - {fileID: 530004892}
   m_Father: {fileID: 0}
@@ -4833,7 +4741,7 @@ RectTransform:
   m_Children:
   - {fileID: 897235571}
   m_Father: {fileID: 1239435168}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

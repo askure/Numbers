@@ -16,7 +16,7 @@ public class SkillNameAnimation : MonoBehaviour
             int revision = skillname.Length - 15;
             text.fontSize = 60 - revision * 3;
         }
-        else text.fontSize = 60;
+        else text.fontSize= 60;
         animator.Play(0);
         return animator.GetCurrentAnimatorClipInfo(0).Length;
     }

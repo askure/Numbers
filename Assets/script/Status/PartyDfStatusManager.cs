@@ -115,6 +115,11 @@ public class PartyDfStatusManager : MonoBehaviour
         StatusList.SetGameObjct(ImageGameObject);
     }
 
+    public void SetStatusList()
+    {
+        StatusList.SetGameObject();
+    }
+
     public string SkillInfo()
     {
         return "-" + cname + "-\n–hŒä—Í‚ð" + effecttext;

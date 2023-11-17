@@ -31,11 +31,11 @@ public class CardModel
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
         cardID = cardEntity.cardID;
         var tenav = cardEntity.Hp * (double)lv / 99 + (99 * 10 - lv * 10);
-        BeforeHp =  Hp = (int)tenav;
+        Hp = (int)tenav;
         tenav = cardEntity.at * (double)lv / 99 + (99 * 4 - lv * 4);
-        BeforeAt = at = (int)tenav;
+        at = (int)tenav;
         tenav = cardEntity.df * (double)lv / 99 + (99 * 5 - lv * 5);
-        BeforeDf =  df = (int) tenav;
+        df = (int) tenav;
         num = cardEntity.num;
         name = cardEntity.name;
         icon = cardEntity.icon;
@@ -46,6 +46,8 @@ public class CardModel
         firstExp = cardEntity.firstExp;
         ReaderSkill = cardEntity.ReaderSkill;
         PublicSkill = cardEntity.AutoSkill;
+
+        CopyStatus();
     }
     public CardModel()
     {
@@ -76,5 +78,11 @@ public class CardModel
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);
         return cardEntity.df * (double)lv / 99 + (99 * 5 - lv * 5);
+    }
+    public void CopyStatus()
+    {
+        BeforeAt = at;
+        BeforeDf = df;
+        BeforeHp = Hp;
     }
 }

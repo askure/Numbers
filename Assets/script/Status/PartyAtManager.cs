@@ -110,6 +110,11 @@ public class PartyAtManager : MonoBehaviour
         StatusList.SetGameObjct(ImageGameObject);
     }
 
+    public void SetStatusList()
+    {
+        StatusList.SetGameObject();
+    }
+
     public string SkillInfo()
     {
         return "-" + cname + "-\nUŒ‚—Í‚ğ" + effecttext  ;

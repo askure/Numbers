@@ -31,7 +31,9 @@ public class StageEntity : ScriptableObject
    public int beforestageid;
    public string stageName;
    public int buttleNum;
-   
+   public int RecoLevel_Chatactor;
+   public int RecoLevel_Bounus;
+
    public List<EnemyEntity> enemy;
    public List<string> stageinfo;
     [System.Serializable]

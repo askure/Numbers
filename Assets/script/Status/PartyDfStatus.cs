@@ -46,7 +46,7 @@ public class PartyDfStatus : MonoBehaviour
     }
     public void StatusReset()
     {
-        Debug.Log("end");
+       
         
         if (mode == "Multi")
         {

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyId: 1
   name: "\u99C6\u52D5\u306E\u30A2\u30FC\u30C6\u30A3\u30D5\u30A1\u30AF\u30C8"
-  numba: 7
+  numba: 12
   Hp: 50000
-  at: 4120
+  at: 5000
   df: 400
   _exp: 20000
   icon: {fileID: 21300000, guid: ba45364955a31064282a0a59b7ec27a9, type: 3}

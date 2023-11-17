@@ -86,7 +86,6 @@ public class Onclick : MonoBehaviour
     public void Decide() {
        
         if (!GameManger.Myturn) return;
-        Debug.Log("Go");
 
         /*var cards = GameObject.FindGameObjectsWithTag("card");
         List<CardController> cardlist = new List<CardController>();

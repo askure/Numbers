@@ -111,7 +111,7 @@ public class CrectmapManager : MonoBehaviour
         {
             stageinfo += s + "\n";
         }
-        stageinfoText.text =   "[バトル数]" + stage.buttleNum.ToString() + "\n[情報]\n" + stageinfo +  "[報酬]\n"  + giftText + "\n" ;
+        stageinfoText.text =    "[推奨キャラレベル] Lv:" + stage.RecoLevel_Chatactor.ToString() + "\n[推奨ボーナスレベル] Lv:" + stage.RecoLevel_Bounus.ToString() + "\n[バトル数]" + stage.buttleNum.ToString() + "\n[情報]\n" + stageinfo +  "[報酬]\n"  + giftText + "\n" ;
         anime.SetBool("flag", true);
         anime.SetBool("Infoanimebl", false);
         /*if (gameobj == g)

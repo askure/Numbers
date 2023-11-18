@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
+  m_Name: "A\u30CD\u30EB\u30DF\u30CD\u30F3\u30B93"
+  m_EditorClassIdentifier: 
+  skill_name: AUTO
+  skill_infomatin: "\u7D20\u6570\u306E\u30AD\u30E3\u30E9\u304C2\u4F53\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B\u3002\u653B\u6483\u529B\u3068\u9632\u5FA1\u529B\u30922\u30BF\u30FC\u30F3\u306E\u95931.5\u500D\u3059\u308B\u3002"
+  _Priority: 3
+  magic_Conditon_Origins:
+  - type: 10
+    condition_kind: 4
+    condition_num: 0
+    conditons: 2
+    magic_kind: 0
+    effect_size: 20000
+    effect_turn: 0
+  - type: 6
+    condition_kind: 4
+    condition_num: 0
+    conditons: 2
+    magic_kind: 1
+    effect_size: 1.5
+    effect_turn: 2
+  - type: 7
+    condition_kind: 4
+    condition_num: 0
+    conditons: 2
+    magic_kind: 1
+    effect_size: 1.5
+    effect_turn: 2

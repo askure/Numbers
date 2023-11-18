@@ -44,8 +44,9 @@ public class CardModel
         advent = cardEntity.advent;
         stageNum = cardEntity.stageNum;
         firstExp = cardEntity.firstExp;
-        ReaderSkill = cardEntity.ReaderSkill;
-        PublicSkill = cardEntity.AutoSkill;
+        int skillLv = (Lv >=100) ? 5 : Lv / 20;
+        ReaderSkill = cardEntity.ReaderSkill[skillLv];
+        PublicSkill = cardEntity.AutoSkill[skillLv];
 
         CopyStatus();
     }

@@ -219,7 +219,7 @@ public class CsvImpoterEditor : Editor
 
 				//スキル
 				column += 1;
-				cardData.AutoSkill = Resources.Load<Skill_origin>("Skill_origin/" + parseByComma[column]);
+				//cardData.AutoSkill = Resources.Load<Skill_origin>("Skill_origin/" + parseByComma[column]);
 
 				//Rスキル
 				column += 1;
@@ -231,7 +231,7 @@ public class CsvImpoterEditor : Editor
 					s += y[j];
 				}
 
-				cardData.ReaderSkill = Resources.Load<Skill_origin>("Skill_origin/" + s);
+				//cardData.ReaderSkill = Resources.Load<Skill_origin>("Skill_origin/" + s);
 		
 				// インスタンス化したものをアセットとして保存
 				var asset = (CardEntity)AssetDatabase.LoadAssetAtPath(path, typeof(CardEntity));

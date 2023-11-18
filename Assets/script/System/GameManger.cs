@@ -1569,6 +1569,7 @@ public class GameManger : MonoBehaviour
                     else _enemy.model.numba = (int)newnumba;
                     yield return new WaitForSeconds(0.5f);
                     break;
+
                 case  AnimationType.enemyturn:
                     yield return StartCoroutine(EnemyTurnAnimation());
                     break;

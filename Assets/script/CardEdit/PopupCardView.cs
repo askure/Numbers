@@ -11,6 +11,7 @@ public class PopupCardView : MonoBehaviour
     [SerializeField] private Text popupSkillinfoText;
     [SerializeField] private Text popupRskillnameText;
     [SerializeField] private Text popuoRskillinfoText;
+    [SerializeField] private Text popupSkillLv;
     [SerializeField] private Image cardImage;
 
 
@@ -20,9 +21,11 @@ public class PopupCardView : MonoBehaviour
         popupNameText.text = card.name;
         if(card.Lv == 0) popupLvText.text = "Lv:-";
         else popupLvText.text = "Lv:" + card.Lv.ToString();
+        int skillLv = (card.Lv >= 100) ? 6 : card.Lv / 20 + 1;
         popupNumText.text = card.num.ToString();
         popupSkillinfoText.text = card.PublicSkill.skill_infomatin;
-        popupRskillnameText.text = card.ReaderSkill.skill_name;
+        popupSkillLv.text = "AUTOÉXÉLÉã(Lv:" + skillLv  + ")" ;
+        popupRskillnameText.text = card.ReaderSkill.skill_name + "(Lv: " + skillLv  + ")" ;
         popuoRskillinfoText.text = card.ReaderSkill.skill_infomatin;
         cardImage.sprite= card.icon;
         cardImage.color = new Color(1, 1, 1);

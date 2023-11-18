@@ -23,5 +23,17 @@ MonoBehaviour:
   name: "\u30A8\u30F3\u30C9\u30EC\u30B7\u30E3\u30FC\u30EB"
   rare: A
   icon: {fileID: 21300000, guid: 380915e828368cf4cbd198a30de97a96, type: 3}
-  ReaderSkill: {fileID: 11400000, guid: 143da9ac18c68f748b514d718d46fd8c, type: 2}
-  AutoSkill: {fileID: 11400000, guid: 485e52b0b28af4545b29541bcecd400c, type: 2}
+  AutoSkill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ReaderSkill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

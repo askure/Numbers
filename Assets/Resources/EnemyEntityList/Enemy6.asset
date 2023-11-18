@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyId: 6
   name: "\u30A2\u30FC\u30C6\u30A3\u30D5\u30A1\u30AF\u30C8\u8ECD\u306E\u5D07\u62DD\u8005"
-  numba: 12
-  Hp: 1000000
-  at: 7500
-  df: 2000
-  _exp: 30000
+  numba: 23
+  Hp: 530000
+  at: 8100
+  df: 3100
+  _exp: 40000
   icon: {fileID: 21300000, guid: 0577c808f49984842b0b3471798ea1be, type: 3}
   skilllist:
   - {fileID: 11400000, guid: 58d2dcc55dd34e44594424f79b14154d, type: 2}

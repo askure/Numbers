@@ -59,7 +59,6 @@ public class PartyDfStatus : MonoBehaviour
             double temp = model.df - effect;
             model.df = (int)temp;
         }
-        Debug.Log(model.name + ":" + model.BeforeDf);
         if (model.df < model.BeforeDf && PartyDfStatusManager.statusNum <= 1) model.df = model.BeforeDf;
         Destroy(gameObject);
     }

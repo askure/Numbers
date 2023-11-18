@@ -16,7 +16,8 @@ public class CardEntity : ScriptableObject
     public new string name;
     public  string rare;
     public Sprite  icon;
-    public Skill_origin ReaderSkill;
-    public Skill_origin AutoSkill; 
+    public Skill_origin[] AutoSkill = new Skill_origin[6];
+    public Skill_origin[] ReaderSkill = new Skill_origin[6];
+   
 
 }

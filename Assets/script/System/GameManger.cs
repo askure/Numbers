@@ -726,9 +726,7 @@ public class GameManger : MonoBehaviour
         }
         else
         {
-            double newnumba = MAX_NUMBA * _enemy.model.Hp / MAX_ENEMYHP;
-            if ((int)newnumba < 1) _enemy.model.numba = 1;
-            else _enemy.model.numba = (int)newnumba;
+           
             animations.Add(AnimationType.numProtect);
 
 
@@ -1384,7 +1382,12 @@ public class GameManger : MonoBehaviour
 
         }
         Debug.Log("At(BeforeBounus):" + ats);
-        double bounus = 1 + 0.3*(sum - _enemy.model.numba);
+        double bounus = 1 + 0.1 * (sum - _enemy.model.numba);
+        if (sum - _enemy.model.numba >= 100)
+        {
+            bounus = 10 * Mathf.Log(sum - _enemy.model.numba,100);
+        }
+        
         Debug.Log("Bounus:" + bounus);
         ats *= bounus;
         Debug.Log("At(AfterBounus):" + ats);
@@ -1561,6 +1564,9 @@ public class GameManger : MonoBehaviour
                     SceneManager.LoadScene("Battle");
                     break;
                 case AnimationType.numProtect:
+                    double newnumba = MAX_NUMBA * _enemy.model.Hp / MAX_ENEMYHP;
+                    if ((int)newnumba < 1) _enemy.model.numba = 1;
+                    else _enemy.model.numba = (int)newnumba;
                     yield return new WaitForSeconds(0.5f);
                     break;
                 case  AnimationType.enemyturn:

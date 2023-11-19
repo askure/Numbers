@@ -10,32 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
-  m_Name: R9
+  m_Name: "R\u30B5\u30DE4"
   m_EditorClassIdentifier: 
   skill_name: "\u751F\u547D\u306E\u5149"
-  skill_infomatin: "2\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u653B\u6483\u529B\u3068\u9632\u5FA1\u529B\u30921.3\u500D\u3059\u308B\u3002\u6570\u5024\u304C6\u306E\u30AD\u30E3\u30E9\u306A\u3089\u3055\u3089\u306BHP\u3068\u653B\u6483\u529B1.2\u500D\u3059\u308B"
+  skill_infomatin: "2\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u653B\u6483\u529B\u3068\u9632\u5FA1\u529B\u30921.8\u500D\u3059\u308B\u3002\u6570\u5024\u304C6\u306E\u30AD\u30E3\u30E9\u306A\u3089HP\u30922.4\u500D\u3059\u308B\u3002"
+  _Priority: 3
   magic_Conditon_Origins:
-  - type: 6
-    condition_kind: 2
-    condition_num: 2
-    conditons: 0
-    magic_kind: 1
-    effect_size: 1.3
   - type: 7
     condition_kind: 2
     condition_num: 2
     conditons: 0
     magic_kind: 1
-    effect_size: 1.3
+    effect_size: 1.8
+    effect_turn: 0
+  - type: 6
+    condition_kind: 2
+    condition_num: 2
+    conditons: 0
+    magic_kind: 1
+    effect_size: 1.8
+    effect_turn: 0
   - type: 9
     condition_kind: 8
     condition_num: 6
     conditons: 0
     magic_kind: 1
-    effect_size: 1.2
-  - type: 6
-    condition_kind: 8
-    condition_num: 6
-    conditons: 0
-    magic_kind: 1
-    effect_size: 1.2
+    effect_size: 2.5
+    effect_turn: 0

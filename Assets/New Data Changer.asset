@@ -25,5 +25,5 @@ MonoBehaviour:
   convex: 1
   allCharactor: 35
   allStage: 40
-  clear: 1
+  clear: 0
   pos: 1

@@ -1174,11 +1174,11 @@ public class GameManger : MonoBehaviour
                     case Skill_origin.Skill_type.decreaseDefence :
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(estatusdf).SetStatus(effect, 1,"Add");
+                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Add");
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(estatusdf).SetStatus(effect, 1,"Multi");
+                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Multi");
                         }
                         
                         break;

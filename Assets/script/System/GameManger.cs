@@ -1180,7 +1180,7 @@ public class GameManger : MonoBehaviour
                         {
                             Instantiate(estatusdf).SetStatus(effect, effectturn,"Multi");
                         }
-                        
+                        animations.Add(AnimationType.decreasedf);
                         break;
                     default:
                         break;
@@ -1481,6 +1481,7 @@ public class GameManger : MonoBehaviour
         heal,
         attack,
         persuit,
+        decreasedf,
         skill,
         gameover,
         win,
@@ -1529,6 +1530,9 @@ public class GameManger : MonoBehaviour
 
                     }
                     else _enemy.model.Hp -= persuit;
+                    yield return new WaitForSeconds(0.3f);
+                    break;
+                case AnimationType.decreasedf:
                     yield return new WaitForSeconds(0.3f);
                     break;
                 case AnimationType.skill:

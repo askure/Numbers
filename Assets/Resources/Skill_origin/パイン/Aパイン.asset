@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
-  m_Name: A14
+  m_Name: "A\u30D1\u30A4\u30F3"
   m_EditorClassIdentifier: 
   skill_name: AUTO
   skill_infomatin: "\u6570\u5024\u304C16\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B"
+  _Priority: 3
   magic_Conditon_Origins:
   - type: 10
     condition_kind: 0
     condition_num: 16
     conditons: 0
     magic_kind: 0
-    effect_size: 77777
+    effect_size: 5000
+    effect_turn: 0

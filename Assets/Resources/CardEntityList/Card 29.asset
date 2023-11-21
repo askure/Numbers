@@ -23,5 +23,17 @@ MonoBehaviour:
   name: "\u30E2\u30F3\u30C6\u30EA\u30AA\u30FC\u30B9"
   rare: SS
   icon: {fileID: 21300000, guid: 29df05f80ffc2f14ea20e1d6c538fa62, type: 3}
-  ReaderSkill: {fileID: 11400000, guid: ece028447049ec6458ea2ad9a13955f2, type: 2}
-  AutoSkill: {fileID: 11400000, guid: 424ebf7d42054ff4e8123e0fad995c38, type: 2}
+  AutoSkill:
+  - {fileID: 11400000, guid: 424ebf7d42054ff4e8123e0fad995c38, type: 2}
+  - {fileID: 11400000, guid: 186d793dfac9fcd45a718c0c4d6e91cd, type: 2}
+  - {fileID: 11400000, guid: 191acacaf9a05d549a8a8ce8c7fad995, type: 2}
+  - {fileID: 11400000, guid: 55e6c54611e663b48bd1ddf1fa197d57, type: 2}
+  - {fileID: 11400000, guid: 764ab29e6aaff1340afe71da1594776b, type: 2}
+  - {fileID: 11400000, guid: 138f47fe01a1fda43b8d245eff837472, type: 2}
+  ReaderSkill:
+  - {fileID: 11400000, guid: ece028447049ec6458ea2ad9a13955f2, type: 2}
+  - {fileID: 11400000, guid: 8ed6614ae83c60d45aebebc04d8cf431, type: 2}
+  - {fileID: 11400000, guid: b96db82819f2b6948a3cb2c23bc83813, type: 2}
+  - {fileID: 11400000, guid: 9fe89b389b07f3245941bcaacfdf3f23, type: 2}
+  - {fileID: 11400000, guid: 0afce902116ccf94eaa100480aacf8d8, type: 2}
+  - {fileID: 11400000, guid: 4d4799b63936ab64fb5ff31318878062, type: 2}

@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
-  m_Name: A28
+  m_Name: "A\u30A4\u30D6\u30C0\u30F3\u30C65"
   m_EditorClassIdentifier: 
   skill_name: AUTO
-  skill_infomatin: "\u6570\u5024\u304C30\u4EE5\u4E0A\u306A\u3089HP\u3092\u56DE\u5FA9\u3057\u3066\u8FFD\u6483\u3092\u3059\u308B"
+  skill_infomatin: "\u6570\u5024\u304C90\u4EE5\u4E0A\u306A\u3089HP\u3092\u8D85\u7D76\u56DE\u5FA9\u3057\u3066\u8FFD\u6483\u3092\u3059\u308B\u3002"
   _Priority: 2
   magic_Conditon_Origins:
   - type: 3
     condition_kind: 0
-    condition_num: 30
+    condition_num: 70
     conditons: 0
     magic_kind: 0
-    effect_size: 35000
+    effect_size: 70000
+    effect_turn: 0
   - type: 10
     condition_kind: 0
-    condition_num: 30
+    condition_num: 70
     conditons: 0
     magic_kind: 0
-    effect_size: 120000
+    effect_size: 130000
+    effect_turn: 0

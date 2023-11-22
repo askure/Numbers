@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
+  m_Name: "A\u738B\u80055"
+  m_EditorClassIdentifier: 
+  skill_name: AUTO
+  skill_infomatin: "\u6570\u5024\u30924\u52A0\u7B97\u3059\u308B\u3002\u653B\u6483\u529B\u30923\u30BF\u30FC\u30F3\u306E\u95933\u500D\u306B\u3059\u308B\u3002"
+  _Priority: 4
+  magic_Conditon_Origins:
+  - type: 6
+    condition_kind: 7
+    condition_num: 0
+    conditons: 0
+    magic_kind: 1
+    effect_size: 3
+    effect_turn: 3
+  - type: 11
+    condition_kind: 7
+    condition_num: 0
+    conditons: 0
+    magic_kind: 0
+    effect_size: 4
+    effect_turn: 0

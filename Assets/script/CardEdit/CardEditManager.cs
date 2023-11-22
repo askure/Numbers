@@ -48,7 +48,9 @@ public class CardEditManager : MonoBehaviour
         string  mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         dmanager.StageDataLoad(mapfilepath);
         cardLv = cmanager.cardLvs;
+
         partyNum = cmanager.sortiePartyNum;
+        if (partyNum < 0 || partyNum > 7) partyNum = 0;
        // partyNum = 0;
        // cardListNum = 0;
         Setupobject();
@@ -89,7 +91,15 @@ public class CardEditManager : MonoBehaviour
     public void EditButton()
     {
         Edit = true;
-        ChangeView(false,false);
+        saveButton.SetActive(true);
+        editButton.SetActive(false);
+        deleateButton.SetActive(false);
+        stopButton.SetActive(true);
+        sortieButton.SetActive(false);
+        nextButton.SetActive(false);
+        BackButton.SetActive(false);
+        beforeCardListButton.SetActive(true);
+        nextCardListButton.SetActive(true);
     }
     public void DeleteButton()
     {
@@ -97,6 +107,8 @@ public class CardEditManager : MonoBehaviour
         deleteChackPanel.SetActive(true);
         nextCardListButton.SetActive(false);
         beforeCardListButton.SetActive(false);
+        nextButton.SetActive(false);
+        BackButton.SetActive(false);
         Edit = false;
 
     }
@@ -125,6 +137,8 @@ public class CardEditManager : MonoBehaviour
         CreateDeck(partyNum);
         CheckSerected();
         deleteChackPanel.SetActive(false);
+        nextCardListButton.SetActive(true);
+        beforeCardListButton.SetActive(true);
         Notification.GetInstance().PutInQueue("削除しました");
     }
 
@@ -238,18 +252,18 @@ public class CardEditManager : MonoBehaviour
         InitCardList();
         CreateCardList(cardListNum);
     }
-    void CreateDeck(int patryNum)
+    void CreateDeck(int partyNum)
     {
-      
-        if (patryNum < 0 || patryNum >= 7) return;
 
-        var x =  cmanager.deck[patryNum];
+        if (partyNum < 0 || partyNum >= 7) partyNum = 0; 
+
+        var x =  cmanager.deck[partyNum];
         
-        if (x.deckName == "") partyName.text = "パーティ" + (patryNum+1).ToString();
+        if (x.deckName == "") partyName.text = "パーティ" + (partyNum + 1).ToString();
         else  partyName.text = x.deckName;
         var deck = x.cardId;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 
+       
         if (deck == null)return;
         
         if(deck.Count == 0)
@@ -257,7 +271,11 @@ public class CardEditManager : MonoBehaviour
            
             Instantiate(newDeck, lineUp);
             PartyHpUpdate(nowDeckCard);
-            ChangeView(false, true);
+            saveButton.SetActive(false);
+            editButton.SetActive(false);
+            deleateButton.SetActive(false);
+            stopButton.SetActive(false);
+            sortieButton.SetActive(false);
             nextButton.SetActive(true);
             BackButton.SetActive(true);
 
@@ -507,6 +525,8 @@ public class CardEditManager : MonoBehaviour
             Destroy(line.transform.GetChild(i).gameObject);
         }
     }
+
+    
     void ChangeView(bool on_off,bool all)
     {   
         if (all)

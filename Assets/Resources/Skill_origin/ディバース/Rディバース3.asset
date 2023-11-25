@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "R\u30C7\u30A3\u30D0\u30FC\u30B93"
   m_EditorClassIdentifier: 
   skill_name: "\u5168\u3066\u3092\u571F\u306B\u9084\u3059"
-  skill_infomatin: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u3001\u73FE\u5728HP\u306E76\uFF05\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u30D1\u30FC\u30C6\u30A3\u306E\u653B\u6483\u529B\u30922.5\u500D\u3001\u9632\u5FA1\u529B\u30923\u500D\u3059\u308B\u30022,3\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u5168\u30D1\u30E9\u30E1\u30FC\u30BF(\u6570\u5024\u3092\u9664\u304F)\u30921.6\u500D\u3059\u308B\u3002 "
+  skill_infomatin: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u3001\u73FE\u5728HP\u306E76\uFF05\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u30D1\u30FC\u30C6\u30A3\u306E\u653B\u6483\u529B\u30922\u500D\u3001\u9632\u5FA1\u529B\u30922.2\u500D\u3059\u308B\u30022,3\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u5168\u30D1\u30E9\u30E1\u30FC\u30BF(\u6570\u5024\u3092\u9664\u304F)\u30921.6\u500D\u3059\u308B\u3002 "
   _Priority: 3
   magic_Conditon_Origins:
   - type: 5
@@ -28,14 +28,14 @@ MonoBehaviour:
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 2.5
+    effect_size: 2
     effect_turn: 0
   - type: 7
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 3
+    effect_size: 2.2
     effect_turn: 0
   - type: 6
     condition_kind: 2

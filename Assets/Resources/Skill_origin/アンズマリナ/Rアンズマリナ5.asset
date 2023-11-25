@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "R\u30A2\u30F3\u30BA\u30DE\u30EA\u30CA5"
   m_EditorClassIdentifier: 
   skill_name: "HP\u5F37\u5316"
-  skill_infomatin: "2,3,5\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\uFF28P\u30922.5\u500D\u3059\u308B"
+  skill_infomatin: "2,3,5\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\uFF28P\u30922.3\u500D\u3059\u308B"
   _Priority: 3
   magic_Conditon_Origins:
   - type: 9
@@ -21,19 +21,19 @@ MonoBehaviour:
     condition_num: 2
     conditons: 0
     magic_kind: 1
-    effect_size: 2.5
+    effect_size: 2.3
     effect_turn: 0
   - type: 9
     condition_kind: 2
     condition_num: 3
     conditons: 0
     magic_kind: 1
-    effect_size: 2.5
+    effect_size: 2.3
     effect_turn: 0
   - type: 9
     condition_kind: 2
     condition_num: 5
     conditons: 0
     magic_kind: 1
-    effect_size: 2.5
+    effect_size: 2.3
     effect_turn: 0

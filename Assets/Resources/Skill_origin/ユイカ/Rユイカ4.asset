@@ -35,7 +35,7 @@ MonoBehaviour:
     condition_num: 2
     conditons: 0
     magic_kind: 0
-    effect_size: 2.2
+    effect_size: 2
     effect_turn: 0
   - type: 7
     condition_kind: 2
@@ -56,5 +56,5 @@ MonoBehaviour:
     condition_num: 3
     conditons: 0
     magic_kind: 0
-    effect_size: 2.2
+    effect_size: 2
     effect_turn: 0

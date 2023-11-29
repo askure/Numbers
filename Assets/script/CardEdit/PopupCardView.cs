@@ -13,6 +13,7 @@ public class PopupCardView : MonoBehaviour
     [SerializeField] private Text popuoRskillinfoText;
     [SerializeField] private Text popupSkillLv;
     [SerializeField] private Image cardImage;
+    [SerializeField] private GameObject autopanel, rpanel;
 
 
 
@@ -29,6 +30,30 @@ public class PopupCardView : MonoBehaviour
         popuoRskillinfoText.text = card.ReaderSkill.skill_infomatin;
         cardImage.sprite= card.icon;
         cardImage.color = new Color(1, 1, 1);
+        rpanel.GetComponent<EffectInfoManager>().SetText(card.ReaderSkill,card.at);
+        autopanel.GetComponent<EffectInfoManager>().SetText(card.PublicSkill, card.at);
     }
 
+    private void SetPanel()
+    {
+
+    }
+
+    public void OpenAutoPanel()
+    {
+        autopanel.SetActive(true);
+    }
+    public void CloseAutoPanel()
+    {
+        autopanel.SetActive(false);
+    }
+    public void OpenRPanel()
+    {
+        rpanel.SetActive(true);
+    }
+
+    public void CloseRPanel()
+    {
+        rpanel.SetActive(false);
+    }
 }

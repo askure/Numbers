@@ -1174,13 +1174,13 @@ public class GameManger : MonoBehaviour
                     case Skill_origin.Skill_type.decreaseDefence :
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(estatusdf).SetStatus(effect, 1,"Add");
+                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Add");
                         }
                         else if (magicKind == Skill_origin.MagicKind.multi)
                         {
-                            Instantiate(estatusdf).SetStatus(effect, 1,"Multi");
+                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Multi");
                         }
-                        
+                        animations.Add(AnimationType.decreasedf);
                         break;
                     default:
                         break;
@@ -1481,6 +1481,7 @@ public class GameManger : MonoBehaviour
         heal,
         attack,
         persuit,
+        decreasedf,
         skill,
         gameover,
         win,
@@ -1529,6 +1530,9 @@ public class GameManger : MonoBehaviour
 
                     }
                     else _enemy.model.Hp -= persuit;
+                    yield return new WaitForSeconds(0.3f);
+                    break;
+                case AnimationType.decreasedf:
                     yield return new WaitForSeconds(0.3f);
                     break;
                 case AnimationType.skill:

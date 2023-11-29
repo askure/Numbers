@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
+  m_Name: "R\u5D07\u5D8B5"
+  m_EditorClassIdentifier: 
+  skill_name: "\u8D85\u5F37\u5316-3-"
+  skill_infomatin: "3\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u653B\u6483\u529B\u30922.4\u500D\u3059\u308B\u3002\u6570\u5024\u30922\u5897\u3084\u3059\u3002"
+  _Priority: 3
+  magic_Conditon_Origins:
+  - type: 6
+    condition_kind: 2
+    condition_num: 3
+    conditons: 0
+    magic_kind: 1
+    effect_size: 2.4
+    effect_turn: 0
+  - type: 8
+    condition_kind: 2
+    condition_num: 3
+    conditons: 0
+    magic_kind: 0
+    effect_size: 2
+    effect_turn: 0

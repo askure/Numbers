@@ -18,7 +18,7 @@ MonoBehaviour:
   Multi: 3
   Diviser: 3
   Prime: 3
-  CardLv: 120
+  CardLv: 1
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0

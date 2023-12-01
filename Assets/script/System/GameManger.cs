@@ -58,6 +58,7 @@ public class GameManger : MonoBehaviour
     private int ALLCHARCTOR;
     private CharacterData.CardLv[] cardLvs;
     private List<CharacterData.DeckCard> deck;
+    private bool buttle_tutorial;
     public static int hpSum;
     public static int partyDf = 0;
     static  private int MAX_HP;
@@ -67,6 +68,7 @@ public class GameManger : MonoBehaviour
     public List<int> decklist;
     public List<CardController> UpCard = new List<CardController>();
     public List<string> logText = new List<string>();
+    
    // public List<int> decklist;
     public CardController ReaderCard;
     public int sortiePartyNum;
@@ -218,7 +220,11 @@ public class GameManger : MonoBehaviour
           
             var t = GameObject.Find("Enemys").GetComponent<Animator>();
             t.enabled = true;
-            //StartCoroutine(Tutorial(1));
+            if (!buttle_tutorial)
+            {
+                StartCoroutine(Tutorial(2));
+                dmanager.buttle_tutorial = true;
+            } 
 
 
 
@@ -242,7 +248,12 @@ public class GameManger : MonoBehaviour
                 BGMManager.SetBGM(DefaultAudioClipIntro[1], DefaultAudioClipLoop[1], volume);
             else
                 BGMManager.SetBGM(CrectmapManager.intro[1], CrectmapManager.loop[1], volume);
-           // BGMManager.Play();
+            // BGMManager.Play();
+            if (!buttle_tutorial)
+            {
+                StartCoroutine(Tutorial(5));
+                dmanager.buttle_tutorial = true;
+            }
 
         }
         if(ButtleNum == 1)
@@ -295,8 +306,8 @@ public class GameManger : MonoBehaviour
         yield return new WaitForSeconds(time);
         var tuto = Resources.Load<GameObject>("tutorial");
         var canva = GameObject.Find("Canvas").transform;
-        Instantiate(tuto, canva);
-        tuto.GetComponent<Tutorial>().SetUpTutorial(tutorial);
+        var g = Instantiate(tuto, canva);
+        g.GetComponent<Tutorial>().SetUpTutorial(tutorial);
 
     }
 
@@ -435,6 +446,7 @@ public class GameManger : MonoBehaviour
         }
         sortiePartyNum = cmanager.sortiePartyNum;
          volume = dmanager.volume;
+        buttle_tutorial = dmanager.buttle_tutorial;
     }
     
 

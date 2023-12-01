@@ -33,6 +33,15 @@ public class DataManager
 
     public int allStage { set; get; } = 0;
     public StageData.Stage[] stages { set; get; }=null;
+
+    public bool buttle_tutorial { set; get; } = false;
+
+    public bool enemystatus_tutorial { set; get; } = false;
+
+    public bool charactor_tutorial { set; get; } = false;
+
+    public bool endgame_tutorial { set; get; } = false;
+
     public  void DataLoad(string s)
     {   
         if (File.Exists(s))
@@ -52,6 +61,10 @@ public class DataManager
             Exp = playerstatus_save.exp;
             rankExp = playerstatus_save.rankexp;
             volume = playerstatus_save.volume;
+            buttle_tutorial = playerstatus_save.buttle_tutorial;
+            enemystatus_tutorial = playerstatus_save.enemystatus_tutorial;
+            charactor_tutorial = playerstatus_save.charactor_tutorial;
+            endgame_tutorial = playerstatus_save.endgame_tutorial;
         }
 
 
@@ -69,7 +82,11 @@ public class DataManager
             stone = Stone,
             exp = Exp,
             rankexp = rankExp,
-            volume = volume
+            volume = volume,
+            buttle_tutorial = buttle_tutorial,
+            enemystatus_tutorial = enemystatus_tutorial,
+            charactor_tutorial = charactor_tutorial,
+            endgame_tutorial = endgame_tutorial
         };
         string json = JsonUtility.ToJson(playerstatus_save, true);
         StreamWriter streamWriter = new StreamWriter(s);
@@ -89,7 +106,11 @@ public class DataManager
             stone = 0,
             exp = 10000,
             rankexp = 0,
-            volume = 0.3f
+            volume = 0.3f,
+            buttle_tutorial = false,
+            enemystatus_tutorial = false,
+            charactor_tutorial = false,
+            endgame_tutorial = false
         };
         string json = JsonUtility.ToJson(playerstatus_save, true);
         StreamWriter streamWriter = new StreamWriter(s);

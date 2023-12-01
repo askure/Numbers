@@ -16,6 +16,7 @@ public class CrectmapManager : MonoBehaviour
     [SerializeField] GameObject AfterStageButton;
     [SerializeField] SpriteRenderer back;
     [SerializeField] PartyManager party;
+    [SerializeField] List<Sprite> chartutorial,endtutorial;
 
     Animator anime;
     GameObject gameobj;
@@ -36,6 +37,7 @@ public class CrectmapManager : MonoBehaviour
 
     void Start()
     {
+        
         filepath = Application.persistentDataPath + "/" + ".savedata.json";
         mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         sortiePartyPanel = GameObject.Find("SortiePartyPanel");
@@ -52,6 +54,17 @@ public class CrectmapManager : MonoBehaviour
         if (Mapid != 0) BeforeStageButton.SetActive(true);
         else BeforeStageButton.SetActive(false);
 
+        if (!manger.enemystatus_tutorial && manger.stages[4].clear)
+        {
+            StartCoroutine(CharTutorial(0));
+            manger.enemystatus_tutorial = true;
+        }
+
+        if(!manger.endgame_tutorial && manger.stages[29].clear)
+        {
+            StartCoroutine(EndTutorial(0));
+            manger.endgame_tutorial = true;
+        }
         var flag = false;
         var index = 0;
         foreach (StageEntity stage in MapManager.maps)
@@ -86,7 +99,7 @@ public class CrectmapManager : MonoBehaviour
         {
             CreatePartyList();
         }
-
+        manger.DataSave(filepath);
     }
 
     public void Onclick()
@@ -265,6 +278,24 @@ public class CrectmapManager : MonoBehaviour
         }
     }
 
+    IEnumerator CharTutorial(int time)
+    {
+        yield return new WaitForSeconds(time);
+        var tuto = Resources.Load<GameObject>("tutorial");
+        var canva = GameObject.Find("Canvas").transform;
+         var g  =Instantiate(tuto, canva);
+        g.GetComponent<Tutorial>().SetUpTutorial(chartutorial);
+
+    }
+    IEnumerator EndTutorial(int time)
+    {
+        yield return new WaitForSeconds(time);
+        var tuto = Resources.Load<GameObject>("tutorial");
+        var canva = GameObject.Find("Canvas").transform;
+        var g = Instantiate(tuto, canva);
+        g.GetComponent<Tutorial>().SetUpTutorial(endtutorial);
+
+    }
 
 
 }

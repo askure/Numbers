@@ -15,7 +15,7 @@ MonoBehaviour:
   EnemyId: 0
   name: "\u907A\u8DE1\u5B88\u8B77"
   numba: 17
-  Hp: 250000
+  Hp: 55000
   at: 6000
   df: 3000
   _exp: 10000

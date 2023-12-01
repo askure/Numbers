@@ -16,16 +16,45 @@ MonoBehaviour:
   beforestageid: 18
   stageName: "\u30AA\u30A2\u30B7\u30B9"
   buttleNum: 4
+  RecoLevel_Chatactor: 50
+  RecoLevel_Bounus: 20
   enemy:
   - {fileID: 11400000, guid: 3a0549a88c16f6b48ada0bd81625f9d4, type: 2}
   - {fileID: 11400000, guid: 616934b07e546be4ba5603f573048902, type: 2}
   - {fileID: 11400000, guid: 5341c74657ffaa14596c92e693b28757, type: 2}
   - {fileID: 11400000, guid: 88f5523544e163447abb58cc751ba132, type: 2}
-  stageinfo: []
-  fieldEffects: []
+  stageinfo:
+  - "\u3059\u3079\u3066\u306E\u6575\u5927\u5F37\u5316\u72B6\u614B"
+  fieldEffects:
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 0
+    effectSize: 2.8
+    effectCondition: 0
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 1
+    effectSize: 2.7
+    effectCondition: 0
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 2
+    effectSize: 2
+    effectCondition: 0
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 3
+    effectSize: 2.1
+    effectCondition: 0
   gifts:
   - Gift: 0
     giftNum: 5
     card: {fileID: 0}
     drop: 0
   BackGraunds: {fileID: 21300000, guid: fb79912e38d63634c94f522e9ee3d572, type: 3}
+  intro:
+  - {fileID: 0}
+  - {fileID: 0}
+  loop:
+  - {fileID: 0}
+  - {fileID: 0}

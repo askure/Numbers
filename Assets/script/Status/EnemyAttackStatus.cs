@@ -11,6 +11,7 @@ public class EnemyAttackStatus : MonoBehaviour
     string mode;
     int beforbuf;
     EnemyModel model;
+    static int statusNum = 0;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +31,7 @@ public class EnemyAttackStatus : MonoBehaviour
         model = p.GetComponent<EnemyContoller>().model;
         this.mode = mode;
         this.effect = effect;
-        this.beforbuf = model.df;
+        if(statusNum==0) this.beforbuf = model.df;
         if (mode == "Multi")
         {
             double temp = model.at * effect;
@@ -44,11 +45,12 @@ public class EnemyAttackStatus : MonoBehaviour
         transform.parent = p;
         EffectTurn = turn;
         FinishTurn = GameManger.TurnNum + EffectTurn;
+        statusNum++;
     }
     public void StatusReset()
     {
-        model.df = beforbuf;
-        /*if (mode == "Multi")
+        
+        if (mode == "Multi")
         {
             double temp = model.at / effect;
             model.at = (int)temp;
@@ -59,7 +61,9 @@ public class EnemyAttackStatus : MonoBehaviour
             double temp = model.at - effect;
             model.at = (int)temp;
         }
-        if (model.at < 1) model.at = 1;*/
+        if (model.at < 1) model.at = 1;
+        statusNum--;
+        if (statusNum == 0 && model.at < model.initAt) model.at = model.initAt;
         Destroy(gameObject);
     }
 

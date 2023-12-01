@@ -16,6 +16,8 @@ MonoBehaviour:
   beforestageid: 35
   stageName: 7F
   buttleNum: 1
+  RecoLevel_Chatactor: 140
+  RecoLevel_Bounus: 48
   enemy:
   - {fileID: 11400000, guid: 36822e5a835ebe84ab9a84441b3e1331, type: 2}
   stageinfo:

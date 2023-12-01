@@ -31,14 +31,14 @@ MonoBehaviour:
     effect_size: 1.7
     effect_turn: 0
   - type: 6
-    condition_kind: 9
+    condition_kind: 8
     condition_num: 14
     conditons: 0
     magic_kind: 1
     effect_size: 2.3
     effect_turn: 0
   - type: 7
-    condition_kind: 9
+    condition_kind: 8
     condition_num: 14
     conditons: 0
     magic_kind: 1

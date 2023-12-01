@@ -16,8 +16,8 @@ MonoBehaviour:
   beforestageid: 29
   stageName: 1F
   buttleNum: 1
-  RecoLevel_Chatactor: 0
-  RecoLevel_Bounus: 0
+  RecoLevel_Chatactor: 110
+  RecoLevel_Bounus: 37
   enemy:
   - {fileID: 11400000, guid: 11075094075999c42a194e40223286fa, type: 2}
   stageinfo:
@@ -27,7 +27,7 @@ MonoBehaviour:
   - EnemyOrParty: 0
     buff: 4
     ApplicationNum: 0
-    effectSize: 1.4
+    effectSize: 3.5
     effectCondition: 0
   - EnemyOrParty: 1
     buff: 4

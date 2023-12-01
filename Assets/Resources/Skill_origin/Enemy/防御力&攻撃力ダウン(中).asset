@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef432a6d2cfb3bd46a1c731d62392ee8, type: 3}
   m_Name: "\u9632\u5FA1\u529B&\u653B\u6483\u529B\u30C0\u30A6\u30F3(\u4E2D)"
   m_EditorClassIdentifier: 
-  skill_name: "\u9632\u5FA1\u529B\u30C0\u30A6\u30F3(\u4E2D)"
-  skill_infomatin: "\u9632\u5FA1\u529B\u3068\u653B\u6483\u529B10\u30BF\u30FC\u30F3\u306E\u95930.5\u500D\u306B\u3059\u308B"
+  skill_name: "\u9632\u5FA1\u529B&\u653B\u6483\u529B\u30C0\u30A6\u30F3(\u4E2D)"
+  skill_infomatin: "\u9632\u5FA1\u529B\u3068\u653B\u6483\u529B\u30925\u30BF\u30FC\u30F3\u306E\u95930.8\u500D\u306B\u3059\u308B"
   _Priority: 1
   magic_Conditon_Origins:
-  - type: 12
-    condition_kind: 7
-    condition_num: 0
-    conditons: 0
-    magic_kind: 1
-    effect_size: 0.3
-    effect_turn: 5
   - type: 14
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 0.3
+    effect_size: 0.8
+    effect_turn: 5
+  - type: 16
+    condition_kind: 7
+    condition_num: 0
+    conditons: 0
+    magic_kind: 1
+    effect_size: 0.8
     effect_turn: 5

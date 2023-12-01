@@ -17,21 +17,21 @@ MonoBehaviour:
   _Priority: 0
   magic_Conditon_Origins:
   - type: 6
-    condition_kind: 9
+    condition_kind: 0
     condition_num: 50
     conditons: 0
     magic_kind: 1
     effect_size: 2
     effect_turn: 2
   - type: 7
-    condition_kind: 9
+    condition_kind: 0
     condition_num: 60
     conditons: 0
     magic_kind: 1
     effect_size: 2.9
     effect_turn: 2
   - type: 3
-    condition_kind: 9
+    condition_kind: 0
     condition_num: 60
     conditons: 0
     magic_kind: 0

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: "\u653B\u6483\u529B\u30C0\u30A6\u30F3"
   m_EditorClassIdentifier: 
   skill_name: "\u653B\u6483\u529B\u30C0\u30A6\u30F3"
-  skill_infomatin: "\u653B\u6483\u529B\u30920.5\u500D\u3059\u308B"
+  skill_infomatin: "\u653B\u6483\u529B\u30920.8\u500D\u3059\u308B"
   _Priority: 1
   magic_Conditon_Origins:
-  - type: 14
+  - type: 16
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 0.5
-    effect_turn: 10
+    effect_size: 0.8
+    effect_turn: 3

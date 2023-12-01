@@ -5,11 +5,11 @@ using UnityEngine;
 public class EnemyDfStatus : MonoBehaviour
 {// Start is called before the first frame update
     int EffectTurn = 3;
-    int FinishTurn;
-    double effect;
+   [SerializeField] int FinishTurn;
+   [SerializeField] double effect;
     string mode;
-    int beforbuf;
     EnemyModel model;
+    static int statusNum = 0;
 
     // Update is called once per frame
     void Update()
@@ -29,7 +29,7 @@ public class EnemyDfStatus : MonoBehaviour
         this.mode = mode;
         model = p.GetComponent<EnemyContoller>().model;
         this.effect = effect;
-        this.beforbuf = model.df;
+        Debug.Log("setbefore" + mode + ":" + model.df);
         if (mode == "Multi")
         {
             double temp = model.df * effect;
@@ -40,12 +40,15 @@ public class EnemyDfStatus : MonoBehaviour
             double temp = model.df + effect;
             model.df = (int)temp;
         }
+        Debug.Log("setafter" + mode + ":" + model.df);
         transform.parent = p;
         EffectTurn = turn;
         FinishTurn = GameManger.TurnNum + EffectTurn;
+        statusNum++;
     }
     public void StatusReset()
     {
+        Debug.Log("resetbefore" + mode  + ":"+ model.df);
         if (mode == "Multi")
         {
             double temp = model.df / effect;
@@ -56,7 +59,11 @@ public class EnemyDfStatus : MonoBehaviour
             double temp = model.df - effect;
             model.df = (int)temp;
         }
+        Debug.Log("resetafter:" + mode + ":" + model.df);
         if (model.df < 1) model.df = 1;
+        statusNum--;
+        if (statusNum == 0 && model.df < model.initDf) model.df = model.initDf;
+        
         Destroy(gameObject);
     }
 }

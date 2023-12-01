@@ -991,6 +991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: Bonus
   changeBGM: 0
+  se: {fileID: 0}
 --- !u!114 &637668785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1352,6 +1353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: Home
   changeBGM: 0
+  se: {fileID: 0}
 --- !u!114 &1056515181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,6 +2387,7 @@ GameObject:
   - component: {fileID: 1442199122}
   - component: {fileID: 1442199121}
   - component: {fileID: 1442199123}
+  - component: {fileID: 1442199124}
   m_Layer: 0
   m_Name: ChacterManager
   m_TagString: Untagged
@@ -2444,6 +2447,21 @@ MonoBehaviour:
   expNumText: {fileID: 2013392871}
   Icon: {fileID: 1084895631}
   rareImage: {fileID: 895164926}
+--- !u!114 &1442199124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442199120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e552164f96a4f44864581b9dd87e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1550587114}
+  notificationPanelPrefab: {fileID: 2667463286433315268, guid: edbf05a4be1519545b4aa2fa165c526b, type: 3}
+  texts: []
 --- !u!1 &1550587111
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,7 +127,8 @@ public class CharacterManager : MonoBehaviour
 
 
            cardLvs[id].Lv++;
-           cardLvs[id].expSum += GetExp(cardLvs[id].Lv, cardLvs[id].expSum);
+           if(cardLvs[id].Lv % 20 == 0 && cardLvs[id].Lv <=100) Notification.GetInstance().PutInQueue("スキルアップ!");
+            cardLvs[id].expSum += GetExp(cardLvs[id].Lv, cardLvs[id].expSum);
            cmanager.cardLvs[id].expSum = cardLvs[id].expSum;
            cmanager.cardLvs[id].Lv = cardLvs[id].Lv;
            SerctedCard.CahacterInit(id, cardLvs[id].Lv);

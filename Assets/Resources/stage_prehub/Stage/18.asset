@@ -16,6 +16,8 @@ MonoBehaviour:
   beforestageid: 17
   stageName: "\u732B\u306E\u96C6\u3044(\u305D\u306E2)"
   buttleNum: 4
+  RecoLevel_Chatactor: 48
+  RecoLevel_Bounus: 19
   enemy:
   - {fileID: 11400000, guid: 87855875210f4994dba32bae689c00c4, type: 2}
   - {fileID: 11400000, guid: fe63b0a4f42a2674cb56db764bc45116, type: 2}
@@ -29,3 +31,9 @@ MonoBehaviour:
     card: {fileID: 0}
     drop: 0
   BackGraunds: {fileID: 21300000, guid: b441682f18bbb6d4bb1475d0c68fc1eb, type: 3}
+  intro:
+  - {fileID: 0}
+  - {fileID: 0}
+  loop:
+  - {fileID: 0}
+  - {fileID: 0}

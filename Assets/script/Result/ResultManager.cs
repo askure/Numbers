@@ -34,6 +34,7 @@ public class ResultManager : MonoBehaviour
     }
     void SetText()
     {
+        if (CrectmapManager.MapManager == null || CrectmapManager.stage == null) return;
         mapNameText.text = CrectmapManager.MapManager.stageName;
         stageNameText.text = CrectmapManager.stage.stageName;
         expText.text = "åoå±íl:"+GameManger.enemysexp.ToString("N0");

@@ -16,13 +16,31 @@ MonoBehaviour:
   beforestageid: 8
   stageName: "\u68EE\u5965\u306E\u9F8D"
   buttleNum: 4
+  RecoLevel_Chatactor: 22
+  RecoLevel_Bounus: 8
   enemy:
   - {fileID: 11400000, guid: 616934b07e546be4ba5603f573048902, type: 2}
   - {fileID: 11400000, guid: 3a0549a88c16f6b48ada0bd81625f9d4, type: 2}
   - {fileID: 11400000, guid: 7691df9c754b7e94b960370bd3638c19, type: 2}
   - {fileID: 11400000, guid: 5341c74657ffaa14596c92e693b28757, type: 2}
-  stageinfo: []
-  fieldEffects: []
+  stageinfo:
+  - "\u4E00\u90E8\u306E\u6575\u5F37\u5316\u72B6\u614B"
+  fieldEffects:
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 0
+    effectSize: 1.3
+    effectCondition: 0
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 1
+    effectSize: 1.2
+    effectCondition: 0
+  - EnemyOrParty: 0
+    buff: 0
+    ApplicationNum: 2
+    effectSize: 1.6
+    effectCondition: 0
   gifts:
   - Gift: 0
     giftNum: 3

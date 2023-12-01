@@ -15,9 +15,9 @@ MonoBehaviour:
   EnemyId: 20
   name: "\u732B(\u7D2B)"
   numba: 29
-  Hp: 1410000
+  Hp: 1100000
   at: 13200
-  df: 31000
+  df: 98000
   _exp: 160000
   icon: {fileID: 21300000, guid: 58b8d466ff7e954429fc91f8c7313af4, type: 3}
   skilllist:

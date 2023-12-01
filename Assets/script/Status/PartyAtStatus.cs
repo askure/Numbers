@@ -6,7 +6,6 @@ public class PartyAtStatus : MonoBehaviour
 {
 
     int FinishTurn;
-    int beforebuf;
     double effect;
     string mode;
     CardModel model;
@@ -32,7 +31,6 @@ public class PartyAtStatus : MonoBehaviour
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
         this.mode = mode;
-        this.beforebuf = model.at;
         if (mode == "Multi")
         {
             double temp = model.at * effect;

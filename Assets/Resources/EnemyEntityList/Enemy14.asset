@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyId: 14
   name: "[\u899A\u9192]\u30A2\u30FC\u30C6\u30A3\u30D5\u30A1\u30AF\u30C8\u8ECD\u306E\u5D07\u62DD\u8005"
-  numba: 35
-  Hp: 1000000
+  numba: 43
+  Hp: 710000
   at: 8120
-  df: 3400
+  df: 7100
   _exp: 120000
   icon: {fileID: 21300000, guid: 0577c808f49984842b0b3471798ea1be, type: 3}
   skilllist:
@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5cbf2456ae5857e43bb1a199265938b8, type: 2}
   - {fileID: 11400000, guid: aa42c4a2d72de8845afd6a82f526f94e, type: 2}
   - {fileID: 11400000, guid: 61014422859244145ae76dbaa2772e80, type: 2}
-  SkillTable: 050000000000000001000000040000000200000003000000
+  SkillTable: 040000000000000001000000040000000200000003000000

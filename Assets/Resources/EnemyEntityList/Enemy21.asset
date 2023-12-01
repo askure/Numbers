@@ -15,13 +15,14 @@ MonoBehaviour:
   EnemyId: 21
   name: "\u732B(\u9EC4)"
   numba: 33
-  Hp: 1200000
-  at: 21200
-  df: 4320
+  Hp: 1000000
+  at: 8100
+  df: 74000
   _exp: 190000
-  icon: {fileID: 21300000, guid: 58b8d466ff7e954429fc91f8c7313af4, type: 3}
+  icon: {fileID: 21300000, guid: a9154cbe642a9e94cacf385f35e4484a, type: 3}
   skilllist:
   - {fileID: 11400000, guid: 9e5b15dd64076d54c84e0dc30f8ccfd9, type: 2}
   - {fileID: 11400000, guid: 9601d5d5dee1ccd4cab9e2ab4058785e, type: 2}
   - {fileID: 11400000, guid: 9307d387d3a721040834206e02eb1977, type: 2}
-  SkillTable: 0100000001000000010000000000000002000000
+  - {fileID: 11400000, guid: 9cada18e28f6abc4d96051f158b7a915, type: 2}
+  SkillTable: 0300000001000000010000000100000001000000010000000100000001000000010000000100000001000000

@@ -15,8 +15,8 @@ MonoBehaviour:
   EnemyId: 17
   name: "\u732B(\u9752)"
   numba: 3210
-  Hp: 3000
-  at: 14320
+  Hp: 10000
+  at: 21000
   df: 4310
   _exp: 160000
   icon: {fileID: 21300000, guid: e03c9101965de0647995ec9f6bc2bada, type: 3}

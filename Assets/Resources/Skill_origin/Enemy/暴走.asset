@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u66B4\u8D70"
   m_EditorClassIdentifier: 
   skill_name: "\u66B4\u8D70"
-  skill_infomatin: "12000\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u9632\u5FA1\u529B\u30922.5\u500D\u3059\u308B\u3002\u653B\u6483\u529B\u30922\u500D\u3059\u308B\u3002\u305D\u306E\u5F8C\u901A\u5E38\u653B\u6483\u3092\u3059\u308B"
+  skill_infomatin: "12000\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\u9632\u5FA1\u529B\u30922.5\u500D\u3059\u308B\u3002\u653B\u6483\u529B\u30922\u500D\u3059\u308B\u3002\u305D\u306E\u5F8C\u5927\u653B\u6483\u3092\u3059\u308B\u3002"
   _Priority: 3
   magic_Conditon_Origins:
   - type: 5
@@ -29,18 +29,18 @@ MonoBehaviour:
     conditons: 0
     magic_kind: 1
     effect_size: 2.5
-    effect_turn: 0
+    effect_turn: 3
   - type: 6
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
     effect_size: 2
-    effect_turn: 1
+    effect_turn: 2
   - type: 1
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 1
+    effect_size: 2.2
     effect_turn: 0

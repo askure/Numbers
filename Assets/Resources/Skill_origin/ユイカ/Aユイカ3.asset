@@ -23,14 +23,14 @@ MonoBehaviour:
     magic_kind: 0
     effect_size: 12000
     effect_turn: 0
-  - type: 10
+  - type: 12
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 0
     effect_size: 14000
     effect_turn: 0
-  - type: 12
+  - type: 10
     condition_kind: 7
     condition_num: 0
     conditons: 0

@@ -24,14 +24,14 @@ MonoBehaviour:
     effect_size: 3
     effect_turn: 3
   - type: 3
-    condition_kind: 1
+    condition_kind: 0
     condition_num: 57
     conditons: 0
     magic_kind: 0
     effect_size: 42000
     effect_turn: 0
   - type: 6
-    condition_kind: 1
+    condition_kind: 0
     condition_num: 57
     conditons: 0
     magic_kind: 0

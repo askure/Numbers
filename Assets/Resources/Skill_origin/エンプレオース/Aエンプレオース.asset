@@ -24,7 +24,7 @@ MonoBehaviour:
     effect_size: 1.5
     effect_turn: 2
   - type: 3
-    condition_kind: 1
+    condition_kind: 0
     condition_num: 30
     conditons: 0
     magic_kind: 0

@@ -16,11 +16,19 @@ MonoBehaviour:
   beforestageid: 19
   stageName: "\u7E6B\u8302\u618E\u307F\u3057\u5E79\u90E8"
   buttleNum: 2
+  RecoLevel_Chatactor: 55
+  RecoLevel_Bounus: 23
   enemy:
   - {fileID: 11400000, guid: 0efee5b5ea420454f96b65eda5d3f75e, type: 2}
   - {fileID: 11400000, guid: d31d144271d80bd4491d5ec66e8dce2a, type: 2}
-  stageinfo: []
-  fieldEffects: []
+  stageinfo:
+  - "2\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u653B\u6483\u529B\u30A2\u30C3\u30D7"
+  fieldEffects:
+  - EnemyOrParty: 1
+    buff: 1
+    ApplicationNum: 0
+    effectSize: 1.2
+    effectCondition: 2
   gifts:
   - Gift: 0
     giftNum: 6

@@ -16,15 +16,15 @@ MonoBehaviour:
   skill_infomatin: "\u6570\u5024\u304C17\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B\u3002\u6570\u5024\u304C37\u4EE5\u4E0A\u306A\u3089\u653B\u6483\u529B\u30922\u30BF\u30FC\u30F3\u306E\u95931.5\u500D\u3059\u308B\u3002"
   _Priority: 3
   magic_Conditon_Origins:
-  - type: 10
-    condition_kind: 9
+  - type: 12
+    condition_kind: 0
     condition_num: 17
     conditons: 0
     magic_kind: 0
     effect_size: 4100
     effect_turn: 0
   - type: 6
-    condition_kind: 9
+    condition_kind: 0
     condition_num: 37
     conditons: 0
     magic_kind: 1

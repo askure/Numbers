@@ -16,7 +16,7 @@ MonoBehaviour:
   skill_infomatin: "\u7D20\u6570\u306E\u30AD\u30E3\u30E9\u304C1\u4F53\u4EE5\u4E0A\u306A\u3089\u8FFD\u6483\u3092\u3059\u308B\u3002\u653B\u6483\u529B\u3068\u9632\u5FA1\u529B\u30923\u30BF\u30FC\u30F3\u306E\u95932\u500D\u3059\u308B\u3002"
   _Priority: 3
   magic_Conditon_Origins:
-  - type: 10
+  - type: 12
     condition_kind: 4
     condition_num: 0
     conditons: 1

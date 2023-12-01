@@ -15,23 +15,26 @@ public class Skill_origin : ScriptableObject
         numIncrease
 
     }
+
     public enum Skill_type
     {
-        constantAttack,//Only Enemy
-        referenceAttack, //Only Enemy
-        NumDamage,
-        Heal_Hp,
-        Heal_num,//only enemy
-        damage,
-        IncreaseAttack,
-        IncreaseDefence,
-        IncreaseNum, // Only ReaderSkill
-        IncreaseHp, //  Only ReaderSkill
-        Pursuit, // Only MagicKind add
-        NumUp, // Only MagicKind add
-        decreaseDefence,
-        decreaseNum,//Only Enemy.
-        decreaseAttack,
+        constantAttack, /*敵の定数攻撃*/
+        referenceAttack, /*敵の攻撃力参照攻撃*/
+        NumDamage,/*数値バリアの値を減らす*/
+        Heal_Hp, /*HP回復*/
+        Heal_num,/*数値バリア回復*/
+        damage,/*自傷ダメージ*/
+        IncreaseAttack,/*攻撃力アップ*/
+        IncreaseDefence,/*防御力アップ*/
+        IncreaseNum, /*数値アップ*/
+        IncreaseHp, /*HPアップ*/
+        decreaseDefence,/*防御力ダウン*/
+        decreaseAttack,/*攻撃力ダウン*/
+        Pursuit, /*追撃*/
+        NumUp, /*数値加算*/
+        partydecreaseDefence,/*味方への防御力デバフ*/
+        decreaseNum,/*味方への数値デバフ*/
+        partydecreaseAttack,/*味方への攻撃力デバフ*/
         Length
     }
 
@@ -39,17 +42,17 @@ public class Skill_origin : ScriptableObject
 
     public enum Magic_condition_kind
     {
-        sum_up, //sum >=conditon_num
-        sum_down, // sum < condition_num
-        multi,
-        divisor,
-        prime,
-        Hp_up, // Hp >= condition_num
-        Hp_down, //hp < conditon_num
-        none,//NorReaderskill
-        specificNum,
-        Num_up, //Only Enemy
-        Num_down, // OnlyEnmey
+        sum_up, /*合計数値以上*/
+        sum_down, /*合計数値未満*/
+        multi,/*倍数*/
+        divisor,/*約数*/
+        prime,/*素数*/
+        Hp_up,/*HP以上*/
+        Hp_down, /*HP未満*/
+        none,/*条件なし*/
+        specificNum,/*特定の数値*/
+        Num_up, /*数値バリア以上*/
+        Num_down, /*未満*/
         Length
 
     }

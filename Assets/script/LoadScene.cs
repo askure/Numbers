@@ -10,16 +10,20 @@ public class LoadScene : MonoBehaviour
     [SerializeField] bool changeBGM;
     [SerializeField] AudioClip se;
     Slider _slider;
+    static BGMManager bgm;
     DataManager dataManager;
 
 
     public void LoadSecne()
     {
-        var SEManager = GameObject.Find("SE");
-        if (SEManager != null)
+       
+        if (bgm == null)
         {
-            SEManager.GetComponent<SEManager>().PlaySE(se);
+            var SEManager = GameObject.Find("BGM");
+            bgm = SEManager.GetComponent<BGMManager>();
         }
+       
+        bgm.PlaySE(se,2f);
         var gameObject = Resources.Load<GameObject>("LoadPanel");
         var canva = GameObject.Find("Canvas").transform;
         var pane = Instantiate(gameObject, canva);

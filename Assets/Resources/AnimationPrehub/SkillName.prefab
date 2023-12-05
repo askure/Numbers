@@ -190,3 +190,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4899451297899427006}
   text: {fileID: 4899451297445290014}
+  se: {fileID: 8300000, guid: 8d20827524b362045884d6ba52da0521, type: 3}

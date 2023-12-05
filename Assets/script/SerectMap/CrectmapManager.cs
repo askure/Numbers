@@ -241,10 +241,10 @@ public class CrectmapManager : MonoBehaviour
         foreach(StageEntity.Gifts gift in gifts){
             switch ((int)gift.Gift)
             {
-                case 0: s += "ストーン*" + gift.giftNum + "\n";
+                case 0: s += "ストーン×" + gift.giftNum + "\n";
                     
                     break;
-                case 1: s += "Item*" + gift.giftNum + "\n";
+                case 1: s += "Item×" + gift.giftNum + "\n";
                     break;
                 case 2:s += gift.card.name + "\n";
                     break;

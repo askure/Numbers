@@ -12,6 +12,7 @@ public class BGMManager : MonoBehaviour
     private  AudioSource _loopAudioSource;
     private AudioSource _introAudioSourcetmp;
     private AudioSource _loopAudioSourcetmp;
+    private AudioSource seaudio;
     private bool _isPause;
     private static bool _isFadeIn;
     private  static bool _isFadeOut;
@@ -220,6 +221,23 @@ public class BGMManager : MonoBehaviour
         _isFadeOut = true;
         _isFadeIn = false;
         FadeDeltaTime = 0;
+    }
+
+    public void PlaySE(AudioClip se)
+    {
+        if(seaudio == null)
+        {
+            seaudio = gameObject.AddComponent<AudioSource>();
+        }
+        seaudio.PlayOneShot(se,volume*1.2f);
+    }
+    public void PlaySE(AudioClip se,float volume)
+    {
+        if (seaudio == null)
+        {
+            seaudio = gameObject.AddComponent<AudioSource>();
+        }
+        seaudio.PlayOneShot(se, this.volume * volume);
     }
 
 }

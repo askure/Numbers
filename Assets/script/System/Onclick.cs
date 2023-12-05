@@ -13,6 +13,8 @@ public class Onclick : MonoBehaviour
     [SerializeField] GameObject trigger;
     [SerializeField] GameObject TurnText;
     [SerializeField] GameObject Button;
+    static AudioClip charse,decidese;
+    static BGMManager sesource;
     void Start()
     {   
         if(gameObject.name == "DECIDE" ) return;
@@ -24,8 +26,24 @@ public class Onclick : MonoBehaviour
         info_obj = transform.Find("Infomation").gameObject;
         Color_obj.alpha = 0f;
         info_obj.SetActive(false);
-        
-       
+
+        var bgmobj = GameObject.Find("BGM");
+        if (decidese == null)
+        {
+            decidese = Resources.Load<AudioClip>("SE/攻撃開始");
+        }
+        if (charse == null)
+        {
+            charse = Resources.Load<AudioClip>("SE/キャラ選択");
+        }
+        if (bgmobj != null)
+        {
+
+            sesource = bgmobj.GetComponent<BGMManager>();
+        }
+
+
+
 
 
 
@@ -49,7 +67,7 @@ public class Onclick : MonoBehaviour
             var card = GetComponent<CardController>();
             GameManger.instnce.SetUpCard(card);
             GameManger.decide_num++;
-           
+            sesource.PlaySE(charse);
         }
         else
         {
@@ -87,6 +105,7 @@ public class Onclick : MonoBehaviour
        
         if (!GameManger.Myturn) return;
 
+        sesource.PlaySE(decidese,0.6f);
         /*var cards = GameObject.FindGameObjectsWithTag("card");
         List<CardController> cardlist = new List<CardController>();
         if (cards.Length > 6) return;

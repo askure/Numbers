@@ -17,9 +17,10 @@ public class CrectmapManager : MonoBehaviour
     [SerializeField] SpriteRenderer back;
     [SerializeField] PartyManager party;
     [SerializeField] List<Sprite> chartutorial,endtutorial;
-
+    static AudioClip desidese,cancelse;
+    static BGMManager bgmobj;
     Animator anime;
-    GameObject gameobj;
+
     static GameObject sortiePartyPanel,notSortiePartyPanel;
     public static MapManager MapManager;
     SceneAnimation scene;
@@ -85,13 +86,14 @@ public class CrectmapManager : MonoBehaviour
             index++;
                 
         }
-
-        if (!flag && manger.stages[MapManager.maps.Count-1].clear) AfterStageButton.SetActive(true);
+        int mapfinalid = MapManager.maps[MapManager.maps.Count-1].stageid;
+        if (!flag && manger.stages[mapfinalid].clear) AfterStageButton.SetActive(true);
         else AfterStageButton.SetActive(false);
-        var bgmobj = GameObject.Find("BGM");
-        if (bgmobj != null && maploop != null && mapintro != null)
+        
+        if(bgmobj == null) bgmobj = GameObject.Find("BGM").GetComponent<BGMManager>();
+        if ( maploop != null && mapintro != null)
         {
-            bgmobj.GetComponent<BGMManager>().SetBGM(mapintro,maploop, manger.volume);
+            bgmobj.SetBGM(mapintro,maploop, manger.volume);
             //bgmobj.GetComponent<BGMManager>().Play();
 
         }
@@ -104,6 +106,16 @@ public class CrectmapManager : MonoBehaviour
 
     public void Onclick()
     {
+
+        if (desidese == null)
+        {
+            desidese = Resources.Load<AudioClip>("SE/map選択");
+        }
+        if (bgmobj != null)
+        {
+
+            bgmobj.PlaySE(desidese);
+        }
         filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         DataManager manger = new DataManager();
         manger.StageDataLoad(filepath);
@@ -114,7 +126,8 @@ public class CrectmapManager : MonoBehaviour
         var buttonui = g.GetComponent<ButtonUi>();
         stage = buttonui.GetStage();
         var stagenameText = panel.transform.GetChild(1).GetComponent<Text>();
-        panel.transform.GetChild(1).GetComponent<Text>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
+        stagenameText.text  = stage.stageName;
+        panel.transform.GetChild(2).GetComponent<Text>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
         var stageinfoText = panel.transform.GetChild(3).GetComponent<Text>();
         stagenameText.text = stage.stageName;
         var gifts = stage.gifts;
@@ -127,28 +140,8 @@ public class CrectmapManager : MonoBehaviour
         stageinfoText.text =    "[推奨キャラレベル] Lv:" + stage.RecoLevel_Chatactor.ToString() + "\n[推奨ボーナスレベル] Lv:" + stage.RecoLevel_Bounus.ToString() + "\n[バトル数]" + stage.buttleNum.ToString() + "\n[情報]\n" + stageinfo +  "[報酬]\n"  + giftText + "\n" ;
         anime.SetBool("flag", true);
         anime.SetBool("Infoanimebl", false);
-        /*if (gameobj == g)
-        {
-            anime.SetBool("Infoanimebl", true);
-            anime.SetBool("x", false);
-            anime.SetBool("flag", false);
-            gameobj = null;
-      
-        }
-        else if(gameobj == null)
-        {
-            anime.SetBool("flag", true);
-            anime.SetBool("Infoanimebl", false);
-            gameobj = g;
+        
 
-        }
-        else
-        {
-            anime.SetBool("Infoanimebl", true);
-            anime.SetBool("x", false);
-            anime.SetBool("Infoanimebl", false);
-            gameobj = g;
-        }*/
 
     }
 
@@ -158,15 +151,37 @@ public class CrectmapManager : MonoBehaviour
         anime.SetBool("Infoanimebl", true);
         anime.SetBool("x", false);
         anime.SetBool("flag", false);
+        if (cancelse == null)
+        {
+            cancelse= Resources.Load<AudioClip>("SE/se_cancel01");
+        }
+        if (bgmobj != null)
+        {
+
+            bgmobj.PlaySE(cancelse);
+        }
+
     }
     public void CreatePartyList()
     {
+        if (desidese == null)
+        {
+            desidese = Resources.Load<AudioClip>("SE/map選択");
+        }
+        if (bgmobj != null)
+        {
+
+            bgmobj.PlaySE(desidese);
+        }
         var canvas = GameObject.Find("Canvas");
         var g = Instantiate(party, canvas.transform);
         g.Init(MapManager.stageName, stage.stageName);
+       
+
     }
     public void StartStage()
     {
+        
         sortiePartyPanel.SetActive(false);
         scene = GameObject.Find("SceneChange").GetComponent<SceneAnimation>();
         enemy = stage.enemy;
@@ -178,7 +193,6 @@ public class CrectmapManager : MonoBehaviour
         BeforeStageButton.SetActive(false);
         GameObject.Find("Panel").SetActive(false);
         GameObject.Find("Tohome").SetActive(false);
-        var bgmobj = GameObject.Find("BGM");
         if (bgmobj != null)
         {
             bgmobj.GetComponent<BGMManager>().FadeOut();

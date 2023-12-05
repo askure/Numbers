@@ -34,6 +34,7 @@ public class GameManger : MonoBehaviour
     [SerializeField] List<Sprite> tutorial;
     [SerializeField] StatusListManager statusManager;
     [SerializeField] int debugenemy;
+    [SerializeField] AudioClip skillse;
 
     BGMManager BGMManager;
     Slider volumeslider;
@@ -1584,7 +1585,8 @@ public class GameManger : MonoBehaviour
 
     IEnumerator AnimationList(List<AnimationType> vs,int persuit,int damage,string skillname,List<int> teamDamage,int teamHeal,int enemyHeal,int healNum,int enemydamage)
     {
-        foreach(AnimationType i in vs)
+        yield return new WaitForSeconds(1f); /*SE’x‰„*/
+        foreach (AnimationType i in vs)
         {
             switch (i)
             {

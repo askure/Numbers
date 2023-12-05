@@ -66,6 +66,7 @@ public class Onclick : MonoBehaviour
             cardcontroll.model.decided = true;
             var card = GetComponent<CardController>();
             GameManger.instnce.SetUpCard(card);
+            GameManger.instnce.SetUpCardObj(this.gameObject);
             GameManger.decide_num++;
             sesource.PlaySE(charse);
         }
@@ -78,6 +79,7 @@ public class Onclick : MonoBehaviour
             cardcontroll.model.decided = false;
             var card = GetComponent<CardController>();
             GameManger.instnce.RemoveCard(card);
+            GameManger.instnce.RemoveCardObj(this.gameObject);
             GameManger.decide_num--;
            
         }

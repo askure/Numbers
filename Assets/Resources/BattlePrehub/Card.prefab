@@ -346,7 +346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 0}
-  model: {fileID: 0}
   gbj: {fileID: 0}
 --- !u!114 &6596396553593184684
 MonoBehaviour:

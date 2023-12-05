@@ -14,7 +14,6 @@ public class Playerstatus {
     public int stone;
     public int exp;
     public float volume;
-    public bool buttle_tutorial;
     public bool enemystatus_tutorial ;
     public bool charactor_tutorial;
     public bool endgame_tutorial ;

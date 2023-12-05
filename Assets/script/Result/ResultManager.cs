@@ -28,6 +28,7 @@ public class ResultManager : MonoBehaviour
         GameObject.Find("ResultBGM").GetComponent<AudioSource>().volume =dmanager.volume ;
         SetText();
         dmanager.DataSave(dfilepath);
+        cmanager.Datasave(cfilepath);
         dmanager.StageDataSave(mapfilepath);
  
         

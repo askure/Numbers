@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SerectCard : MonoBehaviour
-{   
-   
-   public void CardSerect()
+{
+
+    public void CardSerect()
     {
         var x = GetComponent<CardController>();
         CharacterManager.SerctedCard = x;
         CharacterManager characterManager = new CharacterManager();
         characterManager.SetText();
-        
+
     }
 
     public void PopUpSerect()
@@ -40,23 +40,23 @@ public class SerectCard : MonoBehaviour
         gameObject.transform.Find("Serected").gameObject.SetActive(true);
         if (CardEditManager.decklistTemp.IndexOf(x.model.cardID) != -1)
         {
-           
+
             return;
         }
-        
+
         cardEdit.SetDeckCard(x.model.cardID, y);
-        
+
     }
 
     public void DeleteDeckCard()
     {
         if (!CardEditManager.Edit) return;
-       
+
         var x = GetComponent<CardController>();
         CardEditManager cardEdit = new CardEditManager();
         if (CardEditManager.decklistTemp.IndexOf(x.model.cardID) == -1)
         {
-            
+
             return;
         }
 

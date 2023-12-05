@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
-    [SerializeField] Text maxHp, nowHp,logText,Numpower,NowDf;
+    [SerializeField] Text maxHp, nowHp,Numpower,NowDf;
     [SerializeField] Slider hpbar;
+    static Text logText;
+    private void Start()
+    {
+        
+    }
     public void Init(int max,int now,int df)
     {
         maxHp.text = max.ToString();
@@ -14,6 +19,7 @@ public class GameView : MonoBehaviour
         NowDf.text = "Now Df:" + df.ToString(); 
         hpbar.maxValue = max;
         hpbar.value = now;
+        if(logText == null) logText = GameObject.Find("LogText").GetComponent<Text>();
         logText.text = "";
         int[] x = { 0, 0 };
         NumPowerText(x);

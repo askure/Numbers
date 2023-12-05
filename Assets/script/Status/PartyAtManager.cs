@@ -41,12 +41,12 @@ public class PartyAtManager : MonoBehaviour
             for(int i=0; i<parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
-            if (child.gameObject.CompareTag("status")) continue;
-            if (child.Find("partyat" + MystatusNum.ToString()) == null)
-                {
+                if (child.gameObject.CompareTag("status")) continue;
+                if (child.Find("partyat" + MystatusNum.ToString()) == null){
                     var g = Instantiate(partyat);
                     g.SetStatus(effect, FinishTurn, child.gameObject, mode);
                     g.name = "partyat" + MystatusNum.ToString();
+                    Debug.Log(child + ":" + MystatusNum);
                 }
             }
            

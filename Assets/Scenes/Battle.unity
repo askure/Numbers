@@ -2273,6 +2273,7 @@ GameObject:
   - component: {fileID: 601542885}
   - component: {fileID: 601542884}
   - component: {fileID: 601542886}
+  - component: {fileID: 601542887}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2319,14 +2320,19 @@ MonoBehaviour:
   OptionPanel: {fileID: 530004891}
   SoundSettingPanel: {fileID: 107134638}
   tutorial:
-  - {fileID: 21300000, guid: ced721bb8ec376c49b6f462a598da9d3, type: 3}
+  - {fileID: 21300000, guid: a00e8fe2f0a62be4c8268a97ed52102b, type: 3}
+  - {fileID: 21300000, guid: 48cced60adefe7c4aa029f47cafd2bf4, type: 3}
+  bounus_tutorial:
+  - {fileID: 21300000, guid: c863ae4c971452f4a885d626da63ee7e, type: 3}
+  - {fileID: 21300000, guid: a744ee3fe215f5e42a8dd15d71585973, type: 3}
+  - {fileID: 21300000, guid: ce022846493dabc4a9ce7659cd19bcfb, type: 3}
   statusManager: {fileID: 979810123}
   debugenemy: -1
   skillse: {fileID: 0}
   _hand: []
   decklist: 
   UpCard: []
-  logText: []
+  UpCardObj: []
   ReaderCard: {fileID: 0}
   sortiePartyNum: 0
   allStage: 0
@@ -2360,6 +2366,25 @@ MonoBehaviour:
   canvas: {fileID: 1239435167}
   notificationPanelPrefab: {fileID: 8555398022584665684, guid: 77fa62dedf403764d93cdfeabc13baa5, type: 3}
   texts: []
+--- !u!95 &601542887
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601542883}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4990fffb5d6c0d9409e9dcb6a3f50320, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &626685991
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,7 +2908,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: {fileID: 1642628526}
   nowHp: {fileID: 147152312}
-  logText: {fileID: 863739257}
   Numpower: {fileID: 906345137}
   NowDf: {fileID: 1429723539}
   hpbar: {fileID: 814453524}

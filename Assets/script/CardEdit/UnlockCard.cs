@@ -57,7 +57,8 @@ public class UnlockCard : MonoBehaviour
         var panel = Instantiate(gameObject,canvas);
         if (i)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text = "このキャラは解放できません\n\nクエスト報酬にあるキャラはドロップ入手！";
+            panel.transform.GetChild(0).GetComponent<Text>().text = "このキャラは解放できません\n\nこのキャラはクエストで入手可能です\n\nクエスト報酬をチェック！";
+
             var x = panel.transform.GetChild(1).gameObject;
             Destroy(x.transform.GetChild(0).gameObject);
         }else  if (nowExp < NeedExp)

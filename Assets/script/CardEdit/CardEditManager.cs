@@ -120,7 +120,7 @@ public class CardEditManager : MonoBehaviour
         cmanager.deck[index].cardId = cardid;
         cmanager.deck[index].deckName = partyName.text;
         cmanager.Datasave(cfilepath);
-        var tempPartyNum = partyNum;
+        /*var tempPartyNum = partyNum;
         cmanager.Dataload(cfilepath);
         while (cmanager.deck[tempPartyNum].cardId.Count == 0)
         {
@@ -132,7 +132,7 @@ public class CardEditManager : MonoBehaviour
                 break;
             }
         }
-        cmanager.sortiePartyNum = tempPartyNum;
+        cmanager.sortiePartyNum = tempPartyNum;*/
         cmanager.Datasave(cfilepath);
         CreateDeck(partyNum);
         CheckSerected();
@@ -157,7 +157,7 @@ public class CardEditManager : MonoBehaviour
         beforeCardListButton.SetActive(true);
         CreateDeck(partyNum);
         CheckSerected();
-
+        toqest = false;
 
     }
     void InitDaeckData()
@@ -266,7 +266,7 @@ public class CardEditManager : MonoBehaviour
        
         if (deck == null)return;
         
-        if(deck.Count == 0)
+        if(deck.Count == 0 && !toqest)
         {
            
             Instantiate(newDeck, lineUp);

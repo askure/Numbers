@@ -485,7 +485,7 @@ public class CardEditManager : MonoBehaviour
             var cardId = i + x;
             
             if (i >= cardListUp.childCount && i<8) continue;
-            else if ((i - 8) > cardListDown.childCount) continue;
+            else if ((i - 8) >=cardListDown.childCount) continue;
             if (decklistTemp.Contains(cardId))
             {
                 if (i < 8)

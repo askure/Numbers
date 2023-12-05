@@ -8,6 +8,7 @@ public class Tutorial : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] GameObject Panel, BackButton, NextButton, FinishButton;
     [SerializeField] Image image;
+
     static List<Sprite> Photo;
     static int index;
 

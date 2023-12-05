@@ -509,8 +509,8 @@ public class GameManger : MonoBehaviour
         multi_bounuses = (int)Multi_bounus(multis, multi_lv);
         divisor_bounuses = (int)Divisor_bounus(divisors, divisor_lv);
 
-        double correction = (34 - prime_lv) * 0.15;
-        if (prime_bounuse_check) prime_bounuse = (int)(1 + prime_lv *1.12 + correction);
+        double correction = (34 - prime_lv) * 0.1;
+        if (prime_bounuse_check) prime_bounuse = (int)(1 + prime_lv *1.05 + correction);
         else prime_bounuse = 0;
 
         sum += multi_bounuses + divisor_bounuses + prime_bounuse;

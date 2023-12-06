@@ -29,4 +29,4 @@ MonoBehaviour:
     conditons: 0
     magic_kind: 0
     effect_size: 100
-    effect_turn: 0
+    effect_turn: 10

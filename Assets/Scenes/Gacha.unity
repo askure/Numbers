@@ -2547,6 +2547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Home
+  changeBGM: 0
+  se: {fileID: 0}
 --- !u!114 &1828079096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2754,7 +2756,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 0}
-  model: {fileID: 0}
   gbj: {fileID: 0}
 --- !u!4 &1902401221
 Transform:

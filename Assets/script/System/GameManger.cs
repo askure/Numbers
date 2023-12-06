@@ -1403,7 +1403,6 @@ public class GameManger : MonoBehaviour
         
         List<AnimationType> animations = new List<AnimationType>();
         double pesuit = 0;
-        double enemyNum = _enemy.model.numba;
         double enemyDf = _enemy.model.df;
         List<int> damage = new List<int>();
         int teamHeal = 0;
@@ -1414,7 +1413,7 @@ public class GameManger : MonoBehaviour
        
         AutoSkill(animations,cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
         partyDf = Df(_hand);
-        _enemy.model.numba = (int)enemyNum;
+        //_enemy.model.numba = (int)enemyNum;
        // _enemy.model.Hp -= (int)pesuit;
         _enemy.model.df = (int)enemyDf;
         string skillName = "";
@@ -1473,7 +1472,7 @@ public class GameManger : MonoBehaviour
             return;
         }
 
-        double bounus = 1 + 0.1 * (sum - _enemy.model.numba);
+        double bounus = 1 + 0.05 * (sum - _enemy.model.numba);
         if (sum - _enemy.model.numba >= 20)
         {
             bounus = 2 * Mathf.Log(sum - _enemy.model.numba, 20);
@@ -1729,7 +1728,7 @@ public class GameManger : MonoBehaviour
 
                 case  AnimationType.enemyturn:
                     yield return StartCoroutine(EnemyTurnAnimation());
-                    AddLogText("-enemyTurn-");
+                    AddLogText("-EnemyTurn-");
 
                     break;
                 case AnimationType.playerturn:

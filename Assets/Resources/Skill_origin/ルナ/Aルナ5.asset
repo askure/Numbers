@@ -29,11 +29,11 @@ MonoBehaviour:
     conditons: 0
     magic_kind: 0
     effect_size: 1000
-    effect_turn: 99
+    effect_turn: 10
   - type: 7
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 0
     effect_size: 1000
-    effect_turn: 99
+    effect_turn: 10

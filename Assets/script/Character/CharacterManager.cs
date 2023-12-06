@@ -50,7 +50,8 @@ public class CharacterManager : MonoBehaviour
         changeText = false;
     }
 
-    public void SetCard(int pageNum)
+    public void SetCard
+        (int pageNum)
     {   
         for(int i = pageNum*5; i < (pageNum*5) + 5; i++)
         {
@@ -77,16 +78,16 @@ public class CharacterManager : MonoBehaviour
     public void NextPage()
     {
 
-        if ((pageNum + 1) * 5 >= cards.Count) return;
-        pageNum++;
+        if ((pageNum + 1) * 5 >= cards.Count) pageNum = 0;
+        else pageNum++;
      
         InitCard();
         SetCard(pageNum);
     }
     public void BeforePage()
     {
-        if (pageNum == 0) return;
-        pageNum--;
+        if (pageNum == 0) pageNum = pageMax-1;
+        else pageNum--;
        
         InitCard();
         SetCard(pageNum);

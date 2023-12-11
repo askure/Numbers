@@ -30,22 +30,22 @@ MonoBehaviour:
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 0
-    effectSize: 3.7
+    effectSize: 3
     effectCondition: 0
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 1
-    effectSize: 2.6
+    effectSize: 2.3
     effectCondition: 0
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 2
-    effectSize: 2.4
+    effectSize: 2.1
     effectCondition: 0
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 3
-    effectSize: 1.8
+    effectSize: 1.5
     effectCondition: 0
   - EnemyOrParty: 1
     buff: 4

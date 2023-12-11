@@ -8,6 +8,7 @@ public class StatusUpReturn : MonoBehaviour
     {
         CharacterManager characterManager = new CharacterManager();
         characterManager.LevelUp();
+
         Destroy(gameObject);
     }
 }

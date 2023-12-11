@@ -179,7 +179,7 @@ public class CardEditManager : MonoBehaviour
     public void SaveButton()
     {
 
-        double tmp = 0;
+        double tmp ;
         if (decklistTemp.Count < 7)
             tmp = decklistTemp.Count + decklistTemp.Count * decklistTemp.Count * 0.1;
         else

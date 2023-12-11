@@ -41,6 +41,7 @@ public class DataManager
     public bool charactor_tutorial { set; get; } = false;
 
     public bool endgame_tutorial { set; get; } = false;
+    public bool status_tutorial { set; get; } = false;
 
     public  void DataLoad(string s)
     {   
@@ -64,6 +65,7 @@ public class DataManager
             enemystatus_tutorial = playerstatus_save.enemystatus_tutorial;
             charactor_tutorial = playerstatus_save.charactor_tutorial;
             endgame_tutorial = playerstatus_save.endgame_tutorial;
+            status_tutorial = playerstatus_save.status_tutorial;
         }
 
 
@@ -84,7 +86,8 @@ public class DataManager
             volume = volume,
             enemystatus_tutorial = enemystatus_tutorial,
             charactor_tutorial = charactor_tutorial,
-            endgame_tutorial = endgame_tutorial
+            endgame_tutorial = endgame_tutorial,
+            status_tutorial = status_tutorial
         };
         string json = JsonUtility.ToJson(playerstatus_save, true);
         StreamWriter streamWriter = new StreamWriter(s);
@@ -107,7 +110,8 @@ public class DataManager
             volume = 0.3f,
             enemystatus_tutorial = false,
             charactor_tutorial = false,
-            endgame_tutorial = false
+            endgame_tutorial = false,
+            status_tutorial = false
         };
         string json = JsonUtility.ToJson(playerstatus_save, true);
         StreamWriter streamWriter = new StreamWriter(s);

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DamageAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    [SerializeField] AudioClip se;
     int damage;
     public void changeHp()
     {
@@ -16,5 +17,10 @@ public class DamageAnimation : MonoBehaviour
         this.damage = damage;
         animator.Play(0);
         return animator.GetCurrentAnimatorClipInfo(0).Length;
+    }
+    public void PlaySe()
+    {
+        BGMManager bGM = GameObject.Find("BGM").GetComponent<BGMManager>();
+        bGM.PlaySE(se, 2f);
     }
 }

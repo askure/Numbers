@@ -10,6 +10,7 @@ public class CardView : MonoBehaviour
     
     public void Show(CardModel cardModel)
     {
+        numText.text = cardModel.num.ToString();
         iconImage.sprite = cardModel.icon;
         SetPanel(cardModel.rare);
      

@@ -21,7 +21,7 @@ MonoBehaviour:
     condition_num: 20
     conditons: 0
     magic_kind: 1
-    effect_size: 1.5
+    effect_size: 1.1
     effect_turn: 2
   - type: 3
     condition_kind: 0

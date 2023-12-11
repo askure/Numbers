@@ -30,11 +30,11 @@ public class GameManger : MonoBehaviour
     [SerializeField] AudioClip[] DefaultAudioClipIntro;
     [SerializeField] AudioClip[] DefaultAudioClipLoop;
     [SerializeField] GameObject OptionPanel;
-    [SerializeField] GameObject SoundSettingPanel;
+    [SerializeField] SettingPanel SoundSettingPanel;
     [SerializeField] List<Sprite> tutorial,bounus_tutorial;
     [SerializeField] StatusListManager statusManager;
     [SerializeField] int debugenemy;
-    [SerializeField] AudioClip skillse;
+    [SerializeField] AudioClip skillse,damageLow,damageMid,damageHigh;
 
     BGMManager BGMManager;
     Slider volumeslider;
@@ -137,7 +137,7 @@ public class GameManger : MonoBehaviour
 
         BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         OptionPanel.SetActive(false);
-        SoundSettingPanel.SetActive(false);
+       
  
         StartGame();
         StatusNumReset();
@@ -153,6 +153,7 @@ public class GameManger : MonoBehaviour
         TurnNum = 1;
         debugAt = 0;
         debugBounus = 0;
+        sum = 0;
         decklist = deck[sortiePartyNum].cardId;
         List<int> tmp = new List<int>();
         foreach (int x in decklist)
@@ -335,21 +336,27 @@ public class GameManger : MonoBehaviour
         {
             if (OptionPanel.activeInHierarchy)
             {
-                OptionPanel.SetActive(false);
-                SoundSettingPanel.SetActive(false);
+                CloseOptionPanel();
             }
             else
             {
-                OptionPanel.SetActive(true);
+                OpenOptionPanel();
             }
         }
 
-        if (SoundSettingPanel.activeInHierarchy)
-        {
-            volume = volumeslider.value;
-            BGMManager.ChangeVolume(volume);
-            dmanager.volume = volume;
-        }
+        
+    }
+
+    public void OpenOptionPanel()
+    {
+        if (OptionPanel.activeInHierarchy) return;
+        OptionPanel.SetActive(true);
+    }
+    public void CloseOptionPanel()
+    {
+        if (!OptionPanel.activeInHierarchy) return;
+        OptionPanel.SetActive(false);
+
     }
     void FieldEffectParty( List<CardController> hand,  List<StageEntity.FieldEffect> fieldEffects )
     {
@@ -614,6 +621,14 @@ public class GameManger : MonoBehaviour
             //df += dfs[i] * (i*0.85+1);
             df += dfs[i];
         }
+        if (PartyDfStatusManager.statusNum >= 3)
+        {
+            if (PartyDfStatusManager.statusNum >= 22)
+                df *= 0.01;
+            else df *= Mathf.Log(PartyDfStatusManager.statusNum - 2, 20);
+        }
+
+            
         Debug.Log("Df:" + df);
         return (int)df;
 
@@ -702,7 +717,8 @@ public class GameManger : MonoBehaviour
 
 
         foreach (CardController card in _card)
-        {
+        {   
+            
             if (card.model.decided == true)
             {
                 temp.Add(card);
@@ -737,7 +753,7 @@ public class GameManger : MonoBehaviour
             decklist.RemoveAt(0);
             _card.Add(card);
         }
-
+       
         decide_num = 0;
         handchange = true;
         return _card;
@@ -996,6 +1012,7 @@ public class GameManger : MonoBehaviour
         for (int i = 0; i < card.model.ReaderSkill.magic_Conditon_Origins.Count; i++)
         {
             var x = card.model.ReaderSkill.magic_Conditon_Origins[i];
+            
             switch ((int)x.type)
             {
 
@@ -1410,7 +1427,7 @@ public class GameManger : MonoBehaviour
         int enemyHeal = 0;
         int healNum = 0;
         int enemydamage = 0;
-       
+        
         AutoSkill(animations,cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
         partyDf = Df(_hand);
         //_enemy.model.numba = (int)enemyNum;
@@ -1451,9 +1468,7 @@ public class GameManger : MonoBehaviour
             animations.Add(AnimationType.enemyturn);
             skillName = Enemyattack(animations,true, ref teamDamage,ref enemyHeal,ref healNum,ref enemydamage);
            // _hand = HandChange(_hand, Hand);
-            if (CrectmapManager.stage != null)
-                FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
-            ReaderSkill(ReaderCard, _hand);
+        
             if (hpSum + teamHeal - teamDamage.Sum() <=0)
             {
                 //hpSum = 0;
@@ -1482,11 +1497,16 @@ public class GameManger : MonoBehaviour
         {
             if (card.model.decided == true)
             {
-                int tmp = (int)card.model.at - _enemy.model.df;
-                if (tmp <=0) tmp = 1;
-                double tmpBounus = tmp * bounus;
-                damage.Add((int)tmpBounus);
-                AddLogText( card.model.name+ "が<color=red>" + (int)tmpBounus + "</color>ダメージ");
+                double tmp = card.model.at * bounus - _enemy.model.df;
+                if(PartyAtManager.statusNum >= 3)
+                {
+                    if (PartyAtManager.statusNum >= 22)
+                        tmp *= 0.01;
+                    else tmp *= 1 - Mathf.Log(PartyAtManager.statusNum - 2, 20);
+                }
+                if (tmp <= 1) tmp = 1;
+                damage.Add((int)tmp);
+                AddLogText( card.model.name+ "が<color=red>" + (int)tmp + "</color>ダメージ");
                 animations.Add(AnimationType.attack); //attack
 
             }
@@ -1529,10 +1549,6 @@ public class GameManger : MonoBehaviour
             }
 
         }
-
-        
-        if(CrectmapManager.stage != null) FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
-        ReaderSkill(ReaderCard, _hand);
         if (hpSum + teamHeal - teamDamage.Sum() <=0)
         {
            // hpSum = 0;
@@ -1554,10 +1570,10 @@ public class GameManger : MonoBehaviour
 
     public void OpenSoundSetting()
     {
-        
-        SoundSettingPanel.SetActive(true);
-        if (volumeslider == null) volumeslider = SoundSettingPanel.transform.GetChild(1).GetComponent<Slider>();
-        volumeslider.value = volume;
+
+        Transform canvas = GameObject.Find("Canvas").transform;
+        var g = Instantiate(SoundSettingPanel, canvas);
+        g.SetUpPanel();
     }
    
    
@@ -1632,6 +1648,20 @@ public class GameManger : MonoBehaviour
                     var y = g.transform.position.y;
                     g.transform.position = new Vector3(x, y +40, 0);
                     NotificationButtle.GetInstance().PutInQueue(damage[0].ToString());
+                    if (BGMManager == null)
+                        BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
+                    if(damage[0] >= 1 && damage[0] < _enemy.model.Hp * 0.01)
+                    {
+                        BGMManager.PlaySE(damageLow,7f);
+                    }
+                    else if(damage[0] < _enemy.model.Hp * 0.5)
+                    {
+                        BGMManager.PlaySE(damageMid, 2f);
+                    }
+                    else
+                    {
+                        BGMManager.PlaySE(damageHigh, 2f);
+                    }
                     yield return new WaitForSeconds(0.2f);
                     x = g.transform.position.x;
                     y = g.transform.position.y;
@@ -1698,9 +1728,6 @@ public class GameManger : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     dmanager.DataSave(filepath);
                     AddLogText("YOU WIN");
-                    Debug.Log("Ave_at(before):" + debugAt / debugBounus);
-                    Debug.Log("Ave_bounus:" + debugBounus / TurnNum);
-                    Debug.Log("Ave_at(after):" + debugAt / TurnNum);
                     SceneManager.LoadScene("Result");
                     break;
                 case AnimationType.block:
@@ -1716,6 +1743,7 @@ public class GameManger : MonoBehaviour
                     }
                     yield return new WaitForSeconds(1f);
                     dmanager.DataSave(filepath);
+                    AddLogText("YOU WIN");
                     SceneManager.LoadScene("Battle");
                     break;
                 case AnimationType.numProtect:
@@ -1777,6 +1805,9 @@ public class GameManger : MonoBehaviour
         }
         UpCardObj.Clear();
         _hand = HandChange(_hand, Hand);
+        if (CrectmapManager.stage != null)
+            FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
+        ReaderSkill(ReaderCard, _hand);
         Myturn = true;
         if(!vs.Contains(AnimationType.nextStage))
         {
@@ -1796,7 +1827,8 @@ public class GameManger : MonoBehaviour
 
         DamageAnimation e = Instantiate(damageAnimation, canvaspos);
         int s = e.startAnimation(damage);
-        yield return new WaitForSeconds(s);
+        yield return new WaitForSeconds(s); 
+
         Destroy(e.gameObject);
 
 

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill_name: "\u5373\u6B7B"
   skill_infomatin: "\u653B\u6483\u529B\u306E20\u500D\u306E\u653B\u6483\u3092\u3059\u308B"
+  _Priority: 3
   magic_Conditon_Origins:
-  - type: 1
+  - type: 0
     condition_kind: 7
     condition_num: 0
     conditons: 0
     magic_kind: 1
-    effect_size: 20
+    effect_size: 9999999
+    effect_turn: 0

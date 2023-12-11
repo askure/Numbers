@@ -28,5 +28,5 @@ MonoBehaviour:
     condition_num: 37
     conditons: 0
     magic_kind: 1
-    effect_size: 1.5
+    effect_size: 1.2
     effect_turn: 2

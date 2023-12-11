@@ -9,9 +9,9 @@ public class SettingPanel : MonoBehaviour
     DataManager dataManager;
     Slider volumeslider;
     static string dfilepath;
-
     static float volume;
     static BGMManager BGMManager;
+    [SerializeField] GameObject TutorialPanel,strength, skill, status;
     private void Update()
     {
         volume = volumeslider.value;
@@ -32,6 +32,27 @@ public class SettingPanel : MonoBehaviour
     {
         dataManager.DataSave(dfilepath);
         Destroy(gameObject);
+    }
+
+    public void OpenTutorialPanel()
+    {
+        TutorialPanel.SetActive(true);
+        if (!dataManager.status_tutorial)
+        {
+            status.SetActive(false);
+        }
+        if (!dataManager.enemystatus_tutorial)
+        {
+            strength.SetActive(false);
+        }
+        if (!dataManager.charactor_tutorial)
+        {
+            skill.SetActive(false);
+        }
+    }
+    public void CloseTutorialPanel()
+    {
+        TutorialPanel.SetActive(false);
     }
 
 

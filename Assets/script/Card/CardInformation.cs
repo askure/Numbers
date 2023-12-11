@@ -14,23 +14,29 @@ public class CardInformation : MonoBehaviour
 
 
         InfomationObject.SetActive(true);
-        var controller = GetComponent<CardController>();
-        var name = controller. model.name;
-        infoText.color = new Color(0, 0, 0);
-        infoText.text = name + "\n";
+
         /*infoText.text += "Hp:" + controller.model.Hp.ToString() + "\n\n";
         infoText.text += "çUåÇóÕ:" + controller.model.at.ToString() + "\n\n";
         infoText.text += "ñhå‰óÕ:" + controller.model.df.ToString() + "\n\n";*/
+        SetText();
+        
+       
+
+    }
+
+    public void SetText()
+    {
+        var controller = GetComponent<CardController>();
+        var name = controller.model.name;
+        infoText.color = new Color(0, 0, 0);
+        infoText.text = name + "\n";
         infoText.text += controller.model.PublicSkill.skill_infomatin + "\n\n";
         List<CardController> UpCard = GameManger.instnce.GetUpCard();
         int auto = AutoSKillFlag(UpCard, controller);
         int autoSum = controller.model.PublicSkill.magic_Conditon_Origins.Count;
         if (auto == autoSum) infoText.color = new Color(0, 0, 255);
         else if (auto == 0) infoText.color = new Color(255, 0, 0);
-        else infoText.color = new Color(0, 255, 0);
-        
-       
-
+        else infoText.color = new Color(0, 0.5f, 0.2f);
     }
 
     public void InfomationDown()

@@ -17,7 +17,7 @@ MonoBehaviour:
   numba: 29
   Hp: 480000
   at: 11000
-  df: 6530
+  df: 1632
   _exp: 90000
   icon: {fileID: 21300000, guid: ba45364955a31064282a0a59b7ec27a9, type: 3}
   skilllist:

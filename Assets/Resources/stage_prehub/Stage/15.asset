@@ -29,17 +29,17 @@ MonoBehaviour:
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 0
-    effectSize: 1.3
+    effectSize: 1.15
     effectCondition: 0
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 1
-    effectSize: 1.4
+    effectSize: 1.2
     effectCondition: 0
   - EnemyOrParty: 0
     buff: 0
     ApplicationNum: 2
-    effectSize: 1.2
+    effectSize: 1.1
     effectCondition: 0
   gifts:
   - Gift: 0

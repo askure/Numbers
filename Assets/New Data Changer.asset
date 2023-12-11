@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: New Data Changer
   m_EditorClassIdentifier: 
   Rank: 1
-  Stone: 1000000
+  Stone: 100000
   Exp: 100000000
-  Multi: 28
-  Diviser: 28
-  Prime: 28
-  CardLv: 20
+  Multi: 1
+  Diviser: 1
+  Prime: 1
+  CardLv: 1
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0
-  convex: 1
+  convex: 0
   allCharactor: 35
   allStage: 40
   clear: 1

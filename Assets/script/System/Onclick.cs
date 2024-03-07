@@ -66,6 +66,7 @@ public class Onclick : MonoBehaviour
             cardcontroll.model.decided = true;
             var card = GetComponent<CardController>();
             GameManger.instnce.SetUpCard(card);
+            GameManger.instnce.SetUpCardObj(this.gameObject);
             GameManger.decide_num++;
             sesource.PlaySE(charse);
         }
@@ -78,6 +79,7 @@ public class Onclick : MonoBehaviour
             cardcontroll.model.decided = false;
             var card = GetComponent<CardController>();
             GameManger.instnce.RemoveCard(card);
+            GameManger.instnce.RemoveCardObj(this.gameObject);
             GameManger.decide_num--;
            
         }
@@ -143,16 +145,25 @@ public class Onclick : MonoBehaviour
             var cardText = Panel.transform.GetChild(index);
             var color = card.transform.GetChild(2).GetComponent<CanvasGroup>().alpha;
             var Text = cardText.transform.GetChild(0).GetComponent<Text>();
-            Text.text = card.GetComponent<CardController>().model.name;
-            bool auto = AutoSKillFlag(GameManger.instnce.GetUpCard(), card.GetComponent<CardController>());
 
-            if (color == 0.5f && auto) Text.color = new Color(0, 0, 255);
-            else if(color == 0.5f && !auto) Text.color = new Color(255, 0, 0);
+            CardController controller = card.GetComponent<CardController>();
+           
+            Text.text = controller.model.name;
+            
+            int auto = AutoSKillFlag(GameManger.instnce.GetUpCard(), controller);
+            int autoSum = controller.model.PublicSkill.magic_Conditon_Origins.Count;
+
+
+            if (color == 0.5f && auto == autoSum ) Text.color = new Color(0, 0, 255);
+            else if(color == 0.5f && auto == 0) Text.color = new Color(255, 0, 0);
+            else if(color == 0.5f ) Text.color = new Color(0, 255, 0);
             else Text.color = new Color(0, 0, 0);
+
             Text = cardText.transform.GetChild(1).GetComponent<Text>();
-            Text.text = card.GetComponent<CardController>().model.PublicSkill.skill_infomatin;
-            if (color == 0.5f && auto) Text.color = new Color(0, 0, 255);
-            else if (color == 0.5f && !auto) Text.color = new Color(255, 0, 0);
+            Text.text = controller.model.PublicSkill.skill_infomatin;
+            if (color == 0.5f && auto == autoSum) Text.color = new Color(0, 0, 255);
+            else if (color == 0.5f && auto == 0) Text.color = new Color(255, 0, 0);
+            else if(color == 0.5f) Text.color = new Color(0, 255, 0);
             else Text.color = new Color(0, 0, 0);
             index++;
         }
@@ -161,7 +172,7 @@ public class Onclick : MonoBehaviour
         TurnText.SetActive(false);
     }
 
-    bool AutoSKillFlag(List<CardController> cards,CardController card)
+    int AutoSKillFlag(List<CardController> cards,CardController card)
     {
         List<int> nums = new List<int>();
         GameManger gameManger = new GameManger();
@@ -173,7 +184,7 @@ public class Onclick : MonoBehaviour
         var auto = card.model.PublicSkill;
         var skillOrigin = auto.magic_Conditon_Origins;
         var SkillLength = skillOrigin.Count;
-        if (SkillLength == 0) return false;
+        if (SkillLength == 0) return 0;
         bool[] autoInvocation = new bool[SkillLength];
         int index = 0;
         foreach (Skill_origin.magic_conditon_origin _Origin in skillOrigin)
@@ -188,12 +199,12 @@ public class Onclick : MonoBehaviour
             index++;
 
         }
-
+        int autoNum = 0;
         foreach(bool b in autoInvocation)
         {
             
-            if (b) return true;
+            if (b) autoNum++;
         }
-        return false;
+        return autoNum;
     }
 }

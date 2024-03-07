@@ -15,7 +15,7 @@ MonoBehaviour:
   EnemyId: 17
   name: "\u732B(\u9752)"
   numba: 3210
-  Hp: 10000
+  Hp: 91000
   at: 21000
   df: 4310
   _exp: 160000

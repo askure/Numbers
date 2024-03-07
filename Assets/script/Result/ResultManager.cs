@@ -28,6 +28,7 @@ public class ResultManager : MonoBehaviour
         GameObject.Find("ResultBGM").GetComponent<AudioSource>().volume =dmanager.volume ;
         SetText();
         dmanager.DataSave(dfilepath);
+        cmanager.Datasave(cfilepath);
         dmanager.StageDataSave(mapfilepath);
  
         
@@ -43,7 +44,7 @@ public class ResultManager : MonoBehaviour
         MaxNumText.text = "最大数値:"+GameManger.maxNum.ToString("N0");
         var averageTurn = (GameManger.aveTurn / CrectmapManager.enemy.Count);
         AveTurnText.text = "平均ターン:"+ averageTurn.ToString("N0");
-        var score = GameManger.maxDamage / 10 + GameManger.maxNum * averageTurn * 1000;
+        var score = GameManger.maxDamage / 10 + GameManger.maxNum * averageTurn * 1000 + GameManger.enemysexp/10;
         ScoreText.text = "スコア:"+ score.ToString("N0");
        
         if (CrectmapManager.Gift != null)
@@ -57,7 +58,8 @@ public class ResultManager : MonoBehaviour
 
         
         dmanager.stages[CrectmapManager.stage.stageid].clear = true;
-        CheckRankUp(score / 100);
+        Debug.Log(score / 20);
+        CheckRankUp(score / 20);
         int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;
         rankExpText.text = "次のランクまで" + rankExp.ToString("N0");
 
@@ -80,9 +82,15 @@ public class ResultManager : MonoBehaviour
                     var x = Random.Range(0, 1001);
                     
                     if (x > gift.drop) break;
-                    if (cmanager.cardLvs[gift.card.cardID].pos) break;
-                    s += gift.card.name + "\n";
                     var cardId = gift.card.cardID;
+                    s += gift.card.name;
+                    if (cmanager.cardLvs[gift.card.cardID].pos)
+                    {
+                        s += "(所持済み)\n";
+                        cmanager.cardLvs[cardId].Lv += 5;
+                        break;
+                    }
+                    s += "\n";
                     cmanager.cardLvs[gift.card.cardID].pos = true;
                     cmanager.cardLvs[cardId].Id = cardId;
                     cmanager.cardLvs[cardId].Lv = 1;

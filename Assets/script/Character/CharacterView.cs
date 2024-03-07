@@ -42,8 +42,8 @@ public class CharacterView : MonoBehaviour
         lvText.text = "Lv:" + Lv.ToString();
         nameText.text = name + "\n"+convex.ToString() + "/" + LimitConvex.ToString();
         hpText.text = "Hp:" + Hp.ToString() + "(+" + (hpbuf*Hp - Hp).ToString("F0") + ")";
-        atText.text = "Attack:" + at.ToString() + "(+" + (at * atbuf - at).ToString("F0") + ")";
-        dfText.text = "Defence:" + df.ToString() + "(+" + (df * dfbuf - df).ToString("F0") + ")";
+        atText.text = "çUåÇóÕ:" + at.ToString() + "(+" + (at * atbuf - at).ToString("F0") + ")";
+        dfText.text = "ñhå‰óÕ:" + df.ToString() + "(+" + (df * dfbuf - df).ToString("F0") + ")";
         Icon.sprite = icon;
         Icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         if(Lv ==100 +  10 * (convex))

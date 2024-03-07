@@ -28,12 +28,12 @@ MonoBehaviour:
     condition_num: 40
     conditons: 0
     magic_kind: 1
-    effect_size: 1.4
+    effect_size: 1.12
     effect_turn: 3
   - type: 6
     condition_kind: 0
     condition_num: 40
     conditons: 0
     magic_kind: 1
-    effect_size: 1.4
+    effect_size: 1.12
     effect_turn: 3

@@ -9,6 +9,8 @@ public class CharacterManager : MonoBehaviour
     public GameObject ExpShoratage;
     [SerializeField]CardController Card;
     [SerializeField] Transform Transform;
+    [SerializeField] List<Sprite> Photo,Photo_status;
+    [SerializeField] Tutorial tutorial,tutorial_status;
      
     CharacterView characterView;
     public Text expText,pageText,pageMaxText;
@@ -50,7 +52,8 @@ public class CharacterManager : MonoBehaviour
         changeText = false;
     }
 
-    public void SetCard(int pageNum)
+    public void SetCard
+        (int pageNum)
     {   
         for(int i = pageNum*5; i < (pageNum*5) + 5; i++)
         {
@@ -77,16 +80,16 @@ public class CharacterManager : MonoBehaviour
     public void NextPage()
     {
 
-        if ((pageNum + 1) * 5 >= cards.Count) return;
-        pageNum++;
+        if ((pageNum + 1) * 5 >= cards.Count) pageNum = 0;
+        else pageNum++;
      
         InitCard();
         SetCard(pageNum);
     }
     public void BeforePage()
     {
-        if (pageNum == 0) return;
-        pageNum--;
+        if (pageNum == 0) pageNum = pageMax-1;
+        else pageNum--;
        
         InitCard();
         SetCard(pageNum);
@@ -132,10 +135,28 @@ public class CharacterManager : MonoBehaviour
            cmanager.cardLvs[id].expSum = cardLvs[id].expSum;
            cmanager.cardLvs[id].Lv = cardLvs[id].Lv;
            SerctedCard.CahacterInit(id, cardLvs[id].Lv);
+           if (cardLvs[id].Lv >= 20 && !gameManger.charactor_tutorial)
+           {
+                Transform canvas = GameObject.Find("Canvas").transform;
+                gameManger.charactor_tutorial = true;
+                var g = Instantiate(tutorial, canvas);
+                g.SetUpTutorial(Photo);
+           }
+           if (cardLvs[id].Lv == 100 + 10 * convex && !gameManger.status_tutorial)
+           {
+                Transform canvas = GameObject.Find("Canvas").transform;
+                gameManger.status_tutorial = true;
+                var g = Instantiate(tutorial_status, canvas);
+                g.SetUpTutorial(Photo_status);
+           }
+
            gameManger.DataSave(filepath);
-           cmanager.Datasave(cfilepath); 
+           cmanager.Datasave(cfilepath);
            SetText();
            SetExpText();
+           
+
+            
 
         }
         else if(bufSum < LimitBuf(SerctedCard.model.rare)  +(convex * 5))
@@ -254,9 +275,10 @@ public class CharacterManager : MonoBehaviour
         if (x.Lv > 100 + 10 * convex) x.Lv = 100 + 10 * convex;
         if (x.Lv == (100 + 10 * convex) && bufSum < LimitBuf(card.model.rare) + (convex * 5))
         {
+
             GameObject.Find("Lvup").transform.GetChild(0).GetComponent<Text>().text = "ステータス強化";
         }
-        else if(bufSum > LimitBuf(card.model.rare))
+        else if(bufSum >=LimitBuf(card.model.rare))
         {
             GameObject.Find("Lvup").transform.GetChild(0).GetComponent<Text>().text = "限界突破";
 

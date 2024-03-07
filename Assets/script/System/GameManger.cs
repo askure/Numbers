@@ -30,11 +30,11 @@ public class GameManger : MonoBehaviour
     [SerializeField] AudioClip[] DefaultAudioClipIntro;
     [SerializeField] AudioClip[] DefaultAudioClipLoop;
     [SerializeField] GameObject OptionPanel;
-    [SerializeField] GameObject SoundSettingPanel;
-    [SerializeField] List<Sprite> tutorial;
+    [SerializeField] SettingPanel SoundSettingPanel;
+    [SerializeField] List<Sprite> tutorial,bounus_tutorial;
     [SerializeField] StatusListManager statusManager;
     [SerializeField] int debugenemy;
-    [SerializeField] AudioClip skillse;
+    [SerializeField] AudioClip skillse,damageLow,damageMid,damageHigh;
 
     BGMManager BGMManager;
     Slider volumeslider;
@@ -68,7 +68,8 @@ public class GameManger : MonoBehaviour
     public List<CardController> _hand = new List<CardController>();
     public List<int> decklist;
     public List<CardController> UpCard = new List<CardController>();
-    public List<string> logText = new List<string>();
+    public List<GameObject> UpCardObj = new List<GameObject>(); 
+    static public List<string> logText = new List<string>();
     
    // public List<int> decklist;
     public CardController ReaderCard;
@@ -136,7 +137,7 @@ public class GameManger : MonoBehaviour
 
         BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         OptionPanel.SetActive(false);
-        SoundSettingPanel.SetActive(false);
+       
  
         StartGame();
         StatusNumReset();
@@ -152,6 +153,7 @@ public class GameManger : MonoBehaviour
         TurnNum = 1;
         debugAt = 0;
         debugBounus = 0;
+        sum = 0;
         decklist = deck[sortiePartyNum].cardId;
         List<int> tmp = new List<int>();
         foreach (int x in decklist)
@@ -214,18 +216,26 @@ public class GameManger : MonoBehaviour
         OnlyOneReaderSkill = false;
         
         //buttleAnimatoin.SetActive(false);
-        buttleNumText.GetComponent<Text>().text = "Buttle " + ButtleNum.ToString();
+        buttleNumText.GetComponent<Text>().text = "Battle " + ButtleNum.ToString();
         if (CrectmapManager.enemy != null && ButtleNum != CrectmapManager.enemy.Count)
         {
            // buttleNumText.GetComponent<Animator>().enabled = true;
           
             var t = GameObject.Find("Enemys").GetComponent<Animator>();
             t.enabled = true;
-            if (!buttle_tutorial)
+            if (CrectmapManager.stage != null)
             {
-                StartCoroutine(Tutorial(2));
-                dmanager.buttle_tutorial = true;
-            } 
+                if (CrectmapManager.stage.stageid == 0)
+                {
+                    StartCoroutine(Tutorial(2, tutorial));
+                    dmanager.buttle_tutorial = true;
+                }
+                if (CrectmapManager.stage.stageid == 1)
+                {
+                    StartCoroutine(Tutorial(2, bounus_tutorial));
+                }
+
+            }
 
 
 
@@ -250,11 +260,19 @@ public class GameManger : MonoBehaviour
             else
                 BGMManager.SetBGM(CrectmapManager.intro[1], CrectmapManager.loop[1], volume);
             // BGMManager.Play();
-            if (!buttle_tutorial)
+            if (CrectmapManager.stage != null)
             {
-                StartCoroutine(Tutorial(5));
-                dmanager.buttle_tutorial = true;
+                if (CrectmapManager.stage.stageid == 0)
+                {
+                    StartCoroutine(Tutorial(5, tutorial));
+                    dmanager.buttle_tutorial = true;
+                }
+                if (CrectmapManager.stage.stageid == 1)
+                {
+                    StartCoroutine(Tutorial(5, bounus_tutorial));
+                }
             }
+           
 
         }
         if(ButtleNum == 1)
@@ -268,7 +286,7 @@ public class GameManger : MonoBehaviour
             CardModel controllerInstance = new CardModel();
             List<int> hp = new List<int>();
             List<int> num = new List<int>();
-            
+            logText = new List<string>();
             foreach (int id in tmp)
             {
 
@@ -288,11 +306,11 @@ public class GameManger : MonoBehaviour
         partyDf = Df(_hand);
         gameView.Init(MAX_HP, hpSum,partyDf);
         CardShowUpdate(_hand);
-        
-        
+
+
         //
         //log
-
+        LogTextView("Battle:" + ButtleNum);
         LogTextView("Turn:" + TurnNum.ToString());
         //
        
@@ -302,7 +320,7 @@ public class GameManger : MonoBehaviour
 
     }
 
-    IEnumerator Tutorial(int time)
+    IEnumerator Tutorial(int time,List<Sprite> tutorial)
     {
         yield return new WaitForSeconds(time);
         var tuto = Resources.Load<GameObject>("tutorial");
@@ -318,21 +336,27 @@ public class GameManger : MonoBehaviour
         {
             if (OptionPanel.activeInHierarchy)
             {
-                OptionPanel.SetActive(false);
-                SoundSettingPanel.SetActive(false);
+                CloseOptionPanel();
             }
             else
             {
-                OptionPanel.SetActive(true);
+                OpenOptionPanel();
             }
         }
 
-        if (SoundSettingPanel.activeInHierarchy)
-        {
-            volume = volumeslider.value;
-            BGMManager.ChangeVolume(volume);
-            dmanager.volume = volume;
-        }
+        
+    }
+
+    public void OpenOptionPanel()
+    {
+        if (OptionPanel.activeInHierarchy) return;
+        OptionPanel.SetActive(true);
+    }
+    public void CloseOptionPanel()
+    {
+        if (!OptionPanel.activeInHierarchy) return;
+        OptionPanel.SetActive(false);
+
     }
     void FieldEffectParty( List<CardController> hand,  List<StageEntity.FieldEffect> fieldEffects )
     {
@@ -509,8 +533,8 @@ public class GameManger : MonoBehaviour
         multi_bounuses = (int)Multi_bounus(multis, multi_lv);
         divisor_bounuses = (int)Divisor_bounus(divisors, divisor_lv);
 
-        double correction = (34 - prime_lv) * 0.15;
-        if (prime_bounuse_check) prime_bounuse = (int)(1 + prime_lv *1.12 + correction);
+        double correction = (34 - prime_lv) * 0.1;
+        if (prime_bounuse_check) prime_bounuse = (int)(1 + prime_lv *1.05 + correction);
         else prime_bounuse = 0;
 
         sum += multi_bounuses + divisor_bounuses + prime_bounuse;
@@ -597,6 +621,14 @@ public class GameManger : MonoBehaviour
             //df += dfs[i] * (i*0.85+1);
             df += dfs[i];
         }
+        if (PartyDfStatusManager.statusNum >= 3)
+        {
+            if (PartyDfStatusManager.statusNum >= 22)
+                df *= 0.01;
+            else df *= Mathf.Log(PartyDfStatusManager.statusNum - 2, 20);
+        }
+
+            
         Debug.Log("Df:" + df);
         return (int)df;
 
@@ -617,6 +649,10 @@ public class GameManger : MonoBehaviour
         gameView.NumPowerText(x);
 
     }
+    public void SetUpCardObj(GameObject card)
+    {
+        UpCardObj.Add(card);
+    }
     public List<CardController> GetUpCard()
     {
         return UpCard;
@@ -626,6 +662,10 @@ public class GameManger : MonoBehaviour
         UpCard.Remove(card);
         var x = Sum(UpCard);
         gameView.NumPowerText(x);
+    }
+    public void RemoveCardObj(GameObject card)
+    {
+        UpCardObj.Remove(card);
     }
     public void InitUpcard()
     {
@@ -677,7 +717,8 @@ public class GameManger : MonoBehaviour
 
 
         foreach (CardController card in _card)
-        {
+        {   
+            
             if (card.model.decided == true)
             {
                 temp.Add(card);
@@ -712,7 +753,7 @@ public class GameManger : MonoBehaviour
             decklist.RemoveAt(0);
             _card.Add(card);
         }
-
+       
         decide_num = 0;
         handchange = true;
         return _card;
@@ -971,6 +1012,7 @@ public class GameManger : MonoBehaviour
         for (int i = 0; i < card.model.ReaderSkill.magic_Conditon_Origins.Count; i++)
         {
             var x = card.model.ReaderSkill.magic_Conditon_Origins[i];
+            
             switch ((int)x.type)
             {
 
@@ -1262,7 +1304,7 @@ public class GameManger : MonoBehaviour
                         break;
                 }
 
-                if (autoInvocation) AddLogText(card.model.name + "のAUTOスキル発動");
+               
             }
             
 
@@ -1377,20 +1419,18 @@ public class GameManger : MonoBehaviour
     {
         
         List<AnimationType> animations = new List<AnimationType>();
-        double ats = 0;
         double pesuit = 0;
-        double enemyNum = _enemy.model.numba;
         double enemyDf = _enemy.model.df;
-        int damage = 0;
+        List<int> damage = new List<int>();
         int teamHeal = 0;
         List<int> teamDamage = new List<int>();
         int enemyHeal = 0;
         int healNum = 0;
         int enemydamage = 0;
-       
+        
         AutoSkill(animations,cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
         partyDf = Df(_hand);
-        _enemy.model.numba = (int)enemyNum;
+        //_enemy.model.numba = (int)enemyNum;
        // _enemy.model.Hp -= (int)pesuit;
         _enemy.model.df = (int)enemyDf;
         string skillName = "";
@@ -1406,7 +1446,7 @@ public class GameManger : MonoBehaviour
             if (_enemy.model.Hp - pesuit < 0)
             {
                 _enemy.model.Hp = 0;
-                AddLogText("YOU WIN");
+                
                 aveTurn += TurnNum;
                 enemysexp += _enemy.model._exp;
                 if (ButtleNum != CrectmapManager.enemy.Count)
@@ -1425,17 +1465,14 @@ public class GameManger : MonoBehaviour
 
             }
 
-            AddLogText("-EnemyTurn-");
             animations.Add(AnimationType.enemyturn);
             skillName = Enemyattack(animations,true, ref teamDamage,ref enemyHeal,ref healNum,ref enemydamage);
-            _hand = HandChange(_hand, Hand);
-            if (CrectmapManager.stage != null)
-                FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
-            ReaderSkill(ReaderCard, _hand);
-            if (hpSum + teamHeal - teamDamage.Sum() < 0)
+           // _hand = HandChange(_hand, Hand);
+        
+            if (hpSum + teamHeal - teamDamage.Sum() <=0)
             {
                 //hpSum = 0;
-                AddLogText("GAME OVER");
+              
                 ButtleNum = 0;
                 finish = true;
                 animations.Add(AnimationType.gameover); //gameover
@@ -1450,37 +1487,42 @@ public class GameManger : MonoBehaviour
             return;
         }
 
-       
+        double bounus = 1 + 0.05 * (sum - _enemy.model.numba);
+        if (sum - _enemy.model.numba >= 20)
+        {
+            bounus = 2 * Mathf.Log(sum - _enemy.model.numba, 20);
+        }
 
         foreach (CardController card in cardlist)
         {
             if (card.model.decided == true)
-                ats += card.model.at;
+            {
+                double tmp = card.model.at * bounus - _enemy.model.df;
+                if(PartyAtManager.statusNum >= 3)
+                {
+                    if (PartyAtManager.statusNum >= 22)
+                        tmp *= 0.01;
+                    else tmp *= 1 - Mathf.Log(PartyAtManager.statusNum - 2, 20);
+                }
+                if (tmp <= 1) tmp = 1;
+                damage.Add((int)tmp);
+                AddLogText( card.model.name+ "が<color=red>" + (int)tmp + "</color>ダメージ");
+                animations.Add(AnimationType.attack); //attack
+
+            }
+                
 
         }
-        
-        double bounus = 1 + 0.1 * (sum - _enemy.model.numba);
-        if (sum - _enemy.model.numba >= 20)
-        {
-            bounus = 2 * Mathf.Log(sum - _enemy.model.numba,20);
-        }
-        debugBounus += bounus;
        
-        ats *= bounus;
-        debugAt = ats;
-        
+       
+        if (maxDamage < damage.Max()) maxDamage = damage.Max();
 
-        damage = ((int)ats - _enemy.model.df);
-        if (damage <= 0) damage = 1;
-        AddLogText("敵に" + damage + "ダメージ");
-        animations.Add(AnimationType.attack); //attack
-        if (maxDamage < damage) maxDamage = damage;
         if (maxNum < sum) maxNum = sum;
         _enemy.model.numba = 0;       
         if (pesuit != 0) animations.Add(AnimationType.persuit); //persuit
-        if (_enemy.model.Hp - damage - pesuit > 0)
+        if (_enemy.model.Hp - damage.Sum() - pesuit > 0)
         {
-            AddLogText("-EnemyTurn-");
+           
             animations.Add(AnimationType.enemyturn);
             Enemyattack(animations, false, ref teamDamage, ref enemyHeal,ref healNum, ref enemydamage);
             skillName = Enemyattack(animations,true, ref teamDamage, ref enemyHeal, ref healNum, ref enemydamage);
@@ -1489,7 +1531,7 @@ public class GameManger : MonoBehaviour
         else
         {
 
-            AddLogText("YOU WIN");
+           
             aveTurn += TurnNum;
             enemysexp += _enemy.model._exp;
             if ((CrectmapManager.enemy != null) && ButtleNum != CrectmapManager.enemy.Count)
@@ -1507,14 +1549,10 @@ public class GameManger : MonoBehaviour
             }
 
         }
-
-        _hand = HandChange(_hand, Hand);
-        if(CrectmapManager.stage != null) FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
-        ReaderSkill(ReaderCard, _hand);
-        if (hpSum + teamHeal - teamDamage.Sum() < 0)
+        if (hpSum + teamHeal - teamDamage.Sum() <=0)
         {
            // hpSum = 0;
-            AddLogText("GAME OVER");
+          
             ButtleNum = 0;
             finish = true;
             animations.Add(AnimationType.gameover);
@@ -1532,10 +1570,10 @@ public class GameManger : MonoBehaviour
 
     public void OpenSoundSetting()
     {
-        
-        SoundSettingPanel.SetActive(true);
-        if (volumeslider == null) volumeslider = SoundSettingPanel.transform.GetChild(1).GetComponent<Slider>();
-        volumeslider.value = volume;
+
+        Transform canvas = GameObject.Find("Canvas").transform;
+        var g = Instantiate(SoundSettingPanel, canvas);
+        g.SetUpPanel();
     }
    
    
@@ -1583,7 +1621,7 @@ public class GameManger : MonoBehaviour
 
     }
 
-    IEnumerator AnimationList(List<AnimationType> vs,int persuit,int damage,string skillname,List<int> teamDamage,int teamHeal,int enemyHeal,int healNum,int enemydamage)
+    IEnumerator AnimationList(List<AnimationType> vs,int persuit,List<int> damage,string skillname,List<int> teamDamage,int teamHeal,int enemyHeal,int healNum,int enemydamage)
     {
         yield return new WaitForSeconds(1f); /*SE遅延*/
         foreach (AnimationType i in vs)
@@ -1593,23 +1631,53 @@ public class GameManger : MonoBehaviour
                
                 case AnimationType.damage:
                     int tmp = teamDamage[0];
-                    teamDamage.RemoveAt(0);
+                    AddLogText("味方に<color=red>" + (int)teamDamage[0] + "</color>ダメージ");
+                    teamDamage.RemoveAt(0);     
                     yield return StartCoroutine(DamageAnimation(tmp));
                     break;
                 case AnimationType.heal:
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.7f);
                     hpSum += teamHeal;
+                    AddLogText("味方が<color=green>" + (int)teamHeal + "</color>回復");
                     if (hpSum > MAX_HP) hpSum = MAX_HP;
+
                     break;
                 case AnimationType.attack:
-                    NotificationButtle.GetInstance().PutInQueue(damage.ToString());
-                    if (_enemy.model.Hp - damage < 0)
+                    var g = UpCardObj[0];
+                    var x = g.transform.position.x;
+                    var y = g.transform.position.y;
+                    g.transform.position = new Vector3(x, y +40, 0);
+                    NotificationButtle.GetInstance().PutInQueue(damage[0].ToString());
+                    if (BGMManager == null)
+                        BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
+                    if(damage[0] >= 1 && damage[0] < _enemy.model.Hp * 0.01)
+                    {
+                        BGMManager.PlaySE(damageLow,7f);
+                    }
+                    else if(damage[0] < _enemy.model.Hp * 0.5)
+                    {
+                        BGMManager.PlaySE(damageMid, 2f);
+                    }
+                    else
+                    {
+                        BGMManager.PlaySE(damageHigh, 2f);
+                    }
+                    yield return new WaitForSeconds(0.2f);
+                    x = g.transform.position.x;
+                    y = g.transform.position.y;
+                    g.transform.position = new Vector3(x, y - 40, 0);
+                    UpCardObj.RemoveAt(0);
+                   
+                    if (_enemy.model.Hp - damage[0] < 0)
                      {
                             _enemy.model.Hp = 0;
+                            
 
                      }
-                     else _enemy.model.Hp -= damage;
-                    yield return new WaitForSeconds(0.3f);
+                     else _enemy.model.Hp -= damage[0];
+                    
+                    damage.RemoveAt(0);
+                    yield return new WaitForSeconds(0.4f);
                     break;
                 case AnimationType.enemydamage:
                     NotificationButtle.GetInstance().PutInQueue(enemydamage.ToString());
@@ -1619,8 +1687,8 @@ public class GameManger : MonoBehaviour
 
                     }
                     else _enemy.model.Hp -= enemydamage;
-                    yield return new WaitForSeconds(0.3f);
-                    break;
+                    AddLogText(_enemy.model.name  + enemydamage + "の自傷");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.persuit:    
                     NotificationButtle.GetInstance().PutInQueue("<color=black>" + persuit.ToString()+ "</color>");
@@ -1630,15 +1698,18 @@ public class GameManger : MonoBehaviour
 
                     }
                     else _enemy.model.Hp -= persuit;
-                    yield return new WaitForSeconds(0.3f);
+                    AddLogText("敵に" + persuit + "の追撃");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemydecreasedf:
                     NotificationButtle.GetInstance().PutInQueue("<color=blue>" + "防御力ダウン" + "</color>");
-                    yield return new WaitForSeconds(0.3f);
+                    AddLogText(_enemy.model.name + "が防御力ダウン");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemydecreaseat:
                     NotificationButtle.GetInstance().PutInQueue("<color=blue>" + "攻撃力力ダウン" + "</color>");
-                    yield return new WaitForSeconds(0.3f);
+                    AddLogText(_enemy.model.name + "が攻撃力ダウン");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.skill:
                     yield return StartCoroutine(SkillAnimation(skillname));
@@ -1649,23 +1720,21 @@ public class GameManger : MonoBehaviour
                     hpSum = 0;
                     yield return StartCoroutine(GameOverAnimation());
                     dmanager.DataSave(filepath);
+                    AddLogText("GAME OVER");
                     break;
                 case AnimationType.win:
                     Destroy(_enemy.gbj);
                     BGMManager.FadeOut();
                     yield return new WaitForSeconds(1f);
                     dmanager.DataSave(filepath);
-                   
-                    Debug.Log("Ave_at(before):" + debugAt / debugBounus);
-                    Debug.Log("Ave_bounus:" + debugBounus / TurnNum);
-                    Debug.Log("Ave_at(after):" + debugAt / TurnNum);
+                    AddLogText("YOU WIN");
                     SceneManager.LoadScene("Result");
                     break;
                 case AnimationType.block:
                     AddLogText("数値バリアを破壊できなかった");
                    
                     NotificationButtle.GetInstance().PutInQueue("BLOCK");
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.nextStage:
                     if ((ButtleNum+1) == CrectmapManager.enemy.Count)
@@ -1674,25 +1743,30 @@ public class GameManger : MonoBehaviour
                     }
                     yield return new WaitForSeconds(1f);
                     dmanager.DataSave(filepath);
+                    AddLogText("YOU WIN");
                     SceneManager.LoadScene("Battle");
                     break;
                 case AnimationType.numProtect:
                     double newnumba = MAX_NUMBA * _enemy.model.Hp / MAX_ENEMYHP;
                     if ((int)newnumba < 1) _enemy.model.numba = 1;
                     else _enemy.model.numba = (int)newnumba;
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.7f);
+                    AddLogText(_enemy.model.name + "の数値バリアが" + _enemy.model.numba + "に回復");
                     break;
 
                 case  AnimationType.enemyturn:
                     yield return StartCoroutine(EnemyTurnAnimation());
-                    
+                    AddLogText("-EnemyTurn-");
+
                     break;
                 case AnimationType.playerturn:
                         yield return StartCoroutine(ParyTurnAnimation());
+                        AddLogText("-PlayerTurn-");
                     break;
                 case AnimationType.healNum:
                     NotificationButtle.GetInstance().PutInQueue("<color=blue>" + healNum.ToString() + "</color>");
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.7f);
+                    AddLogText(_enemy.model.name + "が数値バリアを" + healNum + "回復");
                     _enemy.model.numba += healNum;
                     break;
                 case AnimationType.enemyHeal:
@@ -1706,29 +1780,40 @@ public class GameManger : MonoBehaviour
                     {
                         _enemy.model.Hp += enemyHeal;
                     }
-                    yield return new WaitForSeconds(0.5f);
+                    AddLogText(_enemy.model.name + "がHPを" + enemyHeal + "回復");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemyIncreaseAt:
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "攻撃力アップ!" + "</color>");
-                    yield return new WaitForSeconds(0.6f);
+                    AddLogText(_enemy.model.name + "が攻撃アップ");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemyIncreaseDf:
                     NotificationButtle.GetInstance().PutInQueue("<color=red>" + "防御力アップ!" + "</color>");
-                    yield return new WaitForSeconds(0.6f);
+                    AddLogText(_enemy.model.name + "が防御力アップ");
+                    yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.partydecrease:
                     statusManager.SetGameObject();
                     partyDf = Df(_hand);
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.7f);
                     break;
 
 
             }
 
         }
+        UpCardObj.Clear();
+        _hand = HandChange(_hand, Hand);
+        if (CrectmapManager.stage != null)
+            FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
+        ReaderSkill(ReaderCard, _hand);
         Myturn = true;
-        TurnNum++;
-        LogTextView("Turn:" + TurnNum.ToString());
+        if(!vs.Contains(AnimationType.nextStage))
+        {
+            TurnNum++;
+            LogTextView("Turn:" + TurnNum.ToString());
+        }
     }
     IEnumerator SkillAnimation(string skillname)
     {
@@ -1742,7 +1827,8 @@ public class GameManger : MonoBehaviour
 
         DamageAnimation e = Instantiate(damageAnimation, canvaspos);
         int s = e.startAnimation(damage);
-        yield return new WaitForSeconds(s);
+        yield return new WaitForSeconds(s); 
+
         Destroy(e.gameObject);
 
 

@@ -8,6 +8,7 @@ public class PartyAtStatus : MonoBehaviour
     int FinishTurn;
     double effect;
     string mode;
+    static string path;
     CardModel model;
 
 
@@ -27,13 +28,18 @@ public class PartyAtStatus : MonoBehaviour
     {
         if (card == null) return;
         transform.parent = card.transform;
-
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
+        if(PartyAtManager.statusNum >= 3 && mode == "Multi" && effect >1)
+        {
+            this.effect =1 +  Mathf.Pow(0.7f, PartyAtManager.statusNum - 2) * (effect - 1);
+        }
         this.mode = mode;
+        int beforeat = model.at;
+
         if (mode == "Multi")
         {
-            double temp = model.at * effect;
+            double temp = model.at * this.effect;
             model.at = (int)temp;
         }
         else if (mode == "Add")
@@ -43,11 +49,11 @@ public class PartyAtStatus : MonoBehaviour
         }
         if (model.at < 1) model.at = 1;
         FinishTurn = turn;
+       // Debug.Log(gameObject.name + ":" + model.name + "に" + effect + "の攻撃力に関するステータス変化が適用("  + FinishTurn + ")"+ beforeat + "→" + model.at );
     }
     public void StatusReset()
     {
-        Debug.Log("end");
-
+        int beforeat = model.at;
         if (mode == "Multi")
         {
             double temp = model.at / effect;
@@ -59,6 +65,7 @@ public class PartyAtStatus : MonoBehaviour
             model.at = (int)temp;
         }
         if (model.at < model.BeforeAt && PartyAtManager.statusNum <= 1) model.at = model.BeforeAt;
+        //Debug.Log(gameObject.name + ":" + model.name + "に" + effect + "の攻撃力に関するステータス変化が解除(" + FinishTurn + ")" + beforeat + "→" + model.at);
         Destroy(gameObject);
     }
 }

@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596feff04e06aaa489d1c2ecac5b3d8b, type: 3}
   m_Name: New Data Changer
   m_EditorClassIdentifier: 
-  Rank: 1
-  Stone: 1000000
+  Rank: 999
+  Stone: 100000
   Exp: 100000000
-  Multi: 4
-  Diviser: 4
-  Prime: 4
-  CardLv: 20
+  Multi: 999
+  Diviser: 999
+  Prime: 999
+  CardLv: 999
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0
-  convex: 1
+  convex: 0
   allCharactor: 35
   allStage: 40
-  clear: 0
+  clear: 1
   pos: 1

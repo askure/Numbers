@@ -9,7 +9,7 @@ public class HomeManeger : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] Text rankeText,expText,stoneText,rankExpText;
     [SerializeField] AudioClip _intro, _loop;
-    [SerializeField] GameObject SoundSettingPanel;
+    [SerializeField] SettingPanel SoundSettingPanel;
     Slider volumeslider;
     DataManager dmanager;
     CharacterDataManager cmanager;
@@ -45,32 +45,32 @@ public class HomeManeger : MonoBehaviour
            // bgmobj.GetComponent<BGMManager>().Play();
 
         }
-        SoundSettingPanel.SetActive(false);
 
 
     }
 
     private void Update()
     {
-        if (SoundSettingPanel.activeInHierarchy)
+        /*if (SoundSettingPanel.activeInHierarchy)
         {
             volume = volumeslider.value;
             BGMManager.ChangeVolume(volume);
             dmanager.volume = volume;
-        }
+        }*/
     }
 
     public void OpenSoundeSetting()
-    {   
-        SoundSettingPanel.SetActive(true);
-        if (volumeslider == null) volumeslider = GameObject.Find("BGMSlider").GetComponent<Slider>();
-        volumeslider.value = volume;
+    {
+        Transform canvas = GameObject.Find("Canvas").transform;
+        var g = Instantiate(SoundSettingPanel,canvas);
+        g.SetUpPanel();
+        
     }
 
     public void CloseSoundSetting()
     {
         dmanager.DataSave(filepath);
-        SoundSettingPanel.SetActive(false);
+        //SoundSettingPanel.SetActive(false);
     }
 
 }

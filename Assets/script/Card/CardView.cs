@@ -10,10 +10,6 @@ public class CardView : MonoBehaviour
     
     public void Show(CardModel cardModel)
     {
-        nameText.text = cardModel.name;
-        HpText.text = "HP:"+ cardModel.Hp.ToString();
-        atText.text = "çUåÇóÕ:"+cardModel.at.ToString();
-        dfText.text = "ñhå‰óÕ"+cardModel.df.ToString();
         numText.text = cardModel.num.ToString();
         iconImage.sprite = cardModel.icon;
         SetPanel(cardModel.rare);

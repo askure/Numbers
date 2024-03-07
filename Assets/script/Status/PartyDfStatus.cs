@@ -30,11 +30,16 @@ public class PartyDfStatus : MonoBehaviour
        
         model = card.GetComponent<CardController>().model;
         this.effect = effect;
+        if(PartyDfStatusManager.statusNum >= 3 && mode == "Multi" && effect > 1)
+        {
+            this.effect = 1 + Mathf.Pow(0.7f, PartyAtManager.statusNum - 2) * (effect - 1);
+        }
+        
         this.mode = mode;
         this.beforebuf = model.df;
         if(mode == "Multi")
         {
-            double temp = model.df * effect;
+            double temp = model.df * this.effect;
             model.df = (int)temp;
         }
         else if(mode == "Add")

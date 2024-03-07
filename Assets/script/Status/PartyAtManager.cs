@@ -8,6 +8,7 @@ public class PartyAtManager : MonoBehaviour
     double effect;
     static public int statusNum = 0;
     static public int statusSum = 0;
+    static string path;
     int MystatusNum;
     string mode,cname,effecttext;
     bool flag = false;
@@ -41,13 +42,15 @@ public class PartyAtManager : MonoBehaviour
             for(int i=0; i<parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
-            if (child.gameObject.CompareTag("status")) continue;
-            if (child.Find("partyat" + MystatusNum.ToString()) == null)
-                {
+                if (child.gameObject.CompareTag("status")) continue;
+                if (child.Find("partyat" + MystatusNum.ToString()) == null){
                     var g = Instantiate(partyat);
+                    //Debug.Log("--ステータス番号" +MystatusNum +  "付与開始--");
                     g.SetStatus(effect, FinishTurn, child.gameObject, mode);
                     g.name = "partyat" + MystatusNum.ToString();
-                }
+                    //Debug.Log("--ステータス番号" + MystatusNum + "付与完了--");
+
+            }
             }
            
         
@@ -63,6 +66,8 @@ public class PartyAtManager : MonoBehaviour
         {
             StatusList = GameObject.Find("StatusList").GetComponent<StatusListManager>();
         }
+        
+
         this.effect = effect;
         this.mode = mode;
         this.cname = cname;
@@ -71,6 +76,7 @@ public class PartyAtManager : MonoBehaviour
         parent = GameObject.Find("Hand").transform;
         transform.parent = parent;
         var childCount = parent.childCount;
+        
         for (int i = 0; i < childCount; i++)
         {
             var child = parent.GetChild(i);
@@ -104,7 +110,7 @@ public class PartyAtManager : MonoBehaviour
             effecttext = turn.ToString() + "ターンの間" + effect.ToString() + "分減らす。";
         }
         flag = true;
-       
+        
         statusNum++;
         statusSum++;
         StatusList.SetGameObjct(ImageGameObject);

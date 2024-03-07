@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -59,6 +60,7 @@ public class PartyManager : MonoBehaviour
             go.SetActive(true);
             var deck = manager.deck[index];
             var deckId = deck.cardId;
+            List<int> numSum = new List<int>();
             for(int  i=0; i<6; i++)
             {
                 if (i >= deckId.Count) break;
@@ -68,6 +70,7 @@ public class PartyManager : MonoBehaviour
 
                 card.DeckEdiInit(id, cardLv[id].Lv);
                 card.gameObject.transform.localScale = new Vector3(1f, 1f, 1);
+                numSum.Add(card.model.num);
                 if(i == 0)
                 {
                     rskill.text = card.model.ReaderSkill.skill_name;
@@ -83,6 +86,17 @@ public class PartyManager : MonoBehaviour
 
                 card.DeckEdiInit(id, cardLv[id].Lv);
                 card.gameObject.transform.localScale = new Vector3(1f, 1f, 1);
+                numSum.Add(card.model.num);
+            }
+            double tmp;
+            if (numSum.Count < 7)
+                tmp = numSum.Count + numSum.Count * numSum.Count * 0.1;
+            else
+                tmp = numSum.Count + numSum.Count * numSum.Count * 0.4;
+            int conditionNum = (int)tmp;
+            if(numSum.Sum() > conditionNum)
+            {
+                go.SetActive(false);
             }
         }
     }

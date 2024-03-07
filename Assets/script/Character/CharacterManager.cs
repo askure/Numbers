@@ -135,11 +135,8 @@ public class CharacterManager : MonoBehaviour
            cmanager.cardLvs[id].expSum = cardLvs[id].expSum;
            cmanager.cardLvs[id].Lv = cardLvs[id].Lv;
            SerctedCard.CahacterInit(id, cardLvs[id].Lv);
-           
-           SetText();
-           SetExpText();
            if (cardLvs[id].Lv >= 20 && !gameManger.charactor_tutorial)
-            {
+           {
                 Transform canvas = GameObject.Find("Canvas").transform;
                 gameManger.charactor_tutorial = true;
                 var g = Instantiate(tutorial, canvas);
@@ -153,8 +150,13 @@ public class CharacterManager : MonoBehaviour
                 g.SetUpTutorial(Photo_status);
            }
 
-            gameManger.DataSave(filepath);
-            cmanager.Datasave(cfilepath);
+           gameManger.DataSave(filepath);
+           cmanager.Datasave(cfilepath);
+           SetText();
+           SetExpText();
+           
+
+            
 
         }
         else if(bufSum < LimitBuf(SerctedCard.model.rare)  +(convex * 5))

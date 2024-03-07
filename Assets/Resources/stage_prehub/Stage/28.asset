@@ -36,7 +36,7 @@ MonoBehaviour:
   - Gift: 2
     giftNum: 0
     card: {fileID: 11400000, guid: 6b743294ace54a14581db01879f4b370, type: 2}
-    drop: 60
+    drop: 150
   BackGraunds: {fileID: 21300000, guid: 25f4a9d1c904b9b418fd09366465bbbe, type: 3}
   intro:
   - {fileID: 0}

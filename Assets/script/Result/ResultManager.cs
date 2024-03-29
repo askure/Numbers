@@ -35,29 +35,29 @@ public class ResultManager : MonoBehaviour
     }
     void SetText()
     {
-        if (CrectmapManager.MapManager == null || CrectmapManager.stage == null) return;
-        mapNameText.text = CrectmapManager.MapManager.stageName;
-        stageNameText.text = CrectmapManager.stage.stageName;
+        if (SelectMapManager.MapManager == null || SelectMapManager.stage == null) return;
+        mapNameText.text = SelectMapManager.MapManager.stageName;
+        stageNameText.text = SelectMapManager.stage.stageName;
         expText.text = "経験値:"+GameManger.enemysexp.ToString("N0");
         dmanager.Exp += GameManger.enemysexp;
         MaxDamageText.text = "最大ダメージ:"+GameManger.maxDamage.ToString("N0");
         MaxNumText.text = "最大数値:"+GameManger.maxNum.ToString("N0");
-        var averageTurn = (GameManger.aveTurn / CrectmapManager.enemy.Count);
+        var averageTurn = (GameManger.aveTurn / SelectMapManager.enemy.Count);
         AveTurnText.text = "平均ターン:"+ averageTurn.ToString("N0");
         var score = GameManger.maxDamage / 10 + GameManger.maxNum * averageTurn * 1000 + GameManger.enemysexp/10;
         ScoreText.text = "スコア:"+ score.ToString("N0");
        
-        if (CrectmapManager.Gift != null)
-            GiftText.text = GiftTostring(CrectmapManager.Gift);
+        if (SelectMapManager.Gift != null)
+            GiftText.text = GiftTostring(SelectMapManager.Gift);
         
         else GiftText.text = "";
-        if (dmanager.stages[CrectmapManager.stage.stageid].Hiscore < score) {
-            dmanager.stages[CrectmapManager.stage.stageid].Hiscore = score;
+        if (dmanager.stages[SelectMapManager.stage.stageid].Hiscore < score) {
+            dmanager.stages[SelectMapManager.stage.stageid].Hiscore = score;
             newRecord.SetActive(true);
         }
 
         
-        dmanager.stages[CrectmapManager.stage.stageid].clear = true;
+        dmanager.stages[SelectMapManager.stage.stageid].clear = true;
         Debug.Log(score / 20);
         CheckRankUp(score / 20);
         int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;

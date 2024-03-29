@@ -134,7 +134,7 @@ public class PartyManager : MonoBehaviour
     public void StartStage()
     {
         manager.Datasave(filepath);
-        GameObject.Find("QuestManager").GetComponent<CrectmapManager>().StartStage();
+        GameObject.Find("QuestManager").GetComponent<SelectMapManager>().StartStage();
         CardEditManager.toqest = false;
         Destroy(gameObject);
     }

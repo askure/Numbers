@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterView : MonoBehaviour
 {
-    [SerializeField] Text lvText, nameText,hpText,atText, dfText,expNumText;
+    [SerializeField] Text lvText, nameText,hpText,atText, dfText,expNumText,autoskillNameText,autoskillInfoText, rskillNameText, rskillInfoText;
     [SerializeField] Image Icon,rareImage;
 
     public void SetText(CardModel card,int exp)
@@ -21,6 +21,14 @@ public class CharacterView : MonoBehaviour
         var icon = card.icon;
         var rare = card.rare;
         var id = card.cardID;
+        int skillLv = (card.Lv >= 100) ? 6 : card.Lv / 20 + 1;
+        var autoskillInfo = card.PublicSkill.skill_infomatin;
+        var rskillName = card.ReaderSkill.skill_name;
+        var rskillInfo = card.ReaderSkill.skill_infomatin;
+        autoskillNameText.text = "AutoÉXÉLÉã(Lv:" + skillLv + ")";
+        autoskillInfoText.text = autoskillInfo;
+        rskillNameText.text = rskillName + "(Lv:" + skillLv + ")";
+        rskillInfoText.text = rskillInfo;
         var cardinfo = cmanager.cardLvs[id];
         var atbuf = 1 + cardinfo.atbuf * 0.05f;
         var dfbuf = 1 + cardinfo.dfbuf * 0.05f;
@@ -64,11 +72,15 @@ public class CharacterView : MonoBehaviour
         lvText.text = "Lv:";
         nameText.text = "";
         hpText.text = "Hp:";
-        atText.text = "Attack:" ;
-        dfText.text = "Defence:";
+        atText.text = "çUåÇóÕ:" ;
+        dfText.text = "ñhå‰óÕ:";
         Icon.sprite = null;
         Icon.color = new Color(1.0f, 1.0f, 1.0f, 0f);
         expNumText.text = "0";
+        autoskillNameText.text = "AutoÉXÉLÉã(Lv:" + "-" + ")";
+        autoskillInfoText.text = "-";
+        rskillNameText.text = "-" + "(Lv:" + "-" + ")";
+        rskillInfoText.text = "-";
         SetPanel("A");
 
 
@@ -88,8 +100,8 @@ public class CharacterView : MonoBehaviour
         var hpbuf = 1 + cardinfo.hpbuf * 0.05f;
 
         hpText.text = "Hp:" + (Hp*hpbuf).ToString("F0") ;
-        atText.text = "Attack:" + (at * atbuf).ToString("F0");
-        dfText.text = "Defence:" + (df * dfbuf ).ToString("F0");
+        atText.text = "çUåÇóÕ:" + (at * atbuf).ToString("F0");
+        dfText.text = "ñhå‰óÕ:" + (df * dfbuf ).ToString("F0");
     }
     void SetPanel(string rare)
     {

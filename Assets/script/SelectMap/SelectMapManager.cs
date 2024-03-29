@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class CrectmapManager : MonoBehaviour
+public class SelectMapManager : MonoBehaviour
 {
     private  GameObject panel;
     private  EventSystem eventSystem;

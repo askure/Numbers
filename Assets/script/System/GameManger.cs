@@ -181,16 +181,16 @@ public class GameManger : MonoBehaviour
         }
 
         ReaderCard = _hand[0];
-       if(CrectmapManager.stage != null) FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
+       if(SelectMapManager.stage != null) FieldEffectParty(_hand, SelectMapManager.stage.fieldEffects);
         _hand = BufApplication(_hand);
         //
 
 
         //enemySetUp
-        if (CrectmapManager.enemy != null)
-            _enemy = EnemyCreate(CrectmapManager.enemy[ButtleNum].EnemyId, Enemys);
+        if (SelectMapManager.enemy != null)
+            _enemy = EnemyCreate(SelectMapManager.enemy[ButtleNum].EnemyId, Enemys);
         else _enemy = EnemyCreate(debugenemy, Enemys);
-        if (CrectmapManager.stage != null) FieldEffectEnemy(ref _enemy, CrectmapManager.stage.fieldEffects);
+        if (SelectMapManager.stage != null) FieldEffectEnemy(ref _enemy, SelectMapManager.stage.fieldEffects);
         
         MAX_NUMBA = _enemy.model.numba;
         MAX_ENEMYHP = _enemy.model.Hp;
@@ -202,7 +202,7 @@ public class GameManger : MonoBehaviour
 
         //
         //BackGround
-        back.sprite = CrectmapManager.BackGrounds;
+        back.sprite = SelectMapManager.BackGrounds;
 
 
 
@@ -217,20 +217,20 @@ public class GameManger : MonoBehaviour
         
         //buttleAnimatoin.SetActive(false);
         buttleNumText.GetComponent<Text>().text = "Battle " + ButtleNum.ToString();
-        if (CrectmapManager.enemy != null && ButtleNum != CrectmapManager.enemy.Count)
+        if (SelectMapManager.enemy != null && ButtleNum != SelectMapManager.enemy.Count)
         {
            // buttleNumText.GetComponent<Animator>().enabled = true;
           
             var t = GameObject.Find("Enemys").GetComponent<Animator>();
             t.enabled = true;
-            if (CrectmapManager.stage != null)
+            if (SelectMapManager.stage != null)
             {
-                if (CrectmapManager.stage.stageid == 0)
+                if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(2, tutorial));
                     dmanager.buttle_tutorial = true;
                 }
-                if (CrectmapManager.stage.stageid == 1)
+                if (SelectMapManager.stage.stageid == 1)
                 {
                     StartCoroutine(Tutorial(2, bounus_tutorial));
                 }
@@ -241,10 +241,10 @@ public class GameManger : MonoBehaviour
 
             if (ButtleNum == 1)
             {   
-                if(CrectmapManager.intro[0] == null || CrectmapManager.loop[0] == null)
+                if(SelectMapManager.intro[0] == null || SelectMapManager.loop[0] == null)
                     BGMManager.SetBGM(DefaultAudioClipIntro[0], DefaultAudioClipLoop[0],volume);
                 else 
-                    BGMManager.SetBGM(CrectmapManager.intro[0], CrectmapManager.loop[0], volume);
+                    BGMManager.SetBGM(SelectMapManager.intro[0], SelectMapManager.loop[0], volume);
                 //BGMManager.Play();
             }
 
@@ -255,19 +255,19 @@ public class GameManger : MonoBehaviour
             
             var t = GameObject.Find("BossAnimation").GetComponent<Animator>();
             t.enabled = true;
-            if (CrectmapManager.intro == null  || CrectmapManager.intro[1] == null || CrectmapManager.loop[1] == null)
+            if (SelectMapManager.intro == null  || SelectMapManager.intro[1] == null || SelectMapManager.loop[1] == null)
                 BGMManager.SetBGM(DefaultAudioClipIntro[1], DefaultAudioClipLoop[1], volume);
             else
-                BGMManager.SetBGM(CrectmapManager.intro[1], CrectmapManager.loop[1], volume);
+                BGMManager.SetBGM(SelectMapManager.intro[1], SelectMapManager.loop[1], volume);
             // BGMManager.Play();
-            if (CrectmapManager.stage != null)
+            if (SelectMapManager.stage != null)
             {
-                if (CrectmapManager.stage.stageid == 0)
+                if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(5, tutorial));
                     dmanager.buttle_tutorial = true;
                 }
-                if (CrectmapManager.stage.stageid == 1)
+                if (SelectMapManager.stage.stageid == 1)
                 {
                     StartCoroutine(Tutorial(5, bounus_tutorial));
                 }
@@ -294,7 +294,7 @@ public class GameManger : MonoBehaviour
                 num.Add( controllerInstance.CardNum(id));
                 
             }
-            if(CrectmapManager.stage != null) MAX_HP = SystemParam(num,hp,ReaderCard, CrectmapManager.stage.fieldEffects);
+            if(SelectMapManager.stage != null) MAX_HP = SystemParam(num, hp,ReaderCard, SelectMapManager.stage.fieldEffects);
             else MAX_HP = SystemParam(num, hp, ReaderCard, null);
             hpSum = MAX_HP;
             
@@ -1449,7 +1449,7 @@ public class GameManger : MonoBehaviour
                 
                 aveTurn += TurnNum;
                 enemysexp += _enemy.model._exp;
-                if (ButtleNum != CrectmapManager.enemy.Count)
+                if (ButtleNum != SelectMapManager.enemy.Count)
                 {
                     animations.Add(AnimationType.nextStage); //NextStage
                     StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1534,7 +1534,7 @@ public class GameManger : MonoBehaviour
            
             aveTurn += TurnNum;
             enemysexp += _enemy.model._exp;
-            if ((CrectmapManager.enemy != null) && ButtleNum != CrectmapManager.enemy.Count)
+            if ((SelectMapManager.enemy != null) && ButtleNum != SelectMapManager.enemy.Count)
             {
                 animations.Add(AnimationType.nextStage); //NextStage
                 StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1737,7 +1737,7 @@ public class GameManger : MonoBehaviour
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.nextStage:
-                    if ((ButtleNum+1) == CrectmapManager.enemy.Count)
+                    if ((ButtleNum+1) == SelectMapManager.enemy.Count)
                     {
                         BGMManager.FadeOut();
                     }
@@ -1805,8 +1805,8 @@ public class GameManger : MonoBehaviour
         }
         UpCardObj.Clear();
         _hand = HandChange(_hand, Hand);
-        if (CrectmapManager.stage != null)
-            FieldEffectParty(_hand, CrectmapManager.stage.fieldEffects);
+        if (SelectMapManager.stage != null)
+            FieldEffectParty(_hand, SelectMapManager.stage.fieldEffects);
         ReaderSkill(ReaderCard, _hand);
         Myturn = true;
         if(!vs.Contains(AnimationType.nextStage))

@@ -1917,12 +1917,10 @@ MonoBehaviour:
   Hand: {fileID: 641450681}
   Enemy: {fileID: 4838628577706830281, guid: 46096faf41bf31d4b90baf23cf3b68fa, type: 3}
   Enemys: {fileID: 536003707}
-  estatusat: {fileID: 6718781753898081121, guid: e0846789fabb7414e965d8f5a9609ddc, type: 3}
-  estatusdf: {fileID: 2996137943319480217, guid: 5f6f8c0d26608f6489d5cfbe8dae478b, type: 3}
   pstatusdf: {fileID: 631297557387908583, guid: af26c22e4ccf58849a9ac31bfda212b5, type: 3}
   pstatusat: {fileID: 4138772669648189265, guid: 9112230db161cce47a9d63ef972baee5, type: 3}
   gameView: {fileID: 814453525}
-  buttleNumText: {fileID: 2073113328}
+  BattleNumText: {fileID: 2073113328}
   gameOverPanel: {fileID: 5627129285687246129, guid: 9b80574a834a9ef4f8b76b93ca09abc2, type: 3}
   gameOverPanelTrance: {fileID: 1239435168}
   damageAnimation: {fileID: 1027952961049578990, guid: 4c915a521801c264d981bc38913a8bdc, type: 3}
@@ -1946,8 +1944,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a744ee3fe215f5e42a8dd15d71585973, type: 3}
   - {fileID: 21300000, guid: ce022846493dabc4a9ce7659cd19bcfb, type: 3}
   statusManager: {fileID: 979810123}
-  debugenemy: -1
-  skillse: {fileID: 0}
+  debugenemy: 10
+  skillse: {fileID: 8300000, guid: 53ccca461def3c94eafe25a0cda2256a, type: 3}
   damageLow: {fileID: 8300000, guid: b7a98217fdd91034cac2488bef3a717f, type: 3}
   damageMid: {fileID: 8300000, guid: 5e214a50cca9d454bbb6506c8fece681, type: 3}
   damageHigh: {fileID: 8300000, guid: 7015f115638b8724b812db55a0492a36, type: 3}

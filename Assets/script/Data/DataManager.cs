@@ -34,7 +34,7 @@ public class DataManager
     public int allStage { set; get; } = 0;
     public StageData.Stage[] stages { set; get; }=null;
 
-    public bool buttle_tutorial { set; get; } = false;
+    public bool Battle_tutorial { set; get; } = false;
 
     public bool enemystatus_tutorial { set; get; } = false;
 

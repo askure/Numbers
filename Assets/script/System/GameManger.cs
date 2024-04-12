@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
+using TMPro;
 
 public class GameManger : MonoBehaviour
 
@@ -19,7 +20,7 @@ public class GameManger : MonoBehaviour
     [SerializeField] PartyDfStatusManager pstatusdf;
     [SerializeField] PartyAtManager pstatusat;
     [SerializeField] GameView gameView;
-    [SerializeField] GameObject buttleNumText;
+    [SerializeField] GameObject BattleNumText;
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Transform gameOverPanelTrance;
     [SerializeField] DamageAnimation damageAnimation;
@@ -59,7 +60,7 @@ public class GameManger : MonoBehaviour
     private int ALLCHARCTOR;
     private CharacterData.CardLv[] cardLvs;
     private List<CharacterData.DeckCard> deck;
-    private bool buttle_tutorial;
+    private bool Battle_tutorial;
     public static int hpSum;
     public static int partyDf = 0;
     static  private int MAX_HP;
@@ -78,14 +79,6 @@ public class GameManger : MonoBehaviour
     //stage
     public int allStage;
     public StageData.Stage[] stages;
-    // Enemystatus
-    private int MAX_ENEMYHP;
-    private int MAX_NUMBA;
-
-    //skill
-    private List<Skill_origin> Enemy_skilllist;
-    private List<int> Enemy_skilllistTable;
-
 
     //Savedata
     string filepath,cfilepath;
@@ -93,7 +86,7 @@ public class GameManger : MonoBehaviour
     CharacterDataManager cmanager;
     //staic 
     public static bool Myturn = true;
-    static int ButtleNum = 0;
+    static int BattleNum = 0;
     public static GameManger instnce;
     public static int maxDamage;
     public static int maxNum;
@@ -188,15 +181,11 @@ public class GameManger : MonoBehaviour
 
         //enemySetUp
         if (SelectMapManager.enemy != null)
-            _enemy = EnemyCreate(SelectMapManager.enemy[ButtleNum].EnemyId, Enemys);
+            _enemy = EnemyCreate(SelectMapManager.enemy[BattleNum].EnemyId, Enemys);
         else _enemy = EnemyCreate(debugenemy, Enemys);
-        if (SelectMapManager.stage != null) FieldEffectEnemy(ref _enemy, SelectMapManager.stage.fieldEffects);
-        
-        MAX_NUMBA = _enemy.model.numba;
-        MAX_ENEMYHP = _enemy.model.Hp;
-        Enemy_skilllist = _enemy.model.skilllist;
-        Enemy_skilllistTable = _enemy.model.skillTable;
-       // _enemy.Show_update(_enemy.model.numba.ToString(), _enemy.model.Hp,MAX_ENEMYHP);
+
+        if (SelectMapManager.stage != null) 
+            FieldEffectEnemy(SelectMapManager.stage.fieldEffects);
 
         //
 
@@ -211,15 +200,15 @@ public class GameManger : MonoBehaviour
         trigger.SetActive(false);*/
         decide_num = 0;
         finish = false;
-        ButtleNum++;
+        BattleNum++;
         Myturn = true;
         OnlyOneReaderSkill = false;
         
-        //buttleAnimatoin.SetActive(false);
-        buttleNumText.GetComponent<Text>().text = "Battle " + ButtleNum.ToString();
-        if (SelectMapManager.enemy != null && ButtleNum != SelectMapManager.enemy.Count)
+        //BattleAnimatoin.SetActive(false);
+        BattleNumText.GetComponent<Text>().text = "Battle " + BattleNum.ToString();
+        if (SelectMapManager.enemy != null && BattleNum != SelectMapManager.enemy.Count)
         {
-           // buttleNumText.GetComponent<Animator>().enabled = true;
+           // BattleNumText.GetComponent<Animator>().enabled = true;
           
             var t = GameObject.Find("Enemys").GetComponent<Animator>();
             t.enabled = true;
@@ -228,7 +217,7 @@ public class GameManger : MonoBehaviour
                 if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(2, tutorial));
-                    dmanager.buttle_tutorial = true;
+                    dmanager.Battle_tutorial = true;
                 }
                 if (SelectMapManager.stage.stageid == 1)
                 {
@@ -239,7 +228,7 @@ public class GameManger : MonoBehaviour
 
 
 
-            if (ButtleNum == 1)
+            if (BattleNum == 1)
             {   
                 if(SelectMapManager.intro[0] == null || SelectMapManager.loop[0] == null)
                     BGMManager.SetBGM(DefaultAudioClipIntro[0], DefaultAudioClipLoop[0],volume);
@@ -265,7 +254,7 @@ public class GameManger : MonoBehaviour
                 if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(5, tutorial));
-                    dmanager.buttle_tutorial = true;
+                    dmanager.Battle_tutorial = true;
                 }
                 if (SelectMapManager.stage.stageid == 1)
                 {
@@ -275,7 +264,7 @@ public class GameManger : MonoBehaviour
            
 
         }
-        if(ButtleNum == 1)
+        if(BattleNum == 1)
         {
             maxDamage = 0;
             maxNum = 0;
@@ -299,7 +288,7 @@ public class GameManger : MonoBehaviour
             hpSum = MAX_HP;
             
         }
-        var j = hpSum * 0.3;
+        var j = (MAX_HP-hpSum) * 0.5;
         hpSum +=(int) j ;
         if (hpSum > MAX_HP) hpSum = MAX_HP;
         ReaderSkill(ReaderCard, _hand);
@@ -310,7 +299,7 @@ public class GameManger : MonoBehaviour
 
         //
         //log
-        LogTextView("Battle:" + ButtleNum);
+        LogTextView("Battle:" + BattleNum);
         LogTextView("Turn:" + TurnNum.ToString());
         //
        
@@ -412,7 +401,7 @@ public class GameManger : MonoBehaviour
         }        
     }
 
-    void FieldEffectEnemy(ref EnemyContoller enemy , List<StageEntity.FieldEffect> fieldEffects)
+    void FieldEffectEnemy(List<StageEntity.FieldEffect> fieldEffects)
     {   
         
         foreach (StageEntity.FieldEffect fieldEffect in fieldEffects)
@@ -420,19 +409,21 @@ public class GameManger : MonoBehaviour
             if (fieldEffect.EnemyOrParty == StageEntity.EnemyOrParty.Enemy)
             {
 
-                if (ButtleNum != fieldEffect.ApplicationNum) continue;
+                if (BattleNum != fieldEffect.ApplicationNum) continue;
+
+                 var effect = fieldEffect.effectSize;
+                 var atStatus = new EnemyAttackStatus(effect, 999, Skill_origin.MagicKind.multi);
+                 _enemy.AddAttackStatus(atStatus);
+
+
+                 var dfStatus = new EnemyDfStatus(effect,999,Skill_origin.MagicKind.multi);
+                 _enemy.AddDefenceStatus(dfStatus);
                  
-                 var temp = enemy.model.at * fieldEffect.effectSize;
-                 enemy.model.at = (int)temp;
-
-                 temp = enemy.model.df * fieldEffect.effectSize;
-                 enemy.model.df = (int)temp;
-
-                 temp = enemy.model.Hp * fieldEffect.effectSize;
-                 enemy.model.initHp =  enemy.model.Hp = (int)temp;
-
-                temp = enemy.model.numba + fieldEffect.effectSize * 4;
-                enemy.model.numba = (int)temp;
+                 var tempHp = _enemy.GetHp() * fieldEffect.effectSize;
+                 _enemy.SetMaxHp((int)tempHp);
+                 
+                 var temp =_enemy.GetNum() + fieldEffect.effectSize * 4;
+                 _enemy.SetMaxNum((int) temp);
                   
                 
                 
@@ -471,14 +462,10 @@ public class GameManger : MonoBehaviour
         }
         sortiePartyNum = cmanager.sortiePartyNum;
          volume = dmanager.volume;
-        buttle_tutorial = dmanager.buttle_tutorial;
+        Battle_tutorial = dmanager.Battle_tutorial;
     }
     
-
-   
-
-
-    //ButtleSystem
+    //BattleSystem
     CardController CardCreate(int Cardid, Transform place)
     {
         CardController card = Instantiate(Card, place);
@@ -491,13 +478,12 @@ public class GameManger : MonoBehaviour
         EnemyContoller enemy = Instantiate(Enemy, place);
         
         enemy.Init(Enemyid);
-       
-
         return enemy;
     }
 
     public int[] Sum(List<CardController> cardlist)
-    {
+    {   
+        Bounus bounus = new Bounus();
         sum = 0;
         prime_bounuse_check = true;
         prime_bounuse = 0;
@@ -505,36 +491,22 @@ public class GameManger : MonoBehaviour
         multi_bounuses = 0;
         divisors = 0;
         multis = 0;
-
-
-
         foreach (CardController card in cardlist)
         {
             if (card.model.decided == true)
             {
-
                 sum += card.model.num;
-
-
                 if (!Prime_number_check(card.model.num) || !prime_bounuse_check) prime_bounuse_check = false;
-                if (Divisor_check(card.model.num, _enemy.model.numba)) divisors++;
-                if (Multi_check(card.model.num, _enemy.model.numba)) multis++;
-
-
-
-
+                if (Divisor_check(card.model.num, _enemy.GetNum())) divisors++;
+                if (Multi_check(card.model.num, _enemy.GetNum())) multis++;
             }
-
-
-
         }
 
         if (cardlist.Count < 4) prime_bounuse_check = false;
-        multi_bounuses = (int)Multi_bounus(multis, multi_lv);
-        divisor_bounuses = (int)Divisor_bounus(divisors, divisor_lv);
+        multi_bounuses = (int)bounus.Multi_bounus(multis, multi_lv);
+        divisor_bounuses = (int)bounus.Divisor_bounus(divisors, divisor_lv);
 
-        double correction = (34 - prime_lv) * 0.1;
-        if (prime_bounuse_check) prime_bounuse = (int)(1 + prime_lv *1.05 + correction);
+        if (prime_bounuse_check) prime_bounuse = bounus.Prime_bounus(prime_lv);
         else prime_bounuse = 0;
 
         sum += multi_bounuses + divisor_bounuses + prime_bounuse;
@@ -547,32 +519,6 @@ public class GameManger : MonoBehaviour
 
 
 
-    }
-
-    double Divisor_bounus(int divisors, int lv)
-    {
-        switch (divisors)
-        {
-            case 1: return lv * 0.54 + 1;
-            case 2: return lv * 0.59 + 2;
-            case 3: return lv * 0.67 + 3;
-            case 4: return lv * 0.9+ 4;
-
-            default: return 0;
-        }
-    }
-
-    double Multi_bounus(int multis, int lv)
-    {
-        switch (multis)
-        {
-            case 1: return lv * 0.64 + 1;
-            case 2: return lv * 0.73 + 2;
-            case 3: return lv * 0.82 + 3;
-            case 4: return lv * 0.93 + 4;
-
-            default: return 0;
-        }
     }
 
     bool Divisor_check(int card, int enemynum)
@@ -628,8 +574,6 @@ public class GameManger : MonoBehaviour
             else df *= Mathf.Log(PartyDfStatusManager.statusNum - 2, 20);
         }
 
-            
-        Debug.Log("Df:" + df);
         return (int)df;
 
     }
@@ -703,10 +647,7 @@ public class GameManger : MonoBehaviour
         {
             int x = Random.Range(0, _deck.Count);
             int y = Random.Range(0, _deck.Count);
-            int _temp = _deck[x];
-            _deck[x] = _deck[y];
-            _deck[y] = _temp;
-
+            (_deck[y], _deck[x]) = (_deck[x], _deck[y]);
         }
         return _deck;
     }
@@ -760,62 +701,52 @@ public class GameManger : MonoBehaviour
     }
 
 
-    string Enemyattack(List<AnimationType> animations,bool skill,ref List<int>  partydamage,ref int enemyHeal,ref int healNum,ref int enemydamage)
+    string Enemyattack(List<AnimationType> animations,ref List<int>  partydamage,ref int enemyHeal,ref int healNum,ref int enemydamage)
     {
         
         string skillname = "";
-        if (skill)
-        {
+        var skillTable = _enemy.GetSKillTable();
+        var skillTableLength = skillTable.Count;
+        var skilllist = _enemy.GetSKillList();
+     
             int index = TurnNum;
-            if (Enemy_skilllistTable.Count == 0)
+            if (skillTableLength == 0)
             {
                 Debug.LogError("No skill table");
             }
-            if (index <= Enemy_skilllistTable.Count)
+            if (index <= skillTableLength)
             {
 
                 index = TurnNum - 1;
             }
             else
             {
-                while (index > Enemy_skilllistTable.Count)
+                while (index > skillTableLength)
                 {
-                    index = index - Enemy_skilllistTable.Count;
+                    index -=skillTableLength;
                 }
                 index--;
 
             }
-            var i = Enemy_skilllistTable[index];
-            skillname = Enemy_skilllist[i].skill_name;
+            var skillId = skillTable[index];
+            skillname = skilllist[skillId].skill_name;
             animations.Add(AnimationType.skill);
-            EnemySkill(animations,Enemy_skilllist, Enemy_skilllistTable[index], ref partydamage, ref _enemy.model.Hp, ref enemyHeal, ref partyDf, ref _enemy.model.at,ref _enemy.model.numba,ref healNum,ref enemydamage);
-           
-
-        }
-        else
-        {
-           
-            animations.Add(AnimationType.numProtect);
-
-
-
-        }
-        //_enemy.Show_update(_enemy.model.numba.ToString(), _enemy.model.Hp);
-        return skillname;
+            EnemySkill(animations, skillId, ref partydamage, ref enemyHeal, ref partyDf,ref healNum,ref enemydamage);      
+            return skillname;
 
     }
 
-    private void EnemySkill(List<AnimationType> animations,List<Skill_origin> skilllist, int skillid, ref List<int> PartyDamage, ref int enemyHp, ref int enemyHeal, ref int partydf, ref int enemyat,ref int enemyNum,ref int healNum,ref int enemydamage)
+    private void EnemySkill(List<AnimationType> animations, int skillid, ref List<int> PartyDamage, ref int enemyHeal, ref int partydf,ref int healNum,ref int enemydamage)
 
     {
-       
+        var skilllist = _enemy.GetSKillList();
         if (skilllist.Count < skillid + 1) return;
         var Skill = skilllist[skillid];
-        for (int i = 0; i < Skill.magic_Conditon_Origins.Count; i++)
+        for (int i = 0,len = Skill.magic_Conditon_Origins.Count; i < len; i++)
         {
             var _Origin = Skill.magic_Conditon_Origins[i];
             var effect = _Origin.effect_size;
-            bool check = EnemySkillCheck(_Origin, enemyat, effect, _Origin.condition_num, enemyHp, enemyNum);
+            bool check = EnemySkillCheck(_Origin);
             var magicKind = _Origin.magic_kind;
             
             if (!check) continue;
@@ -823,21 +754,21 @@ public class GameManger : MonoBehaviour
             {
                 case Skill_origin.Skill_type.constantAttack:
                      
-                   PartyDamage.Add((int) effect);
+                    PartyDamage.Add((int) effect);
                     animations.Add(AnimationType.damage);
                     break;
 
 
                 case Skill_origin.Skill_type.referenceAttack:
 
-                    double damage = effect * enemyat;
-                    if (damage < partydf) PartyDamage.Add( 1);
+                    double damage = effect * _enemy.GetAt();
+                    if (damage < partydf) PartyDamage.Add(1);
                     else PartyDamage.Add((int)damage - partydf);
                     animations.Add(AnimationType.damage);
                     break;
                 
                 case Skill_origin.Skill_type.Heal_Hp:
-                    var x = effect * enemyat;
+                    var x = effect * _enemy.GetAt();
                     animations.Add(AnimationType.enemyHeal);
                     enemyHeal = (int)x;
                   break;
@@ -856,52 +787,38 @@ public class GameManger : MonoBehaviour
 
                 case Skill_origin.Skill_type.IncreaseAttack:
                     animations.Add(AnimationType.enemyIncreaseAt);
-                    var s = Instantiate(estatusat);
-                    if (_Origin.magic_kind == Skill_origin.MagicKind.add)
                     {
-                        s.SetStatus(effect, _Origin.effect_turn, "Add");
+                        var atStatus = new EnemyAttackStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                        _enemy.AddAttackStatus(atStatus);
                     }
-                    else if (_Origin.magic_kind == Skill_origin.MagicKind.multi)
-                    {
-                        s.SetStatus(effect, _Origin.effect_turn, "Multi");
-                    }
-
-
                     break;
 
                     
                 case Skill_origin.Skill_type.IncreaseDefence:
                     animations.Add(AnimationType.enemyIncreaseDf);
-                    var df = Instantiate(estatusdf);
-                    if(_Origin.magic_kind == Skill_origin.MagicKind.add)
                     {
-                        df.SetStatus(effect, _Origin.effect_turn,"Add");
+                        var dfStatus = new EnemyDfStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                        _enemy.AddDefenceStatus(dfStatus);
                     }
-                    else if(_Origin.magic_kind == Skill_origin.MagicKind.multi)
-                    {
-                        df.SetStatus(effect, _Origin.effect_turn, "Multi");
-                    }
-                    
                     break;
 
 
                 case Skill_origin.Skill_type.NumDamage:
 
-                    enemyNum -= (int)effect;
-                    if (enemyNum <= 0) enemyNum = 1;
+                    _enemy.NumDamage(effect);
                     break;
 
                 case Skill_origin.Skill_type.partydecreaseDefence:
                     if (magicKind == Skill_origin.MagicKind.add)
                     {
                         var g = Instantiate(pstatusdf);
-                        g.SetStatusDf(effect,_Origin.effect_turn, "Add", _enemy.model.name);
+                        g.SetStatusDf(effect,_Origin.effect_turn, "Add", _enemy.GetName());
                         g.name = "DfManager";
                     }
                     else if (magicKind == Skill_origin.MagicKind.multi)
                     {
                         var g = Instantiate(pstatusdf);
-                        g.SetStatusDf(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
+                        g.SetStatusDf(effect, _Origin.effect_turn, "Multi", _enemy.GetName());
                         g.name = "DfManager";
                     }
                     animations.Add(AnimationType.partydecrease);
@@ -912,13 +829,13 @@ public class GameManger : MonoBehaviour
                     if (magicKind == Skill_origin.MagicKind.add)
                     {
                         var g = Instantiate(pstatusat);
-                        g.SetStatusAt(effect, _Origin.effect_turn, "Add", _enemy.model.name);
+                        g.SetStatusAt(effect, _Origin.effect_turn, "Add", _enemy.GetName());
                         g.name = "AtManager";
                     }
                     else if (magicKind == Skill_origin.MagicKind.multi)
                     {
                         var g = Instantiate(pstatusat);
-                        g.SetStatusAt(effect, _Origin.effect_turn, "Multi", _enemy.model.name);
+                        g.SetStatusAt(effect, _Origin.effect_turn, "Multi", _enemy.GetName());
                         g.name = "AtManager";
                     }
                     animations.Add(AnimationType.partydecrease);
@@ -926,28 +843,18 @@ public class GameManger : MonoBehaviour
 
 
                 case Skill_origin.Skill_type.decreaseDefence:
-                    var statusdf = Instantiate(estatusdf);
                     animations.Add(AnimationType.enemydecreasedf);
-                    if (_Origin.magic_kind == Skill_origin.MagicKind.add)
                     {
-                        statusdf.SetStatus(effect, _Origin.effect_turn, "Add");
-                    }
-                    else if (_Origin.magic_kind == Skill_origin.MagicKind.multi)
-                    {
-                        statusdf.SetStatus(effect, _Origin.effect_turn, "Multi");
+                        var dfStatus = new EnemyDfStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                        _enemy.AddDefenceStatus(dfStatus);
                     }
                     break;
 
                 case Skill_origin.Skill_type.decreaseAttack:
                     animations.Add(AnimationType.enemydecreaseat);
-                    var statusAt = Instantiate(estatusat);
-                    if (_Origin.magic_kind == Skill_origin.MagicKind.add)
                     {
-                        statusAt.SetStatus(effect, _Origin.effect_turn, "Add");
-                    }
-                    else if (_Origin.magic_kind == Skill_origin.MagicKind.multi)
-                    {
-                        statusAt.SetStatus(effect, _Origin.effect_turn, "Multi");
+                        var atStatus = new EnemyAttackStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                        _enemy.AddAttackStatus(atStatus);
                     }
                     break;
 
@@ -957,9 +864,12 @@ public class GameManger : MonoBehaviour
 
     }
 
-    bool EnemySkillCheck(Skill_origin.magic_conditon_origin _Origin, int param,double effect,int conditionNum,int enemyHp,int enemyNum)
+    bool EnemySkillCheck(Skill_origin.magic_conditon_origin _Origin)
     {
         var conditonKind = _Origin.condition_kind;
+        var conditionNum = _Origin.condition_num;
+        var enemyNum = _enemy.GetNum();
+        var enemyHp = _enemy.GetHp();
         switch (conditonKind)
         {
             case Skill_origin.Magic_condition_kind.Hp_up :
@@ -1177,7 +1087,7 @@ public class GameManger : MonoBehaviour
         return 0;
     }
 
-    void AutoSkill(List<AnimationType> animations,List<CardController> cards,ref double persuit,ref EnemyModel enemy,ref int teamHeal)
+    void AutoSkill(List<AnimationType> animations,List<CardController> cards,ref double persuit,ref int teamHeal)
     {   
         List<int> nums = new List<int>();
         foreach(CardController card in cards)
@@ -1210,12 +1120,7 @@ public class GameManger : MonoBehaviour
                     case Skill_origin.Skill_type.NumDamage: // NumDamage
                         if(magicKind == Skill_origin.MagicKind.add)
                         {
-                            enemy.numba -= (int)effect;
-                        }
-                        else if(magicKind == Skill_origin.MagicKind.multi)
-                        {
-                            double temp = enemy.numba * effect;
-                            enemy.numba = (int)temp;
+                            _enemy.NumDamage(effect);
                         }
                         break;
 
@@ -1280,23 +1185,16 @@ public class GameManger : MonoBehaviour
                     case Skill_origin.Skill_type.decreaseDefence :
                         if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Add");
-                        }
-                        else if (magicKind == Skill_origin.MagicKind.multi)
-                        {
-                            Instantiate(estatusdf).SetStatus(effect, effectturn,"Multi");
+                            var dfStatus = new EnemyDfStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                            _enemy.AddDefenceStatus(dfStatus);
                         }
                         break;
 
 
                     case Skill_origin.Skill_type.decreaseAttack:
-                        if (magicKind == Skill_origin.MagicKind.add)
                         {
-                            Instantiate(estatusat).SetStatus(effect, effectturn, "Add");
-                        }
-                        else if (magicKind == Skill_origin.MagicKind.multi)
-                        {
-                            Instantiate(estatusat).SetStatus(effect, effectturn, "Multi");
+                            var atStatus = new EnemyAttackStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                            _enemy.AddAttackStatus(atStatus);
                         }
                         break;
 
@@ -1413,14 +1311,13 @@ public class GameManger : MonoBehaviour
         
         return true;
     }
-    //ButtleMain
+    //BattleMain
 
-    public void Buttle(List<CardController> cardlist)
+    public void Battle(List<CardController> cardlist)
     {
         
         List<AnimationType> animations = new List<AnimationType>();
         double pesuit = 0;
-        double enemyDf = _enemy.model.df;
         List<int> damage = new List<int>();
         int teamHeal = 0;
         List<int> teamDamage = new List<int>();
@@ -1428,28 +1325,22 @@ public class GameManger : MonoBehaviour
         int healNum = 0;
         int enemydamage = 0;
         
-        AutoSkill(animations,cardlist, ref pesuit,ref _enemy.model,ref teamHeal);
+        AutoSkill(animations,cardlist, ref pesuit,ref teamHeal);
         partyDf = Df(_hand);
-        //_enemy.model.numba = (int)enemyNum;
-       // _enemy.model.Hp -= (int)pesuit;
-        _enemy.model.df = (int)enemyDf;
         string skillName = "";
         Myturn = false;
 
-        if (_enemy.model.numba - sum > 0)
+        if (!_enemy.NumDamage(sum))
         {
            
             animations.Add(AnimationType.block); //block
-            _enemy.model.numba -= sum;
             if (pesuit != 0) animations.Add(AnimationType.persuit); //persuit
 
-            if (_enemy.model.Hp - pesuit < 0)
-            {
-                _enemy.model.Hp = 0;
-                
+            if (_enemy.IsDeath((int)pesuit))
+            {   
                 aveTurn += TurnNum;
-                enemysexp += _enemy.model._exp;
-                if (ButtleNum != SelectMapManager.enemy.Count)
+                enemysexp += _enemy.GetExp();
+                if (BattleNum != SelectMapManager.enemy.Count)
                 {
                     animations.Add(AnimationType.nextStage); //NextStage
                     StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1457,7 +1348,7 @@ public class GameManger : MonoBehaviour
                 }
                 else
                 {
-                    ButtleNum = 0;
+                    BattleNum = 0;
                     animations.Add(AnimationType.win); //WIN
                     StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal,healNum,enemydamage));
                     return;
@@ -1466,14 +1357,12 @@ public class GameManger : MonoBehaviour
             }
 
             animations.Add(AnimationType.enemyturn);
-            skillName = Enemyattack(animations,true, ref teamDamage,ref enemyHeal,ref healNum,ref enemydamage);
-           // _hand = HandChange(_hand, Hand);
-        
+            skillName = Enemyattack(animations, ref teamDamage,ref enemyHeal,ref healNum,ref enemydamage);
             if (hpSum + teamHeal - teamDamage.Sum() <=0)
             {
                 //hpSum = 0;
               
-                ButtleNum = 0;
+                BattleNum = 0;
                 finish = true;
                 animations.Add(AnimationType.gameover); //gameover
                 StartCoroutine(AnimationList(animations, (int)pesuit,damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1487,17 +1376,12 @@ public class GameManger : MonoBehaviour
             return;
         }
 
-        double bounus = 1 + 0.05 * (sum - _enemy.model.numba);
-        if (sum - _enemy.model.numba >= 20)
-        {
-            bounus = 2 * Mathf.Log(sum - _enemy.model.numba, 20);
-        }
-
+        double bounus = 1 + 0.05 * _enemy.GetOverNum(sum);
         foreach (CardController card in cardlist)
         {
             if (card.model.decided == true)
             {
-                double tmp = card.model.at * bounus - _enemy.model.df;
+                double tmp = card.model.at * bounus - _enemy.GetDf();
                 if(PartyAtManager.statusNum >= 3)
                 {
                     if (PartyAtManager.statusNum >= 22)
@@ -1506,7 +1390,7 @@ public class GameManger : MonoBehaviour
                 }
                 if (tmp <= 1) tmp = 1;
                 damage.Add((int)tmp);
-                AddLogText( card.model.name+ "が<color=red>" + (int)tmp + "</color>ダメージ");
+                AddLogText(card.model.name+ "が<color=red>" + (int)tmp + "</color>ダメージ");
                 animations.Add(AnimationType.attack); //attack
 
             }
@@ -1514,18 +1398,15 @@ public class GameManger : MonoBehaviour
 
         }
        
-       
+ 
         if (maxDamage < damage.Max()) maxDamage = damage.Max();
-
-        if (maxNum < sum) maxNum = sum;
-        _enemy.model.numba = 0;       
+        if (maxNum < sum) maxNum = sum;      
         if (pesuit != 0) animations.Add(AnimationType.persuit); //persuit
-        if (_enemy.model.Hp - damage.Sum() - pesuit > 0)
+        if (!_enemy.IsDeath(damage.Sum() + (int)pesuit))
         {
-           
             animations.Add(AnimationType.enemyturn);
-            Enemyattack(animations, false, ref teamDamage, ref enemyHeal,ref healNum, ref enemydamage);
-            skillName = Enemyattack(animations,true, ref teamDamage, ref enemyHeal, ref healNum, ref enemydamage);
+            animations.Add(AnimationType.numProtect);
+            skillName = Enemyattack(animations, ref teamDamage, ref enemyHeal, ref healNum, ref enemydamage);
           
         }
         else
@@ -1533,8 +1414,8 @@ public class GameManger : MonoBehaviour
 
            
             aveTurn += TurnNum;
-            enemysexp += _enemy.model._exp;
-            if ((SelectMapManager.enemy != null) && ButtleNum != SelectMapManager.enemy.Count)
+            enemysexp += _enemy.GetExp();
+            if ((SelectMapManager.enemy != null) && BattleNum != SelectMapManager.enemy.Count)
             {
                 animations.Add(AnimationType.nextStage); //NextStage
                 StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1542,7 +1423,7 @@ public class GameManger : MonoBehaviour
             }
             else
             {
-                ButtleNum = 0;
+                BattleNum = 0;
                 animations.Add(AnimationType.win); //WIN
                 StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
                 return;
@@ -1550,10 +1431,8 @@ public class GameManger : MonoBehaviour
 
         }
         if (hpSum + teamHeal - teamDamage.Sum() <=0)
-        {
-           // hpSum = 0;
-          
-            ButtleNum = 0;
+        {           
+            BattleNum = 0;
             finish = true;
             animations.Add(AnimationType.gameover);
             StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1647,14 +1526,14 @@ public class GameManger : MonoBehaviour
                     var x = g.transform.position.x;
                     var y = g.transform.position.y;
                     g.transform.position = new Vector3(x, y +40, 0);
-                    NotificationButtle.GetInstance().PutInQueue(damage[0].ToString());
+                    NotificationBattle.GetInstance().PutInQueue(damage[0].ToString());
                     if (BGMManager == null)
                         BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
-                    if(damage[0] >= 1 && damage[0] < _enemy.model.Hp * 0.01)
+                    if(damage[0] >= 1 && damage[0] < _enemy.GetHp() * 0.01)
                     {
                         BGMManager.PlaySE(damageLow,7f);
                     }
-                    else if(damage[0] < _enemy.model.Hp * 0.5)
+                    else if(damage[0] < _enemy.GetHp() * 0.5)
                     {
                         BGMManager.PlaySE(damageMid, 2f);
                     }
@@ -1667,48 +1546,30 @@ public class GameManger : MonoBehaviour
                     y = g.transform.position.y;
                     g.transform.position = new Vector3(x, y - 40, 0);
                     UpCardObj.RemoveAt(0);
-                   
-                    if (_enemy.model.Hp - damage[0] < 0)
-                     {
-                            _enemy.model.Hp = 0;
-                            
-
-                     }
-                     else _enemy.model.Hp -= damage[0];
-                    
+                    _enemy.HpDamage(damage[0]);   
                     damage.RemoveAt(0);
                     yield return new WaitForSeconds(0.4f);
                     break;
                 case AnimationType.enemydamage:
-                    NotificationButtle.GetInstance().PutInQueue(enemydamage.ToString());
-                    if (_enemy.model.Hp - enemydamage < 0)
-                    {
-                        _enemy.model.Hp = 0;
-
-                    }
-                    else _enemy.model.Hp -= enemydamage;
-                    AddLogText(_enemy.model.name  + enemydamage + "の自傷");
+                    NotificationBattle.GetInstance().PutInQueue(enemydamage.ToString());
+                    _enemy.HpDamage(enemydamage);
+                    AddLogText(_enemy.GetName()  + enemydamage + "の自傷");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.persuit:    
-                    NotificationButtle.GetInstance().PutInQueue("<color=black>" + persuit.ToString()+ "</color>");
-                    if (_enemy.model.Hp - persuit < 0)
-                    {
-                        _enemy.model.Hp = 0;
-
-                    }
-                    else _enemy.model.Hp -= persuit;
+                    NotificationBattle.GetInstance().PutInQueue("<color=black>" + persuit.ToString()+ "</color>");
+                    _enemy.HpDamage(persuit);
                     AddLogText("敵に" + persuit + "の追撃");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemydecreasedf:
-                    NotificationButtle.GetInstance().PutInQueue("<color=blue>" + "防御力ダウン" + "</color>");
-                    AddLogText(_enemy.model.name + "が防御力ダウン");
+                    NotificationBattle.GetInstance().PutInQueue("<color=blue>" + "防御力ダウン" + "</color>");
+                    AddLogText(_enemy.GetName() + "が防御力ダウン");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemydecreaseat:
-                    NotificationButtle.GetInstance().PutInQueue("<color=blue>" + "攻撃力力ダウン" + "</color>");
-                    AddLogText(_enemy.model.name + "が攻撃力ダウン");
+                    NotificationBattle.GetInstance().PutInQueue("<color=blue>" + "攻撃力力ダウン" + "</color>");
+                    AddLogText(_enemy.GetName() + "が攻撃力ダウン");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.skill:
@@ -1733,11 +1594,11 @@ public class GameManger : MonoBehaviour
                 case AnimationType.block:
                     AddLogText("数値バリアを破壊できなかった");
                    
-                    NotificationButtle.GetInstance().PutInQueue("BLOCK");
+                    NotificationBattle.GetInstance().PutInQueue("BLOCK");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.nextStage:
-                    if ((ButtleNum+1) == SelectMapManager.enemy.Count)
+                    if ((BattleNum+1) == SelectMapManager.enemy.Count)
                     {
                         BGMManager.FadeOut();
                     }
@@ -1747,11 +1608,9 @@ public class GameManger : MonoBehaviour
                     SceneManager.LoadScene("Battle");
                     break;
                 case AnimationType.numProtect:
-                    double newnumba = MAX_NUMBA * _enemy.model.Hp / MAX_ENEMYHP;
-                    if ((int)newnumba < 1) _enemy.model.numba = 1;
-                    else _enemy.model.numba = (int)newnumba;
+                    _enemy.RevivalNum();
                     yield return new WaitForSeconds(0.7f);
-                    AddLogText(_enemy.model.name + "の数値バリアが" + _enemy.model.numba + "に回復");
+                    AddLogText(_enemy.GetName()  + "の数値バリアが" + _enemy.GetNum() + "に回復");
                     break;
 
                 case  AnimationType.enemyturn:
@@ -1764,33 +1623,25 @@ public class GameManger : MonoBehaviour
                         AddLogText("-PlayerTurn-");
                     break;
                 case AnimationType.healNum:
-                    NotificationButtle.GetInstance().PutInQueue("<color=blue>" + healNum.ToString() + "</color>");
+                    NotificationBattle.GetInstance().PutInQueue("<color=blue>" + healNum.ToString() + "</color>");
                     yield return new WaitForSeconds(0.7f);
-                    AddLogText(_enemy.model.name + "が数値バリアを" + healNum + "回復");
-                    _enemy.model.numba += healNum;
+                    AddLogText(_enemy.GetName() +"が数値バリアを" + healNum + "回復");
+                    _enemy.HealNum(healNum);
                     break;
                 case AnimationType.enemyHeal:
-                    NotificationButtle.GetInstance().PutInQueue("<color=green>" + enemyHeal.ToString() + "</color>");
-               
-                    if (_enemy.model.Hp + enemyHeal > MAX_ENEMYHP)
-                    {
-                        _enemy.model.Hp = MAX_ENEMYHP;
-                    }
-                    else
-                    {
-                        _enemy.model.Hp += enemyHeal;
-                    }
-                    AddLogText(_enemy.model.name + "がHPを" + enemyHeal + "回復");
+                    NotificationBattle.GetInstance().PutInQueue("<color=green>" + enemyHeal.ToString() + "</color>");
+                    _enemy.HealHp(enemyHeal);
+                    AddLogText(_enemy.GetName() + "がHPを" + enemyHeal + "回復");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemyIncreaseAt:
-                    NotificationButtle.GetInstance().PutInQueue("<color=red>" + "攻撃力アップ!" + "</color>");
-                    AddLogText(_enemy.model.name + "が攻撃アップ");
+                    NotificationBattle.GetInstance().PutInQueue("<color=red>" + "攻撃力アップ!" + "</color>");
+                    AddLogText(_enemy.GetName() + "が攻撃アップ");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.enemyIncreaseDf:
-                    NotificationButtle.GetInstance().PutInQueue("<color=red>" + "防御力アップ!" + "</color>");
-                    AddLogText(_enemy.model.name + "が防御力アップ");
+                    NotificationBattle.GetInstance().PutInQueue("<color=red>" + "防御力アップ!" + "</color>");
+                    AddLogText(_enemy.GetName() + "が防御力アップ");
                     yield return new WaitForSeconds(0.7f);
                     break;
                 case AnimationType.partydecrease:
@@ -1813,6 +1664,7 @@ public class GameManger : MonoBehaviour
         {
             TurnNum++;
             LogTextView("Turn:" + TurnNum.ToString());
+            _enemy.CheckStatus();
         }
     }
     IEnumerator SkillAnimation(string skillname)
@@ -1870,7 +1722,7 @@ public class GameManger : MonoBehaviour
     {
        // BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         BGMManager.FadeOut();
-        ButtleNum = 0;
+        BattleNum = 0;
         var panel = Instantiate(gameOverPanel, gameOverPanelTrance);
         panel.GetComponent<Animator>().enabled = true;
     }

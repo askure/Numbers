@@ -118,7 +118,7 @@ public class Onclick : MonoBehaviour
         var cardlist = GameManger.instnce.GetUpCard();
         
         GameManger.instnce.Sum(cardlist);
-        GameManger.instnce.Buttle(cardlist);
+        GameManger.instnce.Battle(cardlist);
         GameManger.instnce.InitUpcard();
         
 

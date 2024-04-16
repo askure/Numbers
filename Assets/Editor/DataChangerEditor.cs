@@ -59,7 +59,7 @@ public class DataChangerEditor : Editor {
         }
 
         
-        Debug.Log("•ÏXŠ®—¹");
+      
     }
 
 }

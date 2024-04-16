@@ -148,14 +148,15 @@ public class BonusManager : MonoBehaviour
     }
 
     void SetBounus()
-    {
+    {   
+        Bounus bounus  = new Bounus();
         bounusInfo.text = "";
         /*–ñ”*/
         bounusInfo.text += "–ñ” ";
         for(int i=1; i<5; i++)
         {
-            int bounus = (int)Divisor_bounus(i, divisor);
-            bounusInfo.text += bounus;
+            int divbounus = (int)bounus.Divisor_bounus(i, divisor);
+            bounusInfo.text += divbounus;
             if (i != 4) bounusInfo.text += " ¨";
         }
 
@@ -164,41 +165,17 @@ public class BonusManager : MonoBehaviour
 
         for (int i = 1; i < 5; i++)
         {
-            int bounus = (int)Multi_bounus(i, multi);
-            bounusInfo.text += bounus;
+            int multibounus = (int)bounus.Multi_bounus(i, multi);
+            bounusInfo.text += multibounus;
             if (i != 4) bounusInfo.text += " ¨";
         }
         /*‘f”*/
-        int temp = (int)((34 - prime) * 0.1 + 1 + prime * 1.05);
-        bounusInfo.text += " (‡‚É1,2,3,4‘Ì)\n\n‘f” " + temp + " (4‘Ì‚Å”­“®)";
+        int primebounus = (int)bounus.Prime_bounus(prime);
+        bounusInfo.text += " (‡‚É1,2,3,4‘Ì)\n\n‘f” " + primebounus + " (4‘Ì‚Å”­“®)";
         
     }
 
-    double Divisor_bounus(int divisors, int lv)
-    {
-        switch (divisors)
-        {
-            case 1: return lv * 0.54 + 1;
-            case 2: return lv * 0.59 + 2;
-            case 3: return lv * 0.67 + 3;
-            case 4: return lv * 0.9 + 4;
-
-            default: return 0;
-        }
-    }
-
-    double Multi_bounus(int multis, int lv)
-    {
-        switch (multis)
-        {
-            case 1: return lv * 0.64 + 1;
-            case 2: return lv * 0.73 + 2;
-            case 3: return lv * 0.82 + 3;
-            case 4: return lv * 0.93 + 4;
-
-            default: return 0;
-        }
-    }
+   
     int GetExp(int lv)
     {
         return lv * lv * 200 + ( lv + 10) * 300;

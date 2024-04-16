@@ -23,7 +23,7 @@ public class EffectText : StateMachineBehaviour
     {
         if (stateInfo.IsTag("End"))
         {
-            NotificationButtle.GetInstance().AnimationEnd(); // アニメーションの終了を教える
+            NotificationBattle.GetInstance().AnimationEnd(); // アニメーションの終了を教える
     Destroy(animator.gameObject); // パネルを破壊
 }
     }   

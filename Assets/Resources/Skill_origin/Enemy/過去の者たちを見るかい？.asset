@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u904E\u53BB\u306E\u8005\u305F\u3061\u3092\u898B\u308B\u304B\u3044\uFF1F"
   m_EditorClassIdentifier: 
   skill_name: "\u904E\u53BB\u306E\u8005\u305F\u3061\u3092\u898B\u308B\u304B\u3044\uFF1F"
-  skill_infomatin: 
+  skill_infomatin: "99\u30BF\u30FC\u30F3\u306E\u9593\u3001\u653B\u6483\u529B\u3068\u9632\u5FA1\u529B\u30921.3\u500D\u3059\u308B\u3002"
   _Priority: 3
   magic_Conditon_Origins:
   - type: 6

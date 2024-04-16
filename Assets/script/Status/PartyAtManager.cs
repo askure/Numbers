@@ -17,6 +17,7 @@ public class PartyAtManager : MonoBehaviour
     GameObject ImageGameObject,node;
     [SerializeField] PartyAtStatus partyat;
     StatusListManager StatusList;
+    List<PartyAtStatus> partyAtStatuses = new List<PartyAtStatus>();
 
 
     // Update is called once per frame
@@ -59,6 +60,22 @@ public class PartyAtManager : MonoBehaviour
 
     }
 
+    public void AddStatusAttack(PartyAtStatus partyAt)
+    {
+        partyAtStatuses.Add(partyAt);
+    }
+
+    public void CheckStatus()
+    {
+        for(int i=0,len = partyAtStatuses.Count; i < len; i++)
+        {
+            var turn = partyAtStatuses[i].FinishTurn;
+            if(turn <= GameManger.TurnNum)
+                partyAtStatuses[i] = null;     
+        }
+        if(partyAtStatuses.Contains(null))
+            partyAtStatuses.RemoveAll(tmp => tmp == null);
+    }
 
     public void SetStatusAt(double effect, int turn, string mode,string cname)
     {   

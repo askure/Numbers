@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class EnemyDfStatus 
 {// Start is called before the first frame update
-    int EffectTurn = 3;
     public int FinishTurn;
     public double effect;
     Skill_origin.MagicKind mode;
-    static int statusNum = 0;
-
     // Update is called once per frame
     
     public EnemyDfStatus(double effect,int turn, Skill_origin.MagicKind mode)

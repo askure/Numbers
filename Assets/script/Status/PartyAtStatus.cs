@@ -5,11 +5,12 @@ using UnityEngine;
 public class PartyAtStatus : MonoBehaviour
 {
 
-    int FinishTurn;
+    public int FinishTurn;
     double effect;
     string mode;
     static string path;
     CardModel model;
+    public Skill_origin skillOrigin;
 
 
     // Update is called once per frame
@@ -22,6 +23,14 @@ public class PartyAtStatus : MonoBehaviour
         }
 
     }
+    public PartyAtStatus(double effect,int turn, Skill_origin skillOrigin)
+    {
+        this.effect = effect;
+        FinishTurn = GameManger.TurnNum + turn;
+        this.skillOrigin = skillOrigin;
+    }
+
+    
 
     //çUåÇóÕÉAÉbÉv
     public void SetStatus(double effect, int turn, GameObject card, string mode)

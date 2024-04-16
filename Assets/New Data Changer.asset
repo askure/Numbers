@@ -15,10 +15,10 @@ MonoBehaviour:
   Rank: 999
   Stone: 100000
   Exp: 100000000
-  Multi: 99
-  Diviser: 99
-  Prime: 99
-  CardLv: 999
+  Multi: 33
+  Diviser: 33
+  Prime: 33
+  CardLv: 80
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0

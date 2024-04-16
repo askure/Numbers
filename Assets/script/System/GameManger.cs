@@ -65,7 +65,7 @@ public class GameManger : MonoBehaviour
     public static int partyDf = 0;
     static  private int MAX_HP;
     private float volume;
-    EnemyContoller _enemy;
+   
     public List<CardController> _hand = new List<CardController>();
     public List<int> decklist;
     public List<CardController> UpCard = new List<CardController>();
@@ -95,12 +95,15 @@ public class GameManger : MonoBehaviour
     public static bool finish;
     public static bool handchange = false;
 
+    //Enemy
+    EnemyContoller _enemy;
+    List<Skill_origin> EnemyUsedSkill = new List<Skill_origin>();
+    [SerializeField] SkillViewNode viewNode;
+    [SerializeField] GameObject SkillViewPanel,SkillViewButton, SkillViewBeforeButton, SkillViewAfterButton;
+    [SerializeField] Transform SkillListPos;
+    int SKillViewPage = 0;
 
-    //debug
-    double debugAt;
-    double debugBounus;
-     
-    
+
 
     //StartGame
     public GameManger()
@@ -144,8 +147,6 @@ public class GameManger : MonoBehaviour
     {
         //cardSetUp
         TurnNum = 1;
-        debugAt = 0;
-        debugBounus = 0;
         sum = 0;
         decklist = deck[sortiePartyNum].cardId;
         List<int> tmp = new List<int>();
@@ -157,10 +158,7 @@ public class GameManger : MonoBehaviour
         {
             int x = Random.Range(1, decklist.Count);
             int y = Random.Range(1, decklist.Count);
-            int _temp = decklist[x];
-            decklist[x] = decklist[y];
-            decklist[y] = _temp;
-
+            (decklist[y], decklist[x]) = (decklist[x], decklist[y]);
         }
         var handCount = 0;
         for (int i = 0; i < 6; i++)
@@ -186,7 +184,7 @@ public class GameManger : MonoBehaviour
 
         if (SelectMapManager.stage != null) 
             FieldEffectEnemy(SelectMapManager.stage.fieldEffects);
-
+        SKillViewPage = 0;
         //
 
         //
@@ -544,35 +542,12 @@ public class GameManger : MonoBehaviour
 
     int Df(List<CardController> hands) 
     {
-        List<int> dfs = new List<int>();
         double df = 0.0;
-        foreach(CardController hand in hands)
+        foreach(var hand in hands)
         {
-            dfs.Add(hand.model.df);
+            df += hand.model.df;
         }
-        for(int i = 0; i< dfs.Count; i++)
-        {
-            for(int j = i+1 ; j < dfs.Count; j++)
-            {
-                if(dfs[i] > dfs[j])
-                {
-                    int temp = dfs[j];
-                    dfs[j] = dfs[i];
-                    dfs[i] = temp;
-                }
-            }
-        }
-        for(int i =0; i < dfs.Count; i++)
-        {
-            //df += dfs[i] * (i*0.85+1);
-            df += dfs[i];
-        }
-        if (PartyDfStatusManager.statusNum >= 3)
-        {
-            if (PartyDfStatusManager.statusNum >= 22)
-                df *= 0.01;
-            else df *= Mathf.Log(PartyDfStatusManager.statusNum - 2, 20);
-        }
+        Debug.Log("Df:" + df);
 
         return (int)df;
 
@@ -731,17 +706,20 @@ public class GameManger : MonoBehaviour
             var skillId = skillTable[index];
             skillname = skilllist[skillId].skill_name;
             animations.Add(AnimationType.skill);
-            EnemySkill(animations, skillId, ref partydamage, ref enemyHeal, ref partyDf,ref healNum,ref enemydamage);      
+            EnemySkill(animations, skillId, ref partydamage, ref enemyHeal,ref healNum,ref enemydamage);      
             return skillname;
 
     }
 
-    private void EnemySkill(List<AnimationType> animations, int skillid, ref List<int> PartyDamage, ref int enemyHeal, ref int partydf,ref int healNum,ref int enemydamage)
+    private void EnemySkill(List<AnimationType> animations, int skillid, ref List<int> PartyDamage, ref int enemyHeal,ref int healNum,ref int enemydamage)
 
     {
         var skilllist = _enemy.GetSKillList();
         if (skilllist.Count < skillid + 1) return;
         var Skill = skilllist[skillid];
+        if(!EnemyUsedSkill.Contains(Skill))
+            EnemyUsedSkill.Add(Skill);
+
         for (int i = 0,len = Skill.magic_Conditon_Origins.Count; i < len; i++)
         {
             var _Origin = Skill.magic_Conditon_Origins[i];
@@ -761,9 +739,10 @@ public class GameManger : MonoBehaviour
 
                 case Skill_origin.Skill_type.referenceAttack:
 
+                    Debug.Log("EnemyDamage:" + effect * _enemy.GetAt());
                     double damage = effect * _enemy.GetAt();
-                    if (damage < partydf) PartyDamage.Add(1);
-                    else PartyDamage.Add((int)damage - partydf);
+                    if (damage < partyDf) PartyDamage.Add(1);
+                    else PartyDamage.Add((int)damage - partyDf);
                     animations.Add(AnimationType.damage);
                     break;
                 
@@ -791,6 +770,7 @@ public class GameManger : MonoBehaviour
                         var atStatus = new EnemyAttackStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
                         _enemy.AddAttackStatus(atStatus);
                     }
+                    Debug.Log("EnemyAT:" + _enemy.GetAt());
                     break;
 
                     
@@ -1311,6 +1291,54 @@ public class GameManger : MonoBehaviour
         
         return true;
     }
+    
+    
+    public void OpenSKillViewPanel()
+    {
+        SkillViewPanel.SetActive(true);
+        SkillViewButton.SetActive(false);
+        SkillViewBeforeButton.SetActive(true);
+        SkillViewAfterButton.SetActive(true);
+        for (int i=0,len=SkillListPos.childCount; i<len;i++) { 
+            Destroy(SkillListPos.GetChild(i).gameObject);
+        }
+        int length = EnemyUsedSkill.Count;
+        if (SKillViewPage == 0)
+            SkillViewBeforeButton.SetActive(false);
+        if (((SKillViewPage + 1) * 6 + 1) > length)
+            SkillViewAfterButton.SetActive(false);
+            for (int i = 6*SKillViewPage; i<6*SKillViewPage + 6; i++)
+        {
+            if (i >= length)
+                break;
+            var origin = EnemyUsedSkill[i];
+            var skill = Instantiate(viewNode, SkillListPos);
+            skill.InitSkillViewNode(origin.skill_name, origin.skill_infomatin);
+        }
+        
+    }
+
+    public@void NextPage()
+    {
+        if (((SKillViewPage+1) * 6+1) >EnemyUsedSkill.Count)
+            return;
+        SKillViewPage++;
+        OpenSKillViewPanel();
+
+    }
+    public void BeforePage()
+    {
+        if (SKillViewPage == 0)
+            return;
+        SKillViewPage--;
+        OpenSKillViewPanel();
+    }
+    public void CloseViewPanel()
+    {
+        SkillViewPanel.SetActive(false);
+        SkillViewButton.SetActive(true);
+    }
+    
     //BattleMain
 
     public void Battle(List<CardController> cardlist)
@@ -1658,6 +1686,7 @@ public class GameManger : MonoBehaviour
         _hand = HandChange(_hand, Hand);
         if (SelectMapManager.stage != null)
             FieldEffectParty(_hand, SelectMapManager.stage.fieldEffects);
+        _hand = BufApplication(_hand);
         ReaderSkill(ReaderCard, _hand);
         Myturn = true;
         if(!vs.Contains(AnimationType.nextStage))

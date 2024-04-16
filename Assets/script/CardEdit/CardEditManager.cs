@@ -538,7 +538,7 @@ public class CardEditManager : MonoBehaviour
         for (int i = 0; i < 16; i++)
         {
             var cardId = i + x;
-            Debug.Log(i);
+            
             if (i >= cardListUp.childCount && i < 8) continue;
             else if ((i - 8) >=cardListDown.childCount) continue;
 

@@ -58,7 +58,6 @@ public class ResultManager : MonoBehaviour
 
         
         dmanager.stages[SelectMapManager.stage.stageid].clear = true;
-        Debug.Log(score / 20);
         CheckRankUp(score / 20);
         int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;
         rankExpText.text = "ŽŸ‚Ìƒ‰ƒ“ƒN‚Ü‚Å" + rankExp.ToString("N0");

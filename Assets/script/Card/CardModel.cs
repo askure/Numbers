@@ -25,7 +25,6 @@ public class CardModel
     public bool onBuf = false;
     public Skill_origin ReaderSkill;
     public Skill_origin PublicSkill;
-    public List<PartyAtStatus> partyAtStatuses = new List<PartyAtStatus>();
 
     public CardModel(int cardId,int lv)
     {

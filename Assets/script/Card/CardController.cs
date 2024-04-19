@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CardController : MonoBehaviour
 {
@@ -17,10 +18,8 @@ public class CardController : MonoBehaviour
 
     }
     public CardController(int cardId,int lv)
-    {
-        
-        model = new CardModel(cardId, lv);
-        
+    {   
+        model = new CardModel(cardId, lv);       
     }
     public void Init(int cardID,int lv)
     {
@@ -42,6 +41,8 @@ public class CardController : MonoBehaviour
         model = new CardModel(cardID,lv);
         view.CardListView(model);
     }
+
+    
 
     
 }

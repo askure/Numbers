@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyAtManager : MonoBehaviour
-{
+public class PartyAtManager : MonoBehaviour 
+{ 
     int FinishTurn;
     double effect;
     static public int statusNum = 0;
@@ -60,22 +60,7 @@ public class PartyAtManager : MonoBehaviour
 
     }
 
-    public void AddStatusAttack(PartyAtStatus partyAt)
-    {
-        partyAtStatuses.Add(partyAt);
-    }
-
-    public void CheckStatus()
-    {
-        for(int i=0,len = partyAtStatuses.Count; i < len; i++)
-        {
-            var turn = partyAtStatuses[i].FinishTurn;
-            if(turn <= GameManger.TurnNum)
-                partyAtStatuses[i] = null;     
-        }
-        if(partyAtStatuses.Contains(null))
-            partyAtStatuses.RemoveAll(tmp => tmp == null);
-    }
+    
 
     public void SetStatusAt(double effect, int turn, string mode,string cname)
     {   

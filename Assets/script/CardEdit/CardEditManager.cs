@@ -16,7 +16,7 @@ public class CardEditManager : MonoBehaviour
     [SerializeField] private CardController cardList;
     [SerializeField] private CardController cardNothave;
     [SerializeField] private Text partyName;
-    [SerializeField] static private Text partyHpText, partyCombatText;
+    [SerializeField] static private Text partyHpText;
     [SerializeField] static private GameObject editButton, saveButton, deleateButton, stopButton, stopCheckpanel, deleteChackPanel, nextButton, BackButton, sortieButton, nextCardListButton, beforeCardListButton;
 
 
@@ -79,7 +79,6 @@ public class CardEditManager : MonoBehaviour
         stopCheckpanel = GameObject.Find("StopCheckPanel");
         deleteChackPanel = GameObject.Find("DeleteCheckPanel");
         partyHpText = GameObject.Find("HpText").GetComponent<Text>();
-        partyCombatText = GameObject.Find("CombatScoreText").GetComponent<Text>();
         lineUp = GameObject.Find("DeckLine").transform;
         lineDown = GameObject.Find("DeckLine2").transform;
         cardListUp = GameObject.Find("CardList").transform;
@@ -178,26 +177,6 @@ public class CardEditManager : MonoBehaviour
     }
     public void SaveButton()
     {
-
-        double tmp ;
-        if (decklistTemp.Count < 7)
-            tmp = decklistTemp.Count + decklistTemp.Count * decklistTemp.Count * 0.1;
-        else
-            tmp = decklistTemp.Count + decklistTemp.Count * decklistTemp.Count * 0.4;
-        int conditionNum = (int)tmp;
-
-        if (combat > conditionNum)
-        {
-            var gameObject = Resources.Load<GameObject>("DeckEditPrehub/CharacterUnlock");
-            var canvas = GameObject.Find("Canvas").transform;
-            var panel = Instantiate(gameObject, canvas);
-            panel.transform.GetChild(0).GetComponent<Text>().text = "合計数値が規定値より大きいです。\n\n規定値を上げるには編成するキャラを増やしてください。";
-
-            var x = panel.transform.GetChild(1).gameObject;
-            Destroy(x.transform.GetChild(0).gameObject);
-            return;
-        }
-
         var index = partyNum;
         var cardid = decklistTemp;
         cmanager.deck[index].cardId = cardid;
@@ -349,24 +328,11 @@ public class CardEditManager : MonoBehaviour
     void PartyHpUpdate(List<CardController> cards)
     {
         int hpSum = 0;
-        combat = 0;
-
-        double tmp =0;
-        if (decklistTemp.Count < 7)
-            tmp = decklistTemp.Count + decklistTemp.Count * decklistTemp.Count * 0.1;
-        else
-            tmp = decklistTemp.Count + decklistTemp.Count * decklistTemp.Count * 0.4;
-        int conditionNum = (int)tmp;
         foreach (CardController card in cards)
         {
-            combat += card.model.num;
             hpSum += card.model.Hp;
         }
         partyHpText.text = "合計Hp:" + hpSum.ToString();
-        if(combat > conditionNum)
-            partyCombatText.text = "合計数値:<color=red>" + combat.ToString() + "</color>/" + conditionNum;
-        else
-            partyCombatText.text = "合計数値:" + combat.ToString() + "/" + conditionNum;
     }
 
     void CreateCardList(int pageNum)

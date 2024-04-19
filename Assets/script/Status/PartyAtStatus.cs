@@ -10,7 +10,6 @@ public class PartyAtStatus : MonoBehaviour
     string mode;
     static string path;
     CardModel model;
-    public Skill_origin skillOrigin;
 
 
     // Update is called once per frame
@@ -22,15 +21,7 @@ public class PartyAtStatus : MonoBehaviour
             StatusReset();
         }
 
-    }
-    public PartyAtStatus(double effect,int turn, Skill_origin skillOrigin)
-    {
-        this.effect = effect;
-        FinishTurn = GameManger.TurnNum + turn;
-        this.skillOrigin = skillOrigin;
-    }
-
-    
+    }   
 
     //UŒ‚—ÍƒAƒbƒv
     public void SetStatus(double effect, int turn, GameObject card, string mode)

@@ -345,7 +345,7 @@ public class GameManger : MonoBehaviour
         OptionPanel.SetActive(false);
 
     }
-    void FieldEffectParty( List<CardController> hand,  List<StageEntity.FieldEffect> fieldEffects )
+    void FieldEffectParty(List<CardController> hand, List<StageEntity.FieldEffect> fieldEffects )
     {
        
         foreach(StageEntity.FieldEffect fieldEffect in fieldEffects)
@@ -547,7 +547,6 @@ public class GameManger : MonoBehaviour
         {
             df += hand.model.df;
         }
-        Debug.Log("Df:" + df);
 
         return (int)df;
 
@@ -737,9 +736,7 @@ public class GameManger : MonoBehaviour
                     break;
 
 
-                case Skill_origin.Skill_type.referenceAttack:
-
-                    Debug.Log("EnemyDamage:" + effect * _enemy.GetAt());
+                case Skill_origin.Skill_type.referenceAttack:              
                     double damage = effect * _enemy.GetAt();
                     if (damage < partyDf) PartyDamage.Add(1);
                     else PartyDamage.Add((int)damage - partyDf);
@@ -770,7 +767,6 @@ public class GameManger : MonoBehaviour
                         var atStatus = new EnemyAttackStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
                         _enemy.AddAttackStatus(atStatus);
                     }
-                    Debug.Log("EnemyAT:" + _enemy.GetAt());
                     break;
 
                     
@@ -1162,12 +1158,9 @@ public class GameManger : MonoBehaviour
                         }
                         break;
 
-                    case Skill_origin.Skill_type.decreaseDefence :
-                        if (magicKind == Skill_origin.MagicKind.add)
-                        {
-                            var dfStatus = new EnemyDfStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
-                            _enemy.AddDefenceStatus(dfStatus);
-                        }
+                    case Skill_origin.Skill_type.decreaseDefence :  
+                        var dfStatus = new EnemyDfStatus(effect, _Origin.effect_turn, _Origin.magic_kind);
+                        _enemy.AddDefenceStatus(dfStatus);
                         break;
 
 
@@ -1352,7 +1345,8 @@ public class GameManger : MonoBehaviour
         int enemyHeal = 0;
         int healNum = 0;
         int enemydamage = 0;
-        
+        int HP;
+
         AutoSkill(animations,cardlist, ref pesuit,ref teamHeal);
         partyDf = Df(_hand);
         string skillName = "";
@@ -1368,7 +1362,7 @@ public class GameManger : MonoBehaviour
             {   
                 aveTurn += TurnNum;
                 enemysexp += _enemy.GetExp();
-                if (BattleNum != SelectMapManager.enemy.Count)
+                if (SelectMapManager.enemy != null &&BattleNum != SelectMapManager.enemy.Count)
                 {
                     animations.Add(AnimationType.nextStage); //NextStage
                     StartCoroutine(AnimationList(animations, (int)pesuit, damage, skillName, teamDamage, teamHeal, enemyHeal, healNum, enemydamage));
@@ -1386,7 +1380,13 @@ public class GameManger : MonoBehaviour
 
             animations.Add(AnimationType.enemyturn);
             skillName = Enemyattack(animations, ref teamDamage,ref enemyHeal,ref healNum,ref enemydamage);
-            if (hpSum + teamHeal - teamDamage.Sum() <=0)
+            Debug.Log(teamDamage.Sum());
+            
+            if (hpSum + teamHeal > MAX_HP)
+                HP = MAX_HP;
+            else 
+                HP = hpSum + teamHeal;    
+            if (HP - teamDamage.Sum() <=0)
             {
                 //hpSum = 0;
               
@@ -1410,13 +1410,8 @@ public class GameManger : MonoBehaviour
             if (card.model.decided == true)
             {
                 double tmp = card.model.at * bounus - _enemy.GetDf();
-                if(PartyAtManager.statusNum >= 3)
-                {
-                    if (PartyAtManager.statusNum >= 22)
-                        tmp *= 0.01;
-                    else tmp *= 1 - Mathf.Log(PartyAtManager.statusNum - 2, 20);
-                }
-                if (tmp <= 1) tmp = 1;
+                if (tmp < 1)
+                    tmp = 1;
                 damage.Add((int)tmp);
                 AddLogText(card.model.name+ "Ç™<color=red>" + (int)tmp + "</color>É_ÉÅÅ[ÉW");
                 animations.Add(AnimationType.attack); //attack
@@ -1439,8 +1434,6 @@ public class GameManger : MonoBehaviour
         }
         else
         {
-
-           
             aveTurn += TurnNum;
             enemysexp += _enemy.GetExp();
             if ((SelectMapManager.enemy != null) && BattleNum != SelectMapManager.enemy.Count)
@@ -1458,7 +1451,11 @@ public class GameManger : MonoBehaviour
             }
 
         }
-        if (hpSum + teamHeal - teamDamage.Sum() <=0)
+        if (hpSum + teamHeal > MAX_HP)
+            HP = MAX_HP;
+        else
+            HP = hpSum + teamHeal;
+        if (HP - teamDamage.Sum() <=0)
         {           
             BattleNum = 0;
             finish = true;

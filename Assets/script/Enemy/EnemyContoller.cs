@@ -144,9 +144,8 @@ public class EnemyContoller : MonoBehaviour
     }
     public void HealHp(double effect)
     {
-        double heal = effect * model.at;
-        model.Hp += (int) heal;
-        if(model.MaxHp > model.Hp)
+        model.Hp += (int)effect;
+        if(model.MaxHp < model.Hp)
             model.Hp = model.MaxHp;
 
     }

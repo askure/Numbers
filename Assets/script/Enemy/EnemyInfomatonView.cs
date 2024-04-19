@@ -31,6 +31,6 @@ public class EnemyInfomatonView : MonoBehaviour
 
 
         infomationPanel.SetActive(false);
-        enemyName.fontSize = 40;
+        enemyName.fontSize = 36;
     }
 }

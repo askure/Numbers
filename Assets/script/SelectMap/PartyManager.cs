@@ -26,12 +26,6 @@ public class PartyManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Init(string mapname,string stagename)
     {
     
@@ -87,16 +81,6 @@ public class PartyManager : MonoBehaviour
                 card.DeckEdiInit(id, cardLv[id].Lv);
                 card.gameObject.transform.localScale = new Vector3(1f, 1f, 1);
                 numSum.Add(card.model.num);
-            }
-            double tmp;
-            if (numSum.Count < 7)
-                tmp = numSum.Count + numSum.Count * numSum.Count * 0.1;
-            else
-                tmp = numSum.Count + numSum.Count * numSum.Count * 0.4;
-            int conditionNum = (int)tmp;
-            if(numSum.Sum() > conditionNum)
-            {
-                go.SetActive(false);
             }
         }
     }

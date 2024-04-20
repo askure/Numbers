@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] CardController deckCard;
     [SerializeField] GameObject newDeck,go,toquest;
     [SerializeField] Transform lineUp, lineDown;
-    [SerializeField] Text mapname, stagename, rskill, rskillinfo,pagetext;
+    [SerializeField] TextMeshProUGUI mapname, stagename, rskill, rskillinfo,pagetext;
     CharacterDataManager manager;
     bool first = false;
     string filepath;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ButtleLog : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class ButtleLog : MonoBehaviour
     {
         var g = Resources.Load<GameObject>("BattlePrehub/LogTrigger"); 
         var maneger = GameObject.Find("GameManager").GetComponent<GameManger>();
-        var text = g.transform.GetChild(1).GetComponent<Text>();
+        var text = g.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         text.text = "";
         foreach (string s in maneger.GetLog())
         {

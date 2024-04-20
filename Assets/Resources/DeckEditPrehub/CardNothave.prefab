@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 0}
-  model: {fileID: 0}
   gbj: {fileID: 0}
 --- !u!114 &6596396553593184684
 MonoBehaviour:
@@ -281,6 +280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef46db590a556449b8642edfd499761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Selected: {fileID: 0}
+  isTodeck: 0
 --- !u!114 &1486328406234876966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,8 +415,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3597919022597251371}
-        m_TargetAssemblyTypeName: SerectCard, Assembly-CSharp
-        m_MethodName: PopUpSerect
+        m_TargetAssemblyTypeName: SelectCard, Assembly-CSharp
+        m_MethodName: PopUpSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

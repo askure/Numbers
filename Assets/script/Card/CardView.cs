@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CardView : MonoBehaviour
 {
-    [SerializeField] Text nameText, HpText ,atText, dfText, numText,rareText,lvText;
+    [SerializeField] TextMeshProUGUI nameText, HpText ,atText, dfText, numText,rareText,lvText;
     [SerializeField] Image iconImage,rareImage;
     
     public void Show(CardModel cardModel)

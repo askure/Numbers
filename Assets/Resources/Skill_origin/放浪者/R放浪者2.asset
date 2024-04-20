@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "R\u653E\u6D6A\u80052"
   m_EditorClassIdentifier: 
   skill_name: "\u7121\u9650\u65C5\u8DEF"
-  skill_infomatin: "7\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u6570\u5024\u30921\u4E0A\u3052\u308B\u3002"
+  skill_infomatin: "7\u306E\u500D\u6570\u306E\u30AD\u30E3\u30E9\u306E\u6570\u5024\u30922\u4E0A\u3052\u308B\u3002"
   _Priority: 3
   magic_Conditon_Origins:
   - type: 8
@@ -21,5 +21,5 @@ MonoBehaviour:
     condition_num: 7
     conditons: 0
     magic_kind: 0
-    effect_size: 1
+    effect_size: 2
     effect_turn: 0

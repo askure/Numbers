@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,7 @@ public class StatusUp : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "ストーンが足りません";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "ストーンが足りません";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -62,7 +63,7 @@ public class StatusUp : MonoBehaviour
         var Object = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUpResult");
         var canvas = GameObject.Find("Canvas").transform;
         var panel = Instantiate(Object, canvas);
-        panel.transform.GetChild(0).GetComponent<Text>().text = massage;
+        panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = massage;
         character.SetText();
         
         Destroy(gameObject); 

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillNameAnimation : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] Animator animator;
-    [SerializeField] Text text;
+    [SerializeField] TextMeshProUGUI text;
     [SerializeField] AudioClip se;
     static BGMManager bgm;
     

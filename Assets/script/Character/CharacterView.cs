@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 using UnityEngine.UI;
 
 public class CharacterView : MonoBehaviour
 {
-    [SerializeField] Text lvText, nameText,hpText,atText, dfText,expNumText,autoskillNameText,autoskillInfoText, rskillNameText, rskillInfoText;
+    [SerializeField] TextMeshProUGUI lvText, nameText,hpText,atText, dfText,expNumText,autoskillNameText,autoskillInfoText, rskillNameText, rskillInfoText;
     [SerializeField] Image Icon,rareImage;
 
     public void SetText(CardModel card,int exp)
@@ -48,7 +49,7 @@ public class CharacterView : MonoBehaviour
                 break;
         }
         lvText.text = "Lv:" + Lv.ToString();
-        nameText.text = name + "\n"+convex.ToString() + "/" + LimitConvex.ToString();
+        nameText.text = name+ "(" + rare + ")" + "\n"+convex.ToString() + "/" + LimitConvex.ToString();
         hpText.text = "Hp:" + Hp.ToString() + "(+" + (hpbuf*Hp - Hp).ToString("F0") + ")";
         atText.text = "çUåÇóÕ:" + at.ToString() + "(+" + (at * atbuf - at).ToString("F0") + ")";
         dfText.text = "ñhå‰óÕ:" + df.ToString() + "(+" + (df * dfbuf - df).ToString("F0") + ")";

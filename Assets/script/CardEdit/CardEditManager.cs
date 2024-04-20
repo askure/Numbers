@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class CardEditManager : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class CardEditManager : MonoBehaviour
     [SerializeField] private CardController deckCard;
     [SerializeField] private CardController cardList;
     [SerializeField] private CardController cardNothave;
-    [SerializeField] private Text partyName;
-    [SerializeField] static private Text partyHpText;
-    [SerializeField] static private GameObject editButton, saveButton, deleateButton, stopButton, stopCheckpanel, deleteChackPanel, nextButton, BackButton, sortieButton, nextCardListButton, beforeCardListButton;
-
+    [SerializeField] private TextMeshProUGUI partyName;
+    [SerializeField] private TextMeshProUGUI partyHpText;
+     static private GameObject editButton, saveButton, deleateButton, stopButton, stopCheckpanel,notRcardPanel, deleteChackPanel, nextButton, BackButton, sortieButton, nextCardListButton, beforeCardListButton;
+    [SerializeField] GameObject DummyCard;
 
     static private CharacterData.CardLv[] cardLv;
     static public List<CardController> nowDeckCard;
@@ -33,7 +34,7 @@ public class CardEditManager : MonoBehaviour
     static public bool Edit;
     static int partyNum = 0;
     static int cardListNum = 0;
-    static int combat = 0;
+    private string deckName = "";
     public static CardModel UnlockCardId;
     // Start is called before the first frame update
     void Start()
@@ -51,14 +52,15 @@ public class CardEditManager : MonoBehaviour
         cardLv = cmanager.cardLvs;
 
         partyNum = cmanager.sortiePartyNum;
+        decklistTemp = cmanager.deck[partyNum].cardId;
+        deckName = cmanager.deck[partyNum].deckName;
+        if(deckName == "")
+            deckName = "パーティー" + (partyNum+1);
         if (partyNum < 0 || partyNum > 7) partyNum = 0;
-        // partyNum = 0;
-        // cardListNum = 0;
         Setupobject();
-        CreateDeck(partyNum);
-        CreateCardList(cardListNum);
-        stopCheckpanel.SetActive(false);
-        deleteChackPanel.SetActive(false);
+        CreateDeck();
+        CreateCardList();
+        InitView();
         Edit = false;
         if (toqest)
         {
@@ -78,7 +80,8 @@ public class CardEditManager : MonoBehaviour
         BackButton = GameObject.Find("BackButton");
         stopCheckpanel = GameObject.Find("StopCheckPanel");
         deleteChackPanel = GameObject.Find("DeleteCheckPanel");
-        partyHpText = GameObject.Find("HpText").GetComponent<Text>();
+        notRcardPanel = GameObject.Find("NotReaderCardPanel");
+        partyHpText = GameObject.Find("HpText").GetComponent<TextMeshProUGUI>();
         lineUp = GameObject.Find("DeckLine").transform;
         lineDown = GameObject.Find("DeckLine2").transform;
         cardListUp = GameObject.Find("CardList").transform;
@@ -113,28 +116,13 @@ public class CardEditManager : MonoBehaviour
 
     }
     public void DeleteDeck()
-    {
-        InitDaeckData();
-        var index = partyNum;
-        var cardid = decklistTemp;
-        cmanager.deck[index].cardId = cardid;
-        cmanager.deck[index].deckName = partyName.text;
+    {     
+        decklistTemp.Clear();
+        cmanager.deck[partyNum].cardId = decklistTemp;
+        cmanager.deck[partyNum].deckName = deckName;
         cmanager.Datasave(cfilepath);
-        /*var tempPartyNum = partyNum;
-        cmanager.Dataload(cfilepath);
-        while (cmanager.deck[tempPartyNum].cardId.Count == 0)
-        {
-            tempPartyNum++;
-            if (tempPartyNum == cmanager.deck.Count) tempPartyNum = 0;
-            if (tempPartyNum == partyNum)
-            {
-                tempPartyNum = -1;
-                break;
-            }
-        }
-        cmanager.sortiePartyNum = tempPartyNum;*/
         cmanager.Datasave(cfilepath);
-        CreateDeck(partyNum);
+        CreateDeck();
         CheckSerected();
         deleteChackPanel.SetActive(false);
         nextCardListButton.SetActive(true);
@@ -146,46 +134,48 @@ public class CardEditManager : MonoBehaviour
     {
         stopCheckpanel.SetActive(true);
         nextCardListButton.SetActive(false);
-        beforeCardListButton.SetActive(false);
+        //beforeCardListButton.SetActive(false);
         Edit = false;
     }
     public void StopEdit()
-    {
-        InitDaeckData();
+    {   
         stopCheckpanel.SetActive(false);
         nextCardListButton.SetActive(true);
         beforeCardListButton.SetActive(true);
-        CreateDeck(partyNum);
+        CreateDeck();
         CheckSerected();
         toqest = false;
 
     }
-    void InitDaeckData()
-    {
-        decklistTemp.Clear();
-        nowDeckCard.Clear();
-
-        ALLDelete();
+    void InitDeckData()
+    {   
+        decklistTemp = cmanager.deck[partyNum].cardId;
+        deckName = cmanager.deck[partyNum].deckName;
     }
     public void ClosePanel()
     {
         stopCheckpanel.SetActive(false);
         deleteChackPanel.SetActive(false);
+        notRcardPanel.SetActive(false);
         nextCardListButton.SetActive(true);
         beforeCardListButton.SetActive(true);
         Edit = true;
     }
-    public void SaveButton()
-    {
-        var index = partyNum;
-        var cardid = decklistTemp;
-        cmanager.deck[index].cardId = cardid;
-        cmanager.deck[index].deckName = partyName.text;
+    public void SaveButton(bool flag)
+    {   
+        if(decklistTemp.Count != 0 && decklistTemp[0] == -1 && !flag)
+        {
+            notRcardPanel.SetActive(true);
+            return;
+        }
+        decklistTemp.RemoveAll(x => x == -1);
+        cmanager.deck[partyNum].cardId = decklistTemp;
+        cmanager.deck[partyNum].deckName = deckName;
         cmanager.Datasave(cfilepath);
-        InitDaeckData();
         cmanager = new CharacterDataManager(cfilepath);
-        CreateDeck(partyNum);
+        CreateDeck();
         CheckSerected();
+        InitView();
         Notification.GetInstance().PutInQueue("保存しました");
         Edit = false;
         if (toqest)
@@ -199,9 +189,9 @@ public class CardEditManager : MonoBehaviour
 
         if (partyNum == 6) partyNum = 0;
         else partyNum++;
-        InitDaeckData();
-        CreateDeck(partyNum);
+        CreateDeck();
         CheckSerected();
+        InitView();
 
 
 
@@ -210,9 +200,9 @@ public class CardEditManager : MonoBehaviour
     {
         if (partyNum == 0) partyNum = 6;
         else partyNum--;
-        InitDaeckData();
-        CreateDeck(partyNum);
+        CreateDeck();
         CheckSerected();
+        InitView();
 
     }
     public void SetSortieParty()
@@ -242,32 +232,28 @@ public class CardEditManager : MonoBehaviour
         if (!dmanager.stages[cardEntity.stageNum].clear) return;
         cardListNum++;
         InitCardList();
-        CreateCardList(cardListNum);
+        CreateCardList();
     }
     public void CardListBefore()
     {
         if (cardListNum == 0) return;
         cardListNum--;
         InitCardList();
-        CreateCardList(cardListNum);
+        CreateCardList();
     }
-    void CreateDeck(int partyNum)
+    void CreateDeck()
     {
-
+        ALLDelete();
+        InitDeckData();
         if (partyNum < 0 || partyNum >= 7) partyNum = 0;
+        nowDeckCard.Clear();
 
-        var x = cmanager.deck[partyNum];
+        partyName.text = deckName;
 
-        if (x.deckName == "") partyName.text = "パーティ" + (partyNum + 1).ToString();
-        else partyName.text = x.deckName;
-        var deck = x.cardId;
+        if (decklistTemp == null) return;
 
-
-        if (deck == null) return;
-
-        if (deck.Count == 0 && !toqest)
+        if (decklistTemp.Count == 0 && !toqest)
         {
-
             Instantiate(newDeck, lineUp);
             PartyHpUpdate(nowDeckCard);
             saveButton.SetActive(false);
@@ -277,54 +263,39 @@ public class CardEditManager : MonoBehaviour
             sortieButton.SetActive(false);
             nextButton.SetActive(true);
             BackButton.SetActive(true);
-
             return;
         }
 
         for (int i = 0; i < 6; i++)
         {
-
-
-            if (i >= deck.Count) break;
-
-            CardController card = Instantiate(deckCard, lineUp);
-
-            var index = deck[i];
-
-            card.DeckEdiInit(index, cardLv[index].Lv);
-
-            nowDeckCard.Add(card);
-
-            decklistTemp.Add(card.model.cardID);
-
-
-
-
-
-
+            if (i >= decklistTemp.Count) break;
+            var index = decklistTemp[i];
+            if (index == -1)
+                Instantiate(DummyCard, lineUp);
+            else
+            {
+                CardController card = Instantiate(deckCard, lineUp);
+                card.DeckEdiInit(index, cardLv[index].Lv);
+                nowDeckCard.Add(card);
+            }
+          
         }
         for (int i = 6; i < 12; i++)
         {
 
-            if (i >= deck.Count) break;
-
-            CardController card = Instantiate(deckCard, lineDown);
-
-            var index = deck[i];
-            card.DeckEdiInit(index, cardLv[index].Lv);
-            nowDeckCard.Add(card);
-            decklistTemp.Add(card.model.cardID);
-
-
+            if (i >= decklistTemp.Count) break;
+            var index = decklistTemp[i];
+            if (index == -1)
+                Instantiate(DummyCard, lineDown);
+            else
+            {
+                CardController card = Instantiate(deckCard, lineDown);
+                card.DeckEdiInit(index, cardLv[index].Lv);
+                nowDeckCard.Add(card);
+            }
         }
-
-        PartyHpUpdate(nowDeckCard);
-        ChangeView(true, false);
-
-
-
+        PartyHpUpdate(nowDeckCard);      
     }
-
     void PartyHpUpdate(List<CardController> cards)
     {
         int hpSum = 0;
@@ -335,15 +306,11 @@ public class CardEditManager : MonoBehaviour
         partyHpText.text = "合計Hp:" + hpSum.ToString();
     }
 
-    void CreateCardList(int pageNum)
+    void CreateCardList()
     {
         nextCardListButton.SetActive(true);
         beforeCardListButton.SetActive(true);
-        if (pageNum == 0)
-        {
-            beforeCardListButton.SetActive(false);
-        }
-        var x = pageNum * 16;
+        var x = cardListNum * 16;
         for (int i = x; i < x + 8; i++)
         {
             if (i >= cardLv.Length)
@@ -357,50 +324,41 @@ public class CardEditManager : MonoBehaviour
             {
                 card = Instantiate(cardNothave, cardListUp);
                 card.CardlistInit(i, 0);
-                if (decklistTemp.Contains(card.model.cardID))
-                {
-                    var g = card.transform.Find("Serected");
-                    if(g != null) g.gameObject.SetActive(true);
-                }
-                else
-                {
-                    var g = card.transform.Find("Serected");
-                    if (g != null) g.gameObject.SetActive(false);
-                }
-                   
+
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
 
                 }
+                
             }
-
             else
             {
                 card = Instantiate(cardList, cardListUp);
                 card.DeckEdiInit(i, cardLv[i].Lv);
+                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
+                {
+                    Destroy(card.gameObject);
+                    nextCardListButton.SetActive(false);
+                    continue;
+
+                }
                 if (decklistTemp.Contains(card.model.cardID))
                 {
                     var g = card.transform.Find("Serected");
                     if (g != null) g.gameObject.SetActive(true);
+                    card.GetComponent<SelectCard>().isTodeck = false;
                 }
                 else
                 {
                     var g = card.transform.Find("Serected");
                     if (g != null) g.gameObject.SetActive(false);
+                    card.GetComponent<SelectCard>().isTodeck = true;
                 }
                     
-                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
-                {
-                    Destroy(card.gameObject);
-                    nextCardListButton.SetActive(false);
-
-                }
+                
             }
-
-
-
         }
         for (int i = x + 8; i < x + 16; i++)
         {
@@ -414,16 +372,6 @@ public class CardEditManager : MonoBehaviour
             {
                 card = Instantiate(cardNothave, cardListDown);
                 card.CardlistInit(i, 0);
-                if (decklistTemp.Contains(card.model.cardID))
-                {
-                    var g = card.transform.Find("Serected");
-                    if (g != null) g.gameObject.SetActive(true);
-                }
-                else
-                {
-                    var g = card.transform.Find("Serected");
-                    if (g != null) g.gameObject.SetActive(false);
-                }
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
@@ -434,13 +382,25 @@ public class CardEditManager : MonoBehaviour
             {
                 card = Instantiate(cardList, cardListDown);
                 card.DeckEdiInit(i, cardLv[i].Lv);
-                if (decklistTemp.Contains(card.model.cardID))
-                    card.transform.Find("Serected").gameObject.SetActive(true);
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
+                    continue;
                 }
+                if (decklistTemp.Contains(card.model.cardID))
+                {
+                    card.transform.Find("Serected").gameObject.SetActive(true);
+                    card.GetComponent<SelectCard>().isTodeck = false;
+                }
+                else 
+                {
+                    card.transform.Find("Serected").gameObject.SetActive(false);
+                    card.GetComponent<SelectCard>().isTodeck = true;
+
+                }
+                    
+                
             }
 
 
@@ -455,25 +415,31 @@ public class CardEditManager : MonoBehaviour
         popup.SetText(popupCard.model);
 
     }
-    public void SetDeckCard(int index, CardController controller)
+    public void SetDeckCard(int index)
     {
-        if (decklistTemp.Count > 12) return;
         CardController card;
-        if (decklistTemp.Count < 6) card = Instantiate(controller, lineUp);
-        else card = Instantiate(controller, lineDown);
+        if (!decklistTemp.Contains(-1))
+        {
+            if (decklistTemp.Count < 6) card = Instantiate(deckCard, lineUp);
+            else card = Instantiate(deckCard, lineDown);
+            card.DeckEdiInit(index, cardLv[index].Lv);
+            decklistTemp.Add(card.model.cardID);
+        }
+        else
+        {
+            var id = decklistTemp.IndexOf(-1);
+            if(id < 6) card = Instantiate(deckCard, lineUp);
+            else card = Instantiate(deckCard, lineDown);
+            card.DeckEdiInit(index, cardLv[index].Lv);
+            decklistTemp[id] = card.model.cardID;
 
-        card.DeckEdiInit(index, cardLv[index].Lv);
-
-        nowDeckCard.Add(card);
-        decklistTemp.Add(card.model.cardID);
-
-        PartyHpUpdate(nowDeckCard);
-
-
+        }
+        CreateDeck();
     }
 
-    public void DeckCardDelete(int cardId, CardController controller)
+    public void DeckCardDelete(int cardId)
     {
+      
         var x = cardListNum * 16;
         if (decklistTemp.Contains(cardId))
         {
@@ -490,11 +456,10 @@ public class CardEditManager : MonoBehaviour
                 }
             }
 
+            int id = decklistTemp.IndexOf(cardId);
+            decklistTemp[id] = -1;
         }
-        decklistTemp.Remove(cardId);
-        nowDeckCard.Remove(controller);
-
-        PartyHpUpdate(nowDeckCard);
+        CreateDeck();
 
     }
 
@@ -512,26 +477,34 @@ public class CardEditManager : MonoBehaviour
             {
                 if (i < 8)
                 {
-                    var g = cardListUp.transform.GetChild(i).transform.Find("Serected");
-                    if(g != null)g.gameObject.SetActive(true);
+                    var card = cardListUp.transform.GetChild(i);
+                    var g = card.transform.Find("Serected");
+                    if (g != null)g.gameObject.SetActive(true);
+                    card.GetComponent<SelectCard>().isTodeck = false;
                 }
                 else
                 {
-                    var g = cardListDown.transform.GetChild(i - 8).transform.Find("Serected");
+                    var card = cardListDown.transform.GetChild(i - 8);
+                    var g =card.transform.Find("Serected");
                     if(g != null)g.gameObject.SetActive(true);
+                    card.GetComponent<SelectCard>().isTodeck = false;
                 }
             }
             else
             {
                 if (i < 8)
                 {
-                    var g = cardListUp.transform.GetChild(i).transform.Find("Serected");
+                    var card = cardListUp.transform.GetChild(i);
+                    var g = card.transform.Find("Serected");
                     if (g != null) g.gameObject.SetActive(false);
+                    card.GetComponent<SelectCard>().isTodeck = true;
                 }
                 else
                 {
-                    var g = cardListDown.transform.GetChild(i - 8).transform.Find("Serected");
+                    var card = cardListDown.transform.GetChild(i - 8);
+                    var g = card.transform.Find("Serected");
                     if (g != null)g.gameObject.SetActive(false);
+                    card.GetComponent<SelectCard>().isTodeck = true;
                 }
             }
         }
@@ -553,32 +526,26 @@ public class CardEditManager : MonoBehaviour
     }
 
 
-    void ChangeView(bool on_off, bool all)
+    void InitView()
     {
-        if (all)
+        saveButton.SetActive(false);
+        editButton.SetActive(true);
+        deleateButton.SetActive(true);
+        stopButton.SetActive(false);
+        sortieButton.SetActive(false);
+        nextButton.SetActive(true);
+        BackButton.SetActive(true);
+        stopCheckpanel.SetActive(false);
+        deleteChackPanel.SetActive(false);
+        notRcardPanel.SetActive(false);
+        if (decklistTemp.Count == 0)
         {
-            saveButton.SetActive(on_off);
-            editButton.SetActive(on_off);
-            deleateButton.SetActive(on_off);
-            stopButton.SetActive(on_off);
-            sortieButton.SetActive(on_off);
-            if (partyNum == cmanager.sortiePartyNum)
-            {
-                sortieButton.SetActive(false);
-            }
-            return;
+            editButton.SetActive(false);
+            deleateButton.SetActive(false);
         }
-        saveButton.SetActive(!on_off);
-        editButton.SetActive(on_off);
-        deleateButton.SetActive(on_off);
-        stopButton.SetActive(!on_off);
-        nextButton.SetActive(on_off);
-        BackButton.SetActive(on_off);
-
-        sortieButton.SetActive(on_off);
-        if (partyNum == cmanager.sortiePartyNum)
+        else if(partyNum != cmanager.sortiePartyNum)
         {
-            sortieButton.SetActive(false);
+            sortieButton.SetActive(true);
         }
     }
 

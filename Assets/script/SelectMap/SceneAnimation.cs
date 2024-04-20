@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,8 +18,8 @@ public class SceneAnimation : MonoBehaviour
     }
      public void LoadScene(string sceneName,string mapname, string stagename)
     {
-        var mapName = transform.GetChild(0).GetComponent<Text>();
-        var stageName = transform.GetChild(1).GetComponent<Text>();
+        var mapName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        var stageName = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         mapName.text = mapname;
         stageName.text = stagename;
         GetComponent<Animator>().enabled = true;

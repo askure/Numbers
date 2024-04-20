@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class CardInformation : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] GameObject InfomationObject;
-    [SerializeField] Text infoText;
+    [SerializeField] TextMeshProUGUI infoText;
     
     public void InfomationUp()
     {   

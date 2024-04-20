@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "A\u30E6\u30A4\u30AB1"
   m_EditorClassIdentifier: 
   skill_name: AUTO
-  skill_infomatin: "HP\u3092\u56DE\u5FA9\u3057\u3066\u8FFD\u6483\u3092\u3059\u308B\u3002"
+  skill_infomatin: "HP\u3092\u56DE\u5FA9\u3059\u308B(Lv1\u3088\u308A\u52B9\u679C\u30A2\u30C3\u30D7)\u30027120\u306E\u8FFD\u6483\u3092\u3059\u308B\u3002"
   _Priority: 2
   magic_Conditon_Origins:
   - type: 3

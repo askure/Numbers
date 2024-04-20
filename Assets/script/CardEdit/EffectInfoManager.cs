@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EffectInfoManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] Text info;
+    [SerializeField] TextMeshProUGUI info;
     
     public void SetText(Skill_origin skill,int at)
     {

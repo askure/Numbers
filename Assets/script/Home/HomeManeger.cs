@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HomeManeger : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] Text rankeText,expText,stoneText,rankExpText;
+    [SerializeField] TextMeshProUGUI rankeText,expText,stoneText,rankExpText;
     [SerializeField] AudioClip _intro, _loop;
     [SerializeField] SettingPanel SoundSettingPanel;
     Slider volumeslider;

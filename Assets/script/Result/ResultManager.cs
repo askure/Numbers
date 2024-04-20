@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ResultManager : MonoBehaviour
 {
-    [SerializeField] Text mapNameText,stageNameText,expText, MaxDamageText, MaxNumText, AveTurnText, ScoreText,GiftText,rankExpText;
+    [SerializeField] TextMeshProUGUI mapNameText,stageNameText,expText, MaxDamageText, MaxNumText, AveTurnText, ScoreText,GiftText,rankExpText;
     [SerializeField] GameObject rankup, newRecord;
     
     string mapfilepath;

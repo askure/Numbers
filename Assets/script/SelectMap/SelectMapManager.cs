@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEditor.SearchService;
 
 public class SelectMapManager : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class SelectMapManager : MonoBehaviour
     private  EventSystem eventSystem;
     [SerializeField] ButtonUi Button;
     [SerializeField] Transform Stagetransform;
-    [SerializeField] Text MapName;
+    [SerializeField] TextMeshProUGUI MapName;
     [SerializeField] GameObject BeforeStageButton;
     [SerializeField] GameObject AfterStageButton;
     [SerializeField] SpriteRenderer back;
@@ -23,7 +25,7 @@ public class SelectMapManager : MonoBehaviour
 
     static GameObject sortiePartyPanel,notSortiePartyPanel;
     public static MapManager MapManager;
-    SceneAnimation scene;
+   [SerializeField] SceneAnimation scene;
     public static StageEntity stage;
     static int Mapid;
     string filepath,mapfilepath;
@@ -125,10 +127,10 @@ public class SelectMapManager : MonoBehaviour
         var g = eventSystem.currentSelectedGameObject;
         var buttonui = g.GetComponent<ButtonUi>();
         stage = buttonui.GetStage();
-        var stagenameText = panel.transform.GetChild(1).GetComponent<Text>();
+        var stagenameText = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         stagenameText.text  = stage.stageName;
-        panel.transform.GetChild(2).GetComponent<Text>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
-        var stageinfoText = panel.transform.GetChild(3).GetComponent<Text>();
+        panel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
+        var stageinfoText = panel.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         stagenameText.text = stage.stageName;
         var gifts = stage.gifts;
         var giftText = GiftTostring(gifts);
@@ -181,9 +183,8 @@ public class SelectMapManager : MonoBehaviour
     }
     public void StartStage()
     {
-        
+        scene.gameObject.SetActive(true);
         sortiePartyPanel.SetActive(false);
-        scene = GameObject.Find("SceneChange").GetComponent<SceneAnimation>();
         enemy = stage.enemy;
         Gift = stage.gifts;
         BackGrounds = stage.BackGraunds;
@@ -220,7 +221,7 @@ public class SelectMapManager : MonoBehaviour
         else
         {
             sortiePartyPanel.SetActive(true);
-            var text = sortiePartyPanel.transform.GetChild(0).GetComponent<Text>();
+            var text = sortiePartyPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             text.text = manger.deck[manger.sortiePartyNum].deckName + "で出撃します。";
 
         }

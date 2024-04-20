@@ -203,7 +203,7 @@ public class GameManger : MonoBehaviour
         OnlyOneReaderSkill = false;
         
         //BattleAnimatoin.SetActive(false);
-        BattleNumText.GetComponent<Text>().text = "Battle " + BattleNum.ToString();
+        BattleNumText.GetComponent<TextMeshProUGUI>().text = "Battle " + BattleNum.ToString();
         if (SelectMapManager.enemy != null && BattleNum != SelectMapManager.enemy.Count)
         {
            // BattleNumText.GetComponent<Animator>().enabled = true;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class BonusManager : MonoBehaviour
 {
     static DataManager dataManger;
     static string filepath;
-    public Text divisorText,divisorNeedText ,multiText,multiNeedText, primeText,primeNeedText,expText,bounusInfo;
+    public TextMeshProUGUI divisorText,divisorNeedText ,multiText,multiNeedText, primeText,primeNeedText,expText,bounusInfo;
     private int divisor, multi, prime;
 
     private void Start()

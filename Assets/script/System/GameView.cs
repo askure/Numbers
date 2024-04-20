@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
-    [SerializeField] Text maxHp, nowHp,Numpower,NowDf;
+    [SerializeField] TextMeshProUGUI maxHp, nowHp,Numpower;
     [SerializeField] Slider hpbar;
-    static Text logText;
+    static TextMeshProUGUI logText;
     private void Start()
     {
         
@@ -16,10 +17,9 @@ public class GameView : MonoBehaviour
     {
         maxHp.text = max.ToString();
         nowHp.text = now.ToString();
-        NowDf.text = "Now Df:" + df.ToString(); 
         hpbar.maxValue = max;
         hpbar.value = now;
-        if(logText == null) logText = GameObject.Find("LogText").GetComponent<Text>();
+        if(logText == null) logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
         logText.text = "";
         int[] x = { 0, 0 };
         NumPowerText(x);
@@ -34,7 +34,6 @@ public class GameView : MonoBehaviour
     {
         nowHp.text = now.ToString();
         hpbar.value = now;
-        NowDf.text = "Now Df:" + df.ToString();
     }
     
     public void LogTextView(List<string> s)

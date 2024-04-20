@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class Numanimation : MonoBehaviour
     {
        for(int i = 0; i< nums.transform.childCount; i++)
         {
-            var text = nums.transform.GetChild(i).GetComponent<Text>();
+            var text = nums.transform.GetChild(i).GetComponent<TextMeshProUGUI>();
             var num = Random.Range(1, 100);
             text.text = num.ToString();
         }

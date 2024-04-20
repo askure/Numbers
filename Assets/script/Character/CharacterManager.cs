@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] Tutorial tutorial,tutorial_status;
      
     CharacterView characterView;
-    public Text expText,pageText,pageMaxText;
+    public TextMeshProUGUI expText,pageText,pageMaxText;
     static  string filepath,cfilepath;
     public static CardController SerctedCard;
     //public static Playerstatus.CardLv[] cardLvs;
@@ -120,7 +121,7 @@ public class CharacterManager : MonoBehaviour
                 var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
                 var canva = GameObject.Find("Canvas").transform;
                 var pane = Instantiate(gameObject, canva);
-                pane.transform.GetChild(0).GetComponent<Text>().text = "EXPが足りません";
+                pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "EXPが足りません";
                 var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
                 Destroy(Button);
                 return;
@@ -165,14 +166,14 @@ public class CharacterManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canvas = GameObject.Find("Canvas").transform;
             var panel = Instantiate(gameObject, canvas);
-            panel.transform.GetChild(0).GetComponent<Text>().text += "\n\n消費量:" + (bufSum * 4+1) +"個(現在:" + gameManger.Stone + "個)\n\nあと" + (LimitBuf(SerctedCard.model.rare) + (convex * 5) - bufSum)+"回強化可能";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n\n消費量:" + (bufSum * 4+1) +"個(現在:" + gameManger.Stone + "個)\n\nあと" + (LimitBuf(SerctedCard.model.rare) + (convex * 5) - bufSum)+"回強化可能";
         }
         else if(bufSum >= LimitBuf(SerctedCard.model.rare) + (convex*5) && convex != LimitConvex(SerctedCard.model.rare))
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterConvexUp");
             var canvas = GameObject.Find("Canvas").transform;
             var panel = Instantiate(gameObject, canvas);
-            panel.transform.GetChild(0).GetComponent<Text>().text += "\n 強化前:" + convex.ToString() + "→強化後: " + (convex+1).ToString();
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n 強化前:" + convex.ToString() + "→強化後: " + (convex+1).ToString();
 
         }
         else
@@ -180,7 +181,7 @@ public class CharacterManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canvas = GameObject.Find("Canvas").transform;
             var panel = Instantiate(gameObject, canvas);
-            panel.transform.GetChild(0).GetComponent<Text>().text ="これ以上は強化できません";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text ="これ以上は強化できません";
             var Button = panel.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
         }
@@ -276,16 +277,16 @@ public class CharacterManager : MonoBehaviour
         if (x.Lv == (100 + 10 * convex) && bufSum < LimitBuf(card.model.rare) + (convex * 5))
         {
 
-            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<Text>().text = "ステータス強化";
+            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "ステータス強化";
         }
         else if(bufSum >=LimitBuf(card.model.rare))
         {
-            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<Text>().text = "限界突破";
+            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "限界突破";
 
         }
         else
         {
-            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<Text>().text = "レベルアップ"; 
+            GameObject.Find("Lvup").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "レベルアップ"; 
         }
         characterView.SetText(x,needExp);
     }

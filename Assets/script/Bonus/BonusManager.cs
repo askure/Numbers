@@ -54,7 +54,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -65,7 +65,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "EXPが足りません";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "EXPが足りません";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -89,7 +89,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -99,7 +99,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "EXPが足りません";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "EXPが足りません";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -121,7 +121,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "上限に達しました。\n上限を上げるにはランクを上げてください";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;
@@ -133,7 +133,7 @@ public class BonusManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
-            pane.transform.GetChild(0).GetComponent<Text>().text = "EXPが足りません";
+            pane.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "EXPが足りません";
             var Button = pane.transform.GetChild(1).transform.GetChild(0).gameObject;
             Destroy(Button);
             return;

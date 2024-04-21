@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using UnityEditor.SearchService;
 
 public class SelectMapManager : MonoBehaviour
 {

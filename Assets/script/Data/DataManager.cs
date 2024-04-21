@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 
@@ -44,7 +45,8 @@ public class DataManager
     public bool status_tutorial { set; get; } = false;
 
     public  void DataLoad(string s)
-    {   
+    {
+        UnityEngine.Debug.Log("Start UserDataLoad....");
         if (File.Exists(s))
         {
 
@@ -67,12 +69,13 @@ public class DataManager
             endgame_tutorial = playerstatus_save.endgame_tutorial;
             status_tutorial = playerstatus_save.status_tutorial;
         }
-
+        UnityEngine.Debug.Log("End UserDataLoad");
 
     }
 
     public void DataSave(string s)
     {
+        UnityEngine.Debug.Log("Start UserDataSave....");
         Playerstatus playerstatus_save = new Playerstatus
         {
             FirstGame = FirstGame,
@@ -93,6 +96,7 @@ public class DataManager
         StreamWriter streamWriter = new StreamWriter(s);
         streamWriter.Write(json); streamWriter.Flush();
         streamWriter.Close();
+        UnityEngine.Debug.Log("End UserDataLoad");
     }
 
     public void DataInit(string s)
@@ -120,6 +124,7 @@ public class DataManager
     }
     public void StageDataSave(string s)
     {
+        UnityEngine.Debug.Log("Start StageDataSave....");
         var stageData = new StageData();
         stageData.allstage = allStage;
         stageData.stage = stages;
@@ -127,10 +132,12 @@ public class DataManager
         StreamWriter streamWriter = new StreamWriter(s);
         streamWriter.Write(json); streamWriter.Flush();
         streamWriter.Close();
+        UnityEngine.Debug.Log("End StageDataSave");
     }
 
     public void StageDataLoad(string s)
     {
+        UnityEngine.Debug.Log("Start StageDataLoad....");
         if (File.Exists(s))
         {
 
@@ -160,6 +167,7 @@ public class DataManager
             }
 
         }
+        UnityEngine.Debug.Log("End StageDataSave");
     }
 
     public void MapDataInit(string s, int Allstage, bool clear)

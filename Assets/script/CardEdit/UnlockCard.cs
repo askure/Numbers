@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,8 @@ public class UnlockCard : MonoBehaviour
 
     public void UnlockCardPanel()
     {
-
+        if (!Input.GetMouseButtonUp(0))
+            return;
         cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
         dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
         cmanager = new CharacterDataManager(cfilepath);
@@ -57,17 +59,17 @@ public class UnlockCard : MonoBehaviour
         var panel = Instantiate(gameObject,canvas);
         if (i)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text = "このキャラは解放できません\n\nこのキャラはクエストで入手可能です\n\nクエスト報酬をチェック！";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "このキャラは解放できません\n\nこのキャラはクエストで入手可能です\n\nクエスト報酬をチェック！";
 
             var x = panel.transform.GetChild(1).gameObject;
             Destroy(x.transform.GetChild(0).gameObject);
         }else  if (nowExp < NeedExp)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text += "\n 消費EXP" + NeedExp + "\n不足しています。\n現在のEXP:" + nowExp;
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n 消費EXP" + NeedExp + "\n不足しています。\n現在のEXP:" + nowExp;
             var x = panel.transform.GetChild(1).gameObject;
             Destroy(x.transform.GetChild(0).gameObject);
         }
-        else panel.transform.GetChild(0).GetComponent<Text>().text += "\n 消費EXP" + NeedExp + "/" + nowExp;
+        else panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n 消費EXP" + NeedExp + "/" + nowExp;
 
 
     }

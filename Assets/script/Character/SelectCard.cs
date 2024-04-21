@@ -47,7 +47,6 @@ public class SelectCard : MonoBehaviour
             return;
         if (!isTodeck)
             return;
-        Debug.Log("ToDeck");
         var x = GetComponent<CardController>();
         if (CardEditManager.decklistTemp.IndexOf(x.model.cardID) != -1)
         {
@@ -73,7 +72,6 @@ public class SelectCard : MonoBehaviour
             return;
         if (isTodeck)
             return;
-        Debug.Log("Deleate");
         var x = GetComponent<CardController>();
         if (CardEditManager.decklistTemp.IndexOf(x.model.cardID) == -1)
         {

@@ -38,7 +38,7 @@ public class CardEditManager : MonoBehaviour
     public static CardModel UnlockCardId;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         UnlockCardId = null;
 
         nowDeckCard = new List<CardController>();
@@ -71,6 +71,7 @@ public class CardEditManager : MonoBehaviour
 
     void Setupobject()
     {
+        Debug.Log("Start SetUpObcect....");
         editButton = GameObject.Find("Edit");
         saveButton = GameObject.Find("Save");
 
@@ -89,6 +90,7 @@ public class CardEditManager : MonoBehaviour
         sortieButton = GameObject.Find("Sortie");
         beforeCardListButton = GameObject.Find("CardListBefore ");
         nextCardListButton = GameObject.Find("CardListNext");
+        Debug.Log("End SetUpObcect....");
     }
 
     public void EditButton()
@@ -243,6 +245,7 @@ public class CardEditManager : MonoBehaviour
     }
     void CreateDeck()
     {
+        Debug.Log("Start CreateDeck....");
         ALLDelete();
         InitDeckData();
         if (partyNum < 0 || partyNum >= 7) partyNum = 0;
@@ -294,7 +297,8 @@ public class CardEditManager : MonoBehaviour
                 nowDeckCard.Add(card);
             }
         }
-        PartyHpUpdate(nowDeckCard);      
+        PartyHpUpdate(nowDeckCard);
+        Debug.Log("End SetUpObcect....");
     }
     void PartyHpUpdate(List<CardController> cards)
     {
@@ -322,39 +326,49 @@ public class CardEditManager : MonoBehaviour
 
             if (cardLv[i].pos == false)
             {
+                
                 card = Instantiate(cardNothave, cardListUp);
                 card.CardlistInit(i, 0);
-
+               
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
+                   
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
-
+                    
                 }
                 
             }
             else
             {
+                
                 card = Instantiate(cardList, cardListUp);
                 card.DeckEdiInit(i, cardLv[i].Lv);
+              
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
+                   
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
+                   
                     continue;
 
                 }
                 if (decklistTemp.Contains(card.model.cardID))
                 {
+                   
                     var g = card.transform.Find("Serected");
                     if (g != null) g.gameObject.SetActive(true);
                     card.GetComponent<SelectCard>().isTodeck = false;
+                   
                 }
                 else
                 {
+                  
                     var g = card.transform.Find("Serected");
                     if (g != null) g.gameObject.SetActive(false);
                     card.GetComponent<SelectCard>().isTodeck = true;
+                   
                 }
                     
                 
@@ -364,14 +378,17 @@ public class CardEditManager : MonoBehaviour
         {
             if (i >= cardLv.Length)
             {
+               
                 nextCardListButton.SetActive(false);
                 break;
             }
             CardController card;
             if (cardLv[i].pos == false)
             {
+                
                 card = Instantiate(cardNothave, cardListDown);
                 card.CardlistInit(i, 0);
+                
                 if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
@@ -405,6 +422,7 @@ public class CardEditManager : MonoBehaviour
 
 
         }
+        Debug.Log("End CreateCardList....");
     }
 
     public void SetPopUpcard()
@@ -440,25 +458,10 @@ public class CardEditManager : MonoBehaviour
     public void DeckCardDelete(int cardId)
     {
       
-        var x = cardListNum * 16;
-        if (decklistTemp.Contains(cardId))
-        {
-            if (cardId < (x + 16) && cardId >= x)
-            {
-                var index = cardId - x;
-                if (index < 8)
-                {
-                    cardListUp.transform.GetChild(index).transform.Find("Serected").gameObject.SetActive(false);
-                }
-                else
-                {
-                    cardListDown.transform.GetChild(index - 8).transform.Find("Serected").gameObject.SetActive(false);
-                }
-            }
-
-            int id = decklistTemp.IndexOf(cardId);
-            decklistTemp[id] = -1;
-        }
+        
+        int id = decklistTemp.IndexOf(cardId);
+        decklistTemp[id] = -1;
+        CheckSerected();
         CreateDeck();
 
     }
@@ -547,6 +550,7 @@ public class CardEditManager : MonoBehaviour
         {
             sortieButton.SetActive(true);
         }
+        Debug.Log("End InitView");
     }
 
 

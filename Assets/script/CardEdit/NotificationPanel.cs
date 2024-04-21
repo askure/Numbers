@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class NotificationPanel : MonoBehaviour
 {
     public void SetText(string text)
     {
-        Text t = transform.GetChild(0).GetComponent<Text>();
+        TextMeshProUGUI t = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         t.text = text;
     }
 }

@@ -23,6 +23,7 @@ public class CharacterDataManager
 
     public  void Dataload(string s)
     {
+        Debug.Log("Start CharacterDataLoad...");
         if (File.Exists(s))
         {
 
@@ -58,12 +59,14 @@ public class CharacterDataManager
             }
             sortiePartyNum = playerstatus_save.sortiePartyNum;
         }
+        Debug.Log("End CharacterDataLoad");
 
 
     }
 
     public void Datasave(string s)
     {
+        Debug.Log("Start CharacterDataSave....");
         TextAsset textAsset = Resources.Load<TextAsset>("CardData");
         StringReader reader = new StringReader(textAsset.text);
         var ac = -1;
@@ -106,6 +109,7 @@ public class CharacterDataManager
         StreamWriter streamWriter = new StreamWriter(s);
         streamWriter.Write(json); streamWriter.Flush();
         streamWriter.Close();
+        Debug.Log("End CharacterDataSave");
     }
 
     public void DataInit(string s)

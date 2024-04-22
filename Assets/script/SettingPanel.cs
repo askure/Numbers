@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class SettingPanel : MonoBehaviour
 {
     // Start is called before the first frame update
-    DataManager dataManager;
     Slider volumeslider;
-    static string dfilepath;
     static float volume;
     static BGMManager BGMManager;
     [SerializeField] GameObject TutorialPanel,strength, skill, status;
@@ -16,36 +14,33 @@ public class SettingPanel : MonoBehaviour
     {
         volume = volumeslider.value;
         BGMManager.ChangeVolume(volume);
-        dataManager.volume = volume;
+        DataManager.volume = volume;
     }
     public void SetUpPanel()
     {
         if (BGMManager == null) BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
-        if (dfilepath == null) dfilepath = Application.persistentDataPath + "/" + ".savedata.json"; ;
         if (volumeslider == null) volumeslider = GameObject.Find("BGMSlider").GetComponent<Slider>();
-        dataManager = new DataManager();
-        dataManager.DataLoad(dfilepath);
-        volumeslider.value = dataManager.volume;
+        volumeslider.value = DataManager.volume;
     }
 
    public void ClosePanel()
     {
-        dataManager.DataSave(dfilepath);
+        DataManager.DataSave();
         Destroy(gameObject);
     }
 
     public void OpenTutorialPanel()
     {
         TutorialPanel.SetActive(true);
-        if (!dataManager.status_tutorial)
+        if (!DataManager.status_tutorial)
         {
             status.SetActive(false);
         }
-        if (!dataManager.enemystatus_tutorial)
+        if (!DataManager.enemystatus_tutorial)
         {
             strength.SetActive(false);
         }
-        if (!dataManager.charactor_tutorial)
+        if (!DataManager.charactor_tutorial)
         {
             skill.SetActive(false);
         }

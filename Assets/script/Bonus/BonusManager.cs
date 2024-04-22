@@ -6,19 +6,15 @@ using UnityEngine.UI;
 
 public class BonusManager : MonoBehaviour
 {
-    static DataManager dataManger;
-    static string filepath;
     public TextMeshProUGUI divisorText,divisorNeedText ,multiText,multiNeedText, primeText,primeNeedText,expText,bounusInfo;
     private int divisor, multi, prime;
 
     private void Start()
     {
-
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        dataManger = new DataManager(filepath);
-        divisor = dataManger.divisor_lv;
-        multi = dataManger.multi_lv;
-        prime = dataManger.prime_lv;
+        DataManager.DataLoad();
+        divisor = DataManager.divisor_lv;
+        multi = DataManager.multi_lv;
+        prime = DataManager.prime_lv;
         SetText();
         
         
@@ -27,20 +23,20 @@ public class BonusManager : MonoBehaviour
     void SetText()
     {   
         
-        divisorText.text = divisor.ToString()  + "/" + ((int)Mathf.Ceil(dataManger.rank * 1.2f)).ToString("F0");
+        divisorText.text = divisor.ToString()  + "/" + ((int)Mathf.Ceil(DataManager.rank * 1.2f)).ToString("F0");
         divisorNeedText.text = "必要経験値:" + GetExp(divisor).ToString();
-        multiText.text = multi.ToString() + "/" + ((int)Mathf.Ceil(dataManger.rank * 1.2f)).ToString("F0");
+        multiText.text = multi.ToString() + "/" + ((int)Mathf.Ceil(DataManager.rank * 1.2f)).ToString("F0");
         multiNeedText.text = "必要経験値:" + GetExp(multi).ToString();
-        primeText.text = prime.ToString() + "/" + ((int)Mathf.Ceil(dataManger.rank * 1.2f)).ToString("F0");
+        primeText.text = prime.ToString() + "/" + ((int)Mathf.Ceil(DataManager.rank * 1.2f)).ToString("F0");
         primeNeedText.text = "必要経験値:" +  GetExp(prime).ToString();
-        if (dataManger.Exp > 999999999)
+        if (DataManager.Exp > 999999999)
         {
             expText.text = "999999999+";
         }
 
         else
         {
-            expText.text = dataManger.Exp.ToString();
+            expText.text = DataManager.Exp.ToString();
         }
         SetBounus();
     }
@@ -49,7 +45,7 @@ public class BonusManager : MonoBehaviour
     {
         
         
-        if ((divisor+1) > (int) Mathf.Ceil(dataManger.rank * 1.2f))
+        if ((divisor+1) > (int) Mathf.Ceil(DataManager.rank * 1.2f))
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
@@ -60,7 +56,7 @@ public class BonusManager : MonoBehaviour
             return;
 
         }
-        if (dataManger.Exp < GetExp(divisor++))
+        if (DataManager.Exp < GetExp(divisor++))
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
@@ -72,11 +68,9 @@ public class BonusManager : MonoBehaviour
             
         }
        
-        dataManger.Exp -= GetExp(divisor);
-        dataManger.divisor_lv = divisor;
-        dataManger.multi_lv = multi;
-        dataManger.prime_lv = prime;
-        dataManger.DataSave(filepath);
+        DataManager.Exp -= GetExp(divisor);
+        DataManager.divisor_lv = divisor;
+        DataManager.DataSave();
         SetText();
 
 
@@ -84,7 +78,7 @@ public class BonusManager : MonoBehaviour
 
     public void MultiLvUp()
     {
-        if ((multi+1) > Mathf.Ceil(dataManger.rank * 1.2f))
+        if ((multi+1) > Mathf.Ceil(DataManager.rank * 1.2f))
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
@@ -95,7 +89,7 @@ public class BonusManager : MonoBehaviour
             return;
 
         }
-        if (dataManger.Exp < GetExp(multi++)) {
+        if (DataManager.Exp < GetExp(multi++)) {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
             var pane = Instantiate(gameObject, canva);
@@ -105,18 +99,16 @@ public class BonusManager : MonoBehaviour
             return;
         }
 
-        dataManger.Exp -= GetExp(divisor);
-        dataManger.divisor_lv = divisor;
-        dataManger.multi_lv = multi;
-        dataManger.prime_lv = prime;
-        dataManger.DataSave(filepath);
+        DataManager.Exp -= GetExp(multi);
+        DataManager.multi_lv = multi;
+        DataManager.DataSave();
         SetText();
 
     }
 
     public void PrimeLvUp()
     {
-        if ((prime+1) > Mathf.Ceil(dataManger.rank * 1.2f))
+        if ((prime+1) > Mathf.Ceil(DataManager.rank * 1.2f))
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
@@ -127,7 +119,7 @@ public class BonusManager : MonoBehaviour
             return;
 
         }
-        if (dataManger.Exp < GetExp(prime++))
+        if (DataManager.Exp < GetExp(prime++))
         {
 
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
@@ -139,11 +131,9 @@ public class BonusManager : MonoBehaviour
             return;
         }
 
-        dataManger.Exp -= GetExp(divisor);
-        dataManger.divisor_lv = divisor;
-        dataManger.multi_lv = multi;
-        dataManger.prime_lv = prime;
-        dataManger.DataSave(filepath);
+        DataManager.Exp -= GetExp(prime);
+        DataManager.prime_lv = prime;
+        DataManager.DataSave();
         SetText();
 
     }

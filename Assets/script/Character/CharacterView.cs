@@ -13,7 +13,6 @@ public class CharacterView : MonoBehaviour
     public void SetText(CardModel card,int exp)
     {
         var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        var cmanager = new CharacterDataManager(cfilepath);
         var Lv = card.Lv;
         var name = card.name;
         var Hp = card.Hp;
@@ -30,7 +29,7 @@ public class CharacterView : MonoBehaviour
         autoskillInfoText.text = autoskillInfo;
         rskillNameText.text = rskillName + "(Lv:" + skillLv + ")";
         rskillInfoText.text = rskillInfo;
-        var cardinfo = cmanager.cardLvs[id];
+        var cardinfo = CharacterDataManager.cardLvs[id];
         var atbuf = 1 + cardinfo.atbuf * 0.05f;
         var dfbuf = 1 + cardinfo.dfbuf * 0.05f;
         var hpbuf = 1 + cardinfo.hpbuf * 0.05f;
@@ -90,12 +89,11 @@ public class CharacterView : MonoBehaviour
     public void SetText(CardModel card)
     {
         var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        var cmanager = new CharacterDataManager(cfilepath);
         var Hp = card.Hp;
         var at = card.at;
         var df = card.df;
         var id = card.cardID;
-        var cardinfo = cmanager.cardLvs[id];
+        var cardinfo = CharacterDataManager.cardLvs[id];
         var atbuf = 1 + cardinfo.atbuf * 0.05f;
         var dfbuf = 1 + cardinfo.dfbuf * 0.05f;
         var hpbuf = 1 + cardinfo.hpbuf * 0.05f;

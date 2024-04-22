@@ -5,66 +5,67 @@ using UnityEngine;
 
 public class CharacterDataManager 
 {
-    public CharacterData.CardLv[] cardLvs { set; get; } = null;
-    public List<CharacterData.DeckCard> deck { set; get; } = new List<CharacterData.DeckCard>();
-    public int sortiePartyNum { set; get; } = 0;
-    public int ALLCHARCTOR { set; get; } = 0;
-    void Awake()
-    {
-       var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+    static public CharacterData.CardLv[] cardLvs { set; get; } = null;
+    static public List<CharacterData.DeckCard> deck { set; get; } = new List<CharacterData.DeckCard>();
+    static public int sortiePartyNum { set; get; } = 0;
+    static public int ALLCHARCTOR { set; get; } = 0;
+    static readonly string Filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
+    static  bool IsDataLoad = false;
 
-        
-    }
 
-    public CharacterDataManager(string s )
+    public static void DataLoad()
     {
-        Dataload(s);
-    }
-
-    public  void Dataload(string s)
-    {
-        Debug.Log("Start CharacterDataLoad...");
-        if (File.Exists(s))
+        if (File.Exists(Filepath))
         {
 
             StreamReader streamReader;
-            streamReader = new StreamReader(s);
+            streamReader = new StreamReader(Filepath);
             string data = streamReader.ReadToEnd();
             streamReader.Close();
-            var  playerstatus_save = JsonUtility.FromJson<CharacterData>(data);
-            ALLCHARCTOR = playerstatus_save.allCharactor;
-            cardLvs = new CharacterData.CardLv[ALLCHARCTOR];
-            deck = new List<CharacterData.DeckCard>();
-            for (int i = 0; i < ALLCHARCTOR; i++)
+            var playerstatus_save = JsonUtility.FromJson<CharacterData>(data);
+            if (!IsDataLoad) 
             {
-
-
-                if (i >= playerstatus_save.cardLvs.Length)
+                ALLCHARCTOR = playerstatus_save.allCharactor;
+                cardLvs = new CharacterData.CardLv[ALLCHARCTOR];
+                for (int i = 0; i < ALLCHARCTOR; i++)
                 {
-                    cardLvs[i] = new CharacterData.CardLv();
-                    cardLvs[i].Set(i, 1, 0, false, 0, 0, 0, 0);
-                }
-                else
-                {
-                    var card = playerstatus_save.cardLvs[i];
-                    cardLvs[i] = new CharacterData.CardLv();
-                    cardLvs[i].Set(card.Id, card.Lv, card.expSum, card.pos, card.atbuf, card.dfbuf, card.hpbuf, card.convex);
-                }
+                    if (i >= playerstatus_save.cardLvs.Length)
+                    {
+                        cardLvs[i] = new CharacterData.CardLv();
+                        cardLvs[i].Set(i, 1, 0, false, 0, 0, 0, 0);
+                    }
+                    else
+                    {
+                        var card = playerstatus_save.cardLvs[i];
+                        cardLvs[i] = new CharacterData.CardLv();
+                        cardLvs[i].Set(card.Id, card.Lv, card.expSum, card.pos, card.atbuf, card.dfbuf, card.hpbuf, card.convex);
+                    }
 
+                }
+                sortiePartyNum = playerstatus_save.sortiePartyNum;
             }
+
+            deck = new List<CharacterData.DeckCard>();
             for (int i = 0; i < playerstatus_save.cards.Length; i++)
             {
-                
+
                 deck.Add(playerstatus_save.cards[i]);
             }
-            sortiePartyNum = playerstatus_save.sortiePartyNum;
+            
+            
         }
-        Debug.Log("End CharacterDataLoad");
-
+        else
+        {
+            DataInit();
+        }
+        IsDataLoad = true;
 
     }
 
-    public void Datasave(string s)
+
+   
+
+    public static void DataSave(bool deckSave)
     {
         Debug.Log("Start CharacterDataSave....");
         TextAsset textAsset = Resources.Load<TextAsset>("CardData");
@@ -99,24 +100,26 @@ public class CharacterDataManager
             };
 
         }
-
         for (int i = 0; i < 7; i++)
         {
-            playerstatus_save.cards[i] = deck[i];
+             playerstatus_save.cards[i] = deck[i];
         }
+        
+        
 
         string json = JsonUtility.ToJson(playerstatus_save, true);
-        StreamWriter streamWriter = new StreamWriter(s);
+        StreamWriter streamWriter = new StreamWriter(Filepath);
         streamWriter.Write(json); streamWriter.Flush();
         streamWriter.Close();
         Debug.Log("End CharacterDataSave");
     }
 
-    public void DataInit(string s)
+
+    static private void DataInit()
     {
+        Debug.Log("Start DataInit...");
         TextAsset textAsset = Resources.Load<TextAsset>("CardData");
         StringReader reader = new StringReader(textAsset.text);
-        deck = new List<CharacterData.DeckCard>();
         var ac = -1;
         while (reader.Peek() != -1)
         {
@@ -179,12 +182,11 @@ public class CharacterDataManager
 
 
         string json = JsonUtility.ToJson(playerstatus_save, true);
-        StreamWriter streamWriter = new StreamWriter(s);
+        StreamWriter streamWriter = new StreamWriter(Filepath);
         streamWriter.Write(json); streamWriter.Flush();
         streamWriter.Close();
+        Debug.Log("End DataInit");
     }
-
-
 
 
 }

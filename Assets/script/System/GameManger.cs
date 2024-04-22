@@ -79,11 +79,6 @@ public class GameManger : MonoBehaviour
     //stage
     public int allStage;
     public StageData.Stage[] stages;
-
-    //Savedata
-    string filepath,cfilepath;
-    DataManager dmanager;
-    CharacterDataManager cmanager;
     //staic 
     public static bool Myturn = true;
     static int BattleNum = 0;
@@ -119,9 +114,6 @@ public class GameManger : MonoBehaviour
         {
             instnce = this;
         }
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-      
         deck = new List<CharacterData.DeckCard>();
         
 
@@ -129,12 +121,9 @@ public class GameManger : MonoBehaviour
     void Start()
     {
         Dataload();
-        // DataInit(Application.persistentDataPath + "/" + ".savemapdata.json");
-
         BGMManager = GameObject.Find("BGM").GetComponent<BGMManager>();
         OptionPanel.SetActive(false);
        
- 
         StartGame();
         StatusNumReset();
 
@@ -171,7 +160,7 @@ public class GameManger : MonoBehaviour
 
         }
 
-        ReaderCard = _hand[0];
+       ReaderCard = _hand[0];
        if(SelectMapManager.stage != null) FieldEffectParty(_hand, SelectMapManager.stage.fieldEffects);
         _hand = BufApplication(_hand);
         //
@@ -215,7 +204,7 @@ public class GameManger : MonoBehaviour
                 if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(2, tutorial));
-                    dmanager.Battle_tutorial = true;
+                    DataManager.Battle_tutorial = true;
                 }
                 if (SelectMapManager.stage.stageid == 1)
                 {
@@ -252,7 +241,7 @@ public class GameManger : MonoBehaviour
                 if (SelectMapManager.stage.stageid == 0)
                 {
                     StartCoroutine(Tutorial(5, tutorial));
-                    dmanager.Battle_tutorial = true;
+                    DataManager.Battle_tutorial = true;
                 }
                 if (SelectMapManager.stage.stageid == 1)
                 {
@@ -432,35 +421,35 @@ public class GameManger : MonoBehaviour
   
     public void Dataload()
     {
-        dmanager = new DataManager(filepath);
-        cmanager = new CharacterDataManager(cfilepath);    
-        divisor_lv = dmanager.divisor_lv;
-        multi_lv = dmanager.multi_lv;
-        prime_lv = dmanager.prime_lv;
-        ALLCHARCTOR = cmanager.ALLCHARCTOR;
+        CharacterDataManager.DataLoad();
+        DataManager.DataLoad();
+        divisor_lv = DataManager.divisor_lv;
+        multi_lv = DataManager.multi_lv;
+        prime_lv = DataManager.prime_lv;
+        ALLCHARCTOR = CharacterDataManager.ALLCHARCTOR;
         cardLvs = new CharacterData.CardLv[ALLCHARCTOR];
         for (int i = 0; i < ALLCHARCTOR; i++)
         {  
-          if (i >= cmanager.cardLvs.Length)
-            {
+          if (i >= CharacterDataManager.cardLvs.Length)
+          {
                cardLvs[i] = new CharacterData.CardLv();
                cardLvs[i].Set(i, 1, 0, false,0,0,0,0);
-             }
+          }
           else
-             {
-                var card = cmanager.cardLvs[i];
+          {
+                var card = CharacterDataManager.cardLvs[i];
                 cardLvs[i] = new CharacterData.CardLv();
                 cardLvs[i].Set(card.Id, card.Lv, card.expSum, card.pos,card.atbuf,card.dfbuf,card.hpbuf,card.convex);
-               }
+           }
 
         }
         for (int i = 0; i < 7; i++)
         {
-           deck.Add(cmanager.deck[i]);
+           deck.Add(CharacterDataManager.deck[i]);
         }
-        sortiePartyNum = cmanager.sortiePartyNum;
-         volume = dmanager.volume;
-        Battle_tutorial = dmanager.Battle_tutorial;
+        sortiePartyNum = CharacterDataManager.sortiePartyNum;
+        volume = DataManager.volume;
+        Battle_tutorial = DataManager.Battle_tutorial;
     }
     
     //BattleSystem
@@ -1605,14 +1594,14 @@ public class GameManger : MonoBehaviour
                 case AnimationType.gameover:
                     hpSum = 0;
                     yield return StartCoroutine(GameOverAnimation());
-                    dmanager.DataSave(filepath);
+                    DataManager.DataSave();
                     AddLogText("GAME OVER");
                     break;
                 case AnimationType.win:
                     Destroy(_enemy.gbj);
                     BGMManager.FadeOut();
                     yield return new WaitForSeconds(1f);
-                    dmanager.DataSave(filepath);
+                    DataManager.DataSave();
                     AddLogText("YOU WIN");
                     SceneManager.LoadScene("Result");
                     break;
@@ -1628,7 +1617,7 @@ public class GameManger : MonoBehaviour
                         BGMManager.FadeOut();
                     }
                     yield return new WaitForSeconds(1f);
-                    dmanager.DataSave(filepath);
+                    DataManager.DataSave();
                     AddLogText("YOU WIN");
                     SceneManager.LoadScene("Battle");
                     break;

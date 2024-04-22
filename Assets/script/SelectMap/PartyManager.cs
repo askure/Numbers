@@ -12,38 +12,19 @@ public class PartyManager : MonoBehaviour
     [SerializeField] GameObject newDeck,go,toquest;
     [SerializeField] Transform lineUp, lineDown;
     [SerializeField] TextMeshProUGUI mapname, stagename, rskill, rskillinfo,pagetext;
-    CharacterDataManager manager;
-    bool first = false;
-    string filepath;
-    private void Awake()
-    {
-        
-    }
-    void Start()
-    {
-        var filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        manager = new CharacterDataManager(filepath);
-        
-        
-    }
-
     public void Init(string mapname,string stagename)
     {
-    
+        CharacterDataManager.DataLoad();
         ALLDestory();
         toquest.SetActive(false);
-        if (!first)
-        {
-           filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-            manager = new CharacterDataManager(filepath);
-            first = true;
-        }
         this.mapname.text = mapname;
         this.stagename.text = stagename;
-        var cardLv = manager.cardLvs;
-        int index = manager.sortiePartyNum;
-        pagetext.text = (index + 1).ToString() + "/" + manager.deck.Count;
-        if(manager.deck[index].cardId.Count == 0)
+        var cardLv = CharacterDataManager.cardLvs;
+        int index = CharacterDataManager.sortiePartyNum;
+        if(index == -1)
+            index = 0;
+        pagetext.text = (index + 1).ToString() + "/" + CharacterDataManager.deck.Count;
+        if(CharacterDataManager.deck[index].cardId.Count == 0)
         {
             Instantiate(newDeck, lineUp);
             rskill.text = "";
@@ -53,7 +34,7 @@ public class PartyManager : MonoBehaviour
         else
         {
             go.SetActive(true);
-            var deck = manager.deck[index];
+            var deck = CharacterDataManager.deck[index];
             var deckId = deck.cardId;
             List<int> numSum = new List<int>();
             for(int  i=0; i<6; i++)
@@ -88,18 +69,18 @@ public class PartyManager : MonoBehaviour
 
     public void NextParty()
     {
-        manager.sortiePartyNum++;
-        if (manager.sortiePartyNum >=manager.deck.Count)
-            manager.sortiePartyNum = 0;
+        CharacterDataManager.sortiePartyNum++;
+        if (CharacterDataManager.sortiePartyNum >=CharacterDataManager.deck.Count)
+            CharacterDataManager.sortiePartyNum = 0;
         Init(mapname.text, stagename.text);
 
     }
 
     public void BackParty()
     {
-        manager.sortiePartyNum--;
-        if (manager.sortiePartyNum < 0)
-            manager.sortiePartyNum = manager.deck.Count-1;
+        CharacterDataManager.sortiePartyNum--;
+        if (CharacterDataManager.sortiePartyNum < 0)
+            CharacterDataManager.sortiePartyNum = CharacterDataManager.deck.Count-1;
 
         Init(mapname.text, stagename.text);
 
@@ -118,14 +99,14 @@ public class PartyManager : MonoBehaviour
     }
     public void StartStage()
     {
-        manager.Datasave(filepath);
+        CharacterDataManager.DataSave(false);
         GameObject.Find("QuestManager").GetComponent<SelectMapManager>().StartStage();
         CardEditManager.toqest = false;
         Destroy(gameObject);
     }
     public void OpenToQuestPanel()
     {
-        manager.Datasave(filepath);
+        CharacterDataManager.DataSave(false);
         CardEditManager.toqest = true;
         toquest.SetActive(true);
     }

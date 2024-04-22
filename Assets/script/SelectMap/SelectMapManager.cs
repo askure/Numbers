@@ -27,7 +27,6 @@ public class SelectMapManager : MonoBehaviour
    [SerializeField] SceneAnimation scene;
     public static StageEntity stage;
     static int Mapid;
-    string filepath,mapfilepath;
     public static List<EnemyEntity> enemy;
     public static List<StageEntity.Gifts> Gift;
     public static Sprite BackGrounds;
@@ -40,12 +39,10 @@ public class SelectMapManager : MonoBehaviour
     void Start()
     {
         
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
         sortiePartyPanel = GameObject.Find("SortiePartyPanel");
         notSortiePartyPanel = GameObject.Find("NotSortiePartyPanel");
-        DataManager manger = new DataManager(filepath);
-        manger.StageDataLoad(mapfilepath);
+        DataManager.DataLoad();
+        DataManager.StageDataLoad();
         sortiePartyPanel.SetActive(false);
         notSortiePartyPanel.SetActive(false);
         
@@ -56,22 +53,22 @@ public class SelectMapManager : MonoBehaviour
         if (Mapid != 0) BeforeStageButton.SetActive(true);
         else BeforeStageButton.SetActive(false);
 
-        if (!manger.enemystatus_tutorial && manger.stages[4].clear)
+        if (!DataManager.enemystatus_tutorial && DataManager.stages[4].clear)
         {
             StartCoroutine(CharTutorial(0));
-            manger.enemystatus_tutorial = true;
+            DataManager.enemystatus_tutorial = true;
         }
 
-        if(!manger.endgame_tutorial && manger.stages[29].clear)
+        if(!DataManager.endgame_tutorial && DataManager.stages[29].clear)
         {
             StartCoroutine(EndTutorial(0));
-            manger.endgame_tutorial = true;
+            DataManager.endgame_tutorial = true;
         }
         var flag = false;
         var index = 0;
         foreach (StageEntity stage in MapManager.maps)
         {   
-            if(stage.beforestageid != -1 && !manger.stages[stage.beforestageid].clear )
+            if(stage.beforestageid != -1 && !DataManager.stages[stage.beforestageid].clear )
             {
                 flag = true;
                 index++;
@@ -80,7 +77,7 @@ public class SelectMapManager : MonoBehaviour
             
             var map = Instantiate(Button, Stagetransform);
             map.InitButton(stage.stageid);
-            if (manger.stages[stage.stageid].clear)
+            if (DataManager.stages[stage.stageid].clear)
             {
                 map.GetComponent<Image>().color = Color.yellow;
             }
@@ -88,21 +85,19 @@ public class SelectMapManager : MonoBehaviour
                 
         }
         int mapfinalid = MapManager.maps[MapManager.maps.Count-1].stageid;
-        if (!flag && manger.stages[mapfinalid].clear) AfterStageButton.SetActive(true);
+        if (!flag && DataManager.stages[mapfinalid].clear) AfterStageButton.SetActive(true);
         else AfterStageButton.SetActive(false);
         
         if(bgmobj == null) bgmobj = GameObject.Find("BGM").GetComponent<BGMManager>();
         if ( maploop != null && mapintro != null)
         {
-            bgmobj.SetBGM(mapintro,maploop, manger.volume);
-            //bgmobj.GetComponent<BGMManager>().Play();
-
+            bgmobj.SetBGM(mapintro,maploop, DataManager.volume);
         }
         if (CardEditManager.toqest)
         {
             CreatePartyList();
         }
-        manger.DataSave(filepath);
+        DataManager.DataSave();
     }
 
     public void Onclick()
@@ -117,9 +112,6 @@ public class SelectMapManager : MonoBehaviour
 
             bgmobj.PlaySE(desidese);
         }
-        filepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        DataManager manger = new DataManager();
-        manger.StageDataLoad(filepath);
         eventSystem = EventSystem.current;
         panel = GameObject.Find("Panel");
         anime = panel.GetComponent<Animator>();
@@ -128,7 +120,7 @@ public class SelectMapManager : MonoBehaviour
         stage = buttonui.GetStage();
         var stagenameText = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         stagenameText.text  = stage.stageName;
-        panel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "ハイスコア:"+ manger.stages[stage.stageid].Hiscore.ToString();
+        panel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "ハイスコア:" + DataManager.stages[stage.stageid].Hiscore.ToString();
         var stageinfoText = panel.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         stagenameText.text = stage.stageName;
         var gifts = stage.gifts;
@@ -208,11 +200,7 @@ public class SelectMapManager : MonoBehaviour
         var g = eventSystem.currentSelectedGameObject;
         var buttonui = g.GetComponent<ButtonUi>();
         stage = buttonui.GetStage();       
-       
-        var filepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        CharacterDataManager manger = new CharacterDataManager(filepath);
-        manger.Dataload(filepath);
-        if(manger.sortiePartyNum == -1)
+        if(CharacterDataManager.sortiePartyNum == -1)
         {
             notSortiePartyPanel.SetActive(true);
             return;
@@ -221,7 +209,7 @@ public class SelectMapManager : MonoBehaviour
         {
             sortiePartyPanel.SetActive(true);
             var text = sortiePartyPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            text.text = manger.deck[manger.sortiePartyNum].deckName + "で出撃します。";
+            text.text = CharacterDataManager.deck[CharacterDataManager.sortiePartyNum].deckName + "で出撃します。";
 
         }
             

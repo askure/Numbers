@@ -6,7 +6,6 @@ public class SEManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private static bool isLoad = false;
-    private static DataManager dataManager;
     private static string filepath;
     private void Awake()
     {
@@ -19,23 +18,12 @@ public class SEManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
-    {
-        if(dataManager == null)
-        {
-            dataManager = new DataManager();
-        }
-        if(filepath == "")
-        {
-            filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        }
-    }
 
     public void PlaySE(AudioClip se)
     {   
         AudioSource audio = GetComponent<AudioSource>();
-        dataManager.DataLoad(filepath);
-        audio.volume = dataManager.volume;
+        DataManager.DataLoad();
+        audio.volume = DataManager.volume;
         audio.PlayOneShot(se);
         
     }

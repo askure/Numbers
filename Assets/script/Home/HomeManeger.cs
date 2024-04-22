@@ -12,37 +12,21 @@ public class HomeManeger : MonoBehaviour
     [SerializeField] AudioClip _intro, _loop;
     [SerializeField] SettingPanel SoundSettingPanel;
     Slider volumeslider;
-    DataManager dmanager;
-    CharacterDataManager cmanager;
     BGMManager BGMManager;
-    string filepath,mapfilepath,cfilepath;
-    float volume;
     void Start()
     {
-        filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        dmanager = new DataManager();
-        cmanager = new CharacterDataManager(cfilepath);
-        if (!File.Exists(mapfilepath) || !File.Exists(filepath) || !File.Exists(cfilepath))
-        {
-            dmanager.DataInit(filepath);
-            dmanager.MapDataInit(mapfilepath, 40, false);
-            cmanager.DataInit(cfilepath);
-        }
-        dmanager.DataLoad(filepath);
-        cmanager.Dataload(cfilepath);
-        rankeText.text = dmanager.rank.ToString();
-        expText.text = dmanager.Exp.ToString("N0");
-        stoneText.text = dmanager.Stone.ToString();
-        int rankExp = (dmanager.rank + 1) * (dmanager.rank + 1) * 100 - dmanager.rankExp;
+
+        DataManager.DataLoad();
+        rankeText.text = DataManager.rank.ToString();
+        expText.text = DataManager.Exp.ToString("N0");
+        stoneText.text = DataManager.Stone.ToString();
+        int rankExp = (DataManager.rank + 1) * (DataManager.rank + 1) * 100 - DataManager.rankExp;
         rankExpText.text = "ŽŸ‚Ìƒ‰ƒ“ƒN‚Ü‚Å" + rankExp.ToString("N0");
         var bgmobj = GameObject.Find("BGM");
         if(bgmobj!= null)
         {
             BGMManager =   bgmobj.GetComponent<BGMManager>();
-            volume = dmanager.volume;
-            BGMManager.SetBGM(_intro, _loop, dmanager.volume);
+            BGMManager.SetBGM(_intro, _loop, DataManager.volume);
            // bgmobj.GetComponent<BGMManager>().Play();
 
         }
@@ -50,15 +34,6 @@ public class HomeManeger : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        /*if (SoundSettingPanel.activeInHierarchy)
-        {
-            volume = volumeslider.value;
-            BGMManager.ChangeVolume(volume);
-            dmanager.volume = volume;
-        }*/
-    }
 
     public void OpenSoundeSetting()
     {
@@ -70,8 +45,7 @@ public class HomeManeger : MonoBehaviour
 
     public void CloseSoundSetting()
     {
-        dmanager.DataSave(filepath);
-        //SoundSettingPanel.SetActive(false);
+        DataManager.DataSave();
     }
 
 }

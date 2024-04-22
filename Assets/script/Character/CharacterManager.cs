@@ -15,7 +15,7 @@ public class CharacterManager : MonoBehaviour
      
     CharacterView characterView;
     public TextMeshProUGUI expText,pageText,pageMaxText;
-    static  string filepath,cfilepath;
+    static string filepath;
     public static CardController SerctedCard;
     //public static Playerstatus.CardLv[] cardLvs;
     static List<CharacterData.CardLv> cards;
@@ -25,7 +25,6 @@ public class CharacterManager : MonoBehaviour
     private void Awake()
     {   
         filepath = Application.persistentDataPath + "/" + ".savedata.json";
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
         cards = new List<CharacterData.CardLv>();
         temp = new List<CardController>();
         
@@ -34,10 +33,9 @@ public class CharacterManager : MonoBehaviour
     
     private void Start()
     {
-        DataManager gameManger = new DataManager();
-        gameManger.DataLoad(filepath);
-        CharacterDataManager cmanager = new CharacterDataManager(cfilepath);
-        CharacterData.CardLv[] cardLvs = cmanager.cardLvs;
+        DataManager.DataLoad();
+        CharacterDataManager.DataLoad();
+        CharacterData.CardLv[] cardLvs = CharacterDataManager.cardLvs;
         foreach(CharacterData.CardLv lv in cardLvs)
         {
             if (lv.pos == false) continue;
@@ -97,26 +95,18 @@ public class CharacterManager : MonoBehaviour
     }
     public void LevelUp()
     {
-        DataManager gameManger = new DataManager();
-        gameManger.DataLoad(filepath);
-        CharacterDataManager cmanager = new CharacterDataManager(cfilepath);
-        if (SerctedCard == null) return;
-        
+        if (SerctedCard == null) return; 
         int id = SerctedCard.model.cardID;
-        CharacterData.CardLv[] cardLvs = cmanager.cardLvs;
+        CharacterData.CardLv[] cardLvs = CharacterDataManager.cardLvs;
         var bufSum = cardLvs[id].atbuf+
                      cardLvs[id].dfbuf+
                      cardLvs[id].hpbuf;
-        var convex = cardLvs[id].convex;
-        
-       
-          
-        
+        var convex = cardLvs[id].convex;        
         if (cardLvs[id].Lv < 100 + 10 * convex)
         {
             int expSum = cardLvs[id].expSum;
             int needExp = GetExp(cardLvs[id].Lv + 1, expSum);
-            if (needExp > gameManger.Exp)
+            if (needExp > DataManager.Exp)
             {
                 var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
                 var canva = GameObject.Find("Canvas").transform;
@@ -126,33 +116,34 @@ public class CharacterManager : MonoBehaviour
                 Destroy(Button);
                 return;
             }
-            gameManger.Exp -= needExp;
-            if (gameManger.Exp < 0) gameManger.Exp = 0;
-
-
+            DataManager.Exp -= needExp;
            cardLvs[id].Lv++;
-           if(cardLvs[id].Lv % 20 == 0 && cardLvs[id].Lv <=100) Notification.GetInstance().PutInQueue("スキルアップ!");
-            cardLvs[id].expSum += GetExp(cardLvs[id].Lv, cardLvs[id].expSum);
-           cmanager.cardLvs[id].expSum = cardLvs[id].expSum;
-           cmanager.cardLvs[id].Lv = cardLvs[id].Lv;
+           if(cardLvs[id].Lv % 20 == 0 && cardLvs[id].Lv <=100) 
+                Notification.GetInstance().PutInQueue("スキルアップ!");
+
+           cardLvs[id].expSum += GetExp(cardLvs[id].Lv, cardLvs[id].expSum);
+
+           CharacterDataManager.cardLvs[id].expSum = cardLvs[id].expSum;
+           CharacterDataManager.cardLvs[id].Lv = cardLvs[id].Lv;
            SerctedCard.CahacterInit(id, cardLvs[id].Lv);
-           if (cardLvs[id].Lv >= 20 && !gameManger.charactor_tutorial)
+           if (cardLvs[id].Lv >= 20 && !DataManager.charactor_tutorial)
            {
                 Transform canvas = GameObject.Find("Canvas").transform;
-                gameManger.charactor_tutorial = true;
+                DataManager.charactor_tutorial = true;
                 var g = Instantiate(tutorial, canvas);
                 g.SetUpTutorial(Photo);
            }
-           if (cardLvs[id].Lv == 100 + 10 * convex && !gameManger.status_tutorial)
+           if (cardLvs[id].Lv == 100 + 10 * convex && !DataManager.status_tutorial)
            {
                 Transform canvas = GameObject.Find("Canvas").transform;
-                gameManger.status_tutorial = true;
+                DataManager.status_tutorial = true;
                 var g = Instantiate(tutorial_status, canvas);
                 g.SetUpTutorial(Photo_status);
            }
 
-           gameManger.DataSave(filepath);
-           cmanager.Datasave(cfilepath);
+
+           DataManager.DataSave();
+           CharacterDataManager.DataSave(false);
            SetText();
            SetExpText();
            
@@ -166,7 +157,7 @@ public class CharacterManager : MonoBehaviour
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canvas = GameObject.Find("Canvas").transform;
             var panel = Instantiate(gameObject, canvas);
-            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n\n消費量:" + (bufSum * 4+1) +"個(現在:" + gameManger.Stone + "個)\n\nあと" + (LimitBuf(SerctedCard.model.rare) + (convex * 5) - bufSum)+"回強化可能";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += "\n\n消費量:" + (bufSum * 4+1) +"個(現在:" + DataManager.Stone + "個)\n\nあと" + (LimitBuf(SerctedCard.model.rare) + (convex * 5) - bufSum)+"回強化可能";
         }
         else if(bufSum >= LimitBuf(SerctedCard.model.rare) + (convex*5) && convex != LimitConvex(SerctedCard.model.rare))
         {
@@ -223,27 +214,20 @@ public class CharacterManager : MonoBehaviour
     }
     void SetExpText()
     {
-        DataManager gameManger = new DataManager();
-        gameManger.DataLoad(filepath);
-        if (gameManger.Exp > 999999999)
+        if (DataManager.Exp > 999999999)
         {
             expText.text = "999999999+";
         }
         else
         {
             
-                expText.text =gameManger.Exp.ToString();
+                expText.text = DataManager.Exp.ToString();
             
         }
     }
     public  void SetText()
     {
-
-        DataManager gameManger = new DataManager();
-        gameManger.DataLoad(filepath);
-        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        CharacterDataManager cmanager = new CharacterDataManager(cfilepath);
-        CharacterData.CardLv[] cardLvs = cmanager.cardLvs;
+        CharacterData.CardLv[] cardLvs = CharacterDataManager.cardLvs;
         
         var card = SerctedCard;
         var id = card.model.cardID;

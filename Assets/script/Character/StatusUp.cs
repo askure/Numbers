@@ -6,22 +6,17 @@ using UnityEngine.UI;
 
 public class StatusUp : MonoBehaviour
 {
-    string filepath;
-
+  
     public void Statusup()
     {
-        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        var cmanager = new CharacterDataManager(cfilepath);
-        var dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
-        var dmanager = new DataManager(dfilepath);
         var id = CharacterManager.SerctedCard.model.cardID;
-        var card = cmanager.cardLvs[id];
+        var card = CharacterDataManager.cardLvs[id];
         var status = Random.Range(0, 3);
         string statusName = "";
         var beforeBuf = 0f;
         var afterBuf = 0f;
         var needStone = (card.atbuf + card.dfbuf + card.hpbuf) * 4 + 1;
-        if(dmanager.Stone < needStone)
+        if(DataManager.Stone < needStone)
         {
             var gameObject = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUp");
             var canva = GameObject.Find("Canvas").transform;
@@ -31,7 +26,7 @@ public class StatusUp : MonoBehaviour
             Destroy(Button);
             return;
         }
-        dmanager.Stone -= needStone;
+        DataManager.Stone -= needStone;
         
         switch (status)
         {
@@ -56,9 +51,10 @@ public class StatusUp : MonoBehaviour
                 break;
 
         }
-        dmanager.DataSave(dfilepath);
-        cmanager.Datasave(cfilepath);
+        DataManager.DataSave();
+        CharacterDataManager.DataSave(false);
         CharacterManager character = new CharacterManager();
+
         var massage = statusName + "Ç™ã≠âªÇ≥ÇÍÇΩ\n" + beforeBuf.ToString("F2") + "î{Å®" + afterBuf.ToString("F2") + "î{"  ;
         var Object = Resources.Load<GameObject>("CharacterPrehub/CharacterStatusUpResult");
         var canvas = GameObject.Find("Canvas").transform;

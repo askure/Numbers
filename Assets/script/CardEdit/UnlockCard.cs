@@ -6,23 +6,17 @@ using UnityEngine.UI;
 
 public class UnlockCard : MonoBehaviour
 {
-    CharacterDataManager cmanager;
-    DataManager dmanager;
-    string cfilepath,dfilepath;
+    string dfilepath;
     static int  NeedExp = 0;
     public void Unlockcard()
     {
-       int cardId = CardEditManager.UnlockCardId.cardID;
+        int cardId = CardEditManager.UnlockCardId.cardID;
         if (cardId == -1) return;
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json"; 
-        dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
-        cmanager = new CharacterDataManager(cfilepath);
-        dmanager = new DataManager(dfilepath);
-        cmanager.cardLvs[cardId].pos = true;
-        cmanager.cardLvs[cardId].Lv = 1;
-        dmanager.Exp -= NeedExp;
-        cmanager.Datasave(cfilepath);
-        dmanager.DataSave(dfilepath);
+        CharacterDataManager.cardLvs[cardId].pos = true;
+        CharacterDataManager.cardLvs[cardId].Lv = 1;
+        DataManager.Exp -= NeedExp;
+        CharacterDataManager.DataSave(false);
+        DataManager.DataSave();
         UnityEngine.SceneManagement.SceneManager.LoadScene("DeckEdit");
 
     }
@@ -31,11 +25,7 @@ public class UnlockCard : MonoBehaviour
     {
         if (!Input.GetMouseButtonUp(0))
             return;
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
-        cmanager = new CharacterDataManager(cfilepath);
-        dmanager = new DataManager(dfilepath);
-        int nowExp = dmanager.Exp;
+        int nowExp = DataManager.Exp;
         var rare = GetComponent<CardController>().model.rare;
         CardEditManager.UnlockCardId = GetComponent<CardController>().model;
         var i = CardEditManager.UnlockCardId.advent;

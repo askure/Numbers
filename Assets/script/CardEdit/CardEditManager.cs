@@ -23,12 +23,10 @@ public class CardEditManager : MonoBehaviour
 
     static private CharacterData.CardLv[] cardLv;
     static public List<CardController> nowDeckCard;
-    static CharacterDataManager cmanager;
-    static DataManager dmanager;
     public static bool toqest;
     PopupCardView popup;
 
-    string cfilepath, dfilepath;
+    string  dfilepath;
     static public CardController popupCard;
     static public List<int> decklistTemp;
     static public bool Edit;
@@ -43,17 +41,15 @@ public class CardEditManager : MonoBehaviour
 
         nowDeckCard = new List<CardController>();
         decklistTemp = new List<int>();
-        cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
         dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
-        cmanager = new CharacterDataManager(cfilepath);
-        dmanager = new DataManager(dfilepath);
-        string mapfilepath = Application.persistentDataPath + "/" + ".savemapdata.json";
-        dmanager.StageDataLoad(mapfilepath);
-        cardLv = cmanager.cardLvs;
+        CharacterDataManager.DataLoad();
+        DataManager.DataLoad();
+        DataManager.StageDataLoad();
+        cardLv = CharacterDataManager.cardLvs;
 
-        partyNum = cmanager.sortiePartyNum;
-        decklistTemp = cmanager.deck[partyNum].cardId;
-        deckName = cmanager.deck[partyNum].deckName;
+        partyNum = CharacterDataManager.sortiePartyNum;
+        decklistTemp = CharacterDataManager.deck[partyNum].cardId;
+        deckName = CharacterDataManager.deck[partyNum].deckName;
         if(deckName == "")
             deckName = "パーティー" + (partyNum+1);
         if (partyNum < 0 || partyNum > 7) partyNum = 0;
@@ -71,7 +67,6 @@ public class CardEditManager : MonoBehaviour
 
     void Setupobject()
     {
-        Debug.Log("Start SetUpObcect....");
         editButton = GameObject.Find("Edit");
         saveButton = GameObject.Find("Save");
 
@@ -90,7 +85,7 @@ public class CardEditManager : MonoBehaviour
         sortieButton = GameObject.Find("Sortie");
         beforeCardListButton = GameObject.Find("CardListBefore ");
         nextCardListButton = GameObject.Find("CardListNext");
-        Debug.Log("End SetUpObcect....");
+        
     }
 
     public void EditButton()
@@ -120,10 +115,9 @@ public class CardEditManager : MonoBehaviour
     public void DeleteDeck()
     {     
         decklistTemp.Clear();
-        cmanager.deck[partyNum].cardId = decklistTemp;
-        cmanager.deck[partyNum].deckName = deckName;
-        cmanager.Datasave(cfilepath);
-        cmanager.Datasave(cfilepath);
+        CharacterDataManager.deck[partyNum].cardId = decklistTemp;
+        CharacterDataManager.deck[partyNum].deckName = deckName;
+        CharacterDataManager.DataSave(true);
         CreateDeck();
         CheckSerected();
         deleteChackPanel.SetActive(false);
@@ -136,7 +130,7 @@ public class CardEditManager : MonoBehaviour
     {
         stopCheckpanel.SetActive(true);
         nextCardListButton.SetActive(false);
-        //beforeCardListButton.SetActive(false);
+        beforeCardListButton.SetActive(false);
         Edit = false;
     }
     public void StopEdit()
@@ -151,8 +145,8 @@ public class CardEditManager : MonoBehaviour
     }
     void InitDeckData()
     {   
-        decklistTemp = cmanager.deck[partyNum].cardId;
-        deckName = cmanager.deck[partyNum].deckName;
+        decklistTemp = CharacterDataManager.deck[partyNum].cardId;
+        deckName = CharacterDataManager.deck[partyNum].deckName;
     }
     public void ClosePanel()
     {
@@ -171,10 +165,9 @@ public class CardEditManager : MonoBehaviour
             return;
         }
         decklistTemp.RemoveAll(x => x == -1);
-        cmanager.deck[partyNum].cardId = decklistTemp;
-        cmanager.deck[partyNum].deckName = deckName;
-        cmanager.Datasave(cfilepath);
-        cmanager = new CharacterDataManager(cfilepath);
+        CharacterDataManager.deck[partyNum].cardId = decklistTemp;
+        CharacterDataManager.deck[partyNum].deckName = deckName;
+        CharacterDataManager.DataSave(true);
         CreateDeck();
         CheckSerected();
         InitView();
@@ -209,8 +202,8 @@ public class CardEditManager : MonoBehaviour
     }
     public void SetSortieParty()
     {
-        cmanager.sortiePartyNum = partyNum;
-        cmanager.Datasave(cfilepath);
+        CharacterDataManager.sortiePartyNum = partyNum;
+        CharacterDataManager.DataSave(false);
         sortieButton.SetActive(false);
     }
     void InitCardList()
@@ -231,7 +224,7 @@ public class CardEditManager : MonoBehaviour
         if ((cardListNum + 1) * 16 >= cardLv.Length) return;
         int stageNum = (cardListNum + 1) * 16;
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + stageNum);
-        if (!dmanager.stages[cardEntity.stageNum].clear) return;
+        if (!DataManager.stages[cardEntity.stageNum].clear) return;
         cardListNum++;
         InitCardList();
         CreateCardList();
@@ -245,7 +238,6 @@ public class CardEditManager : MonoBehaviour
     }
     void CreateDeck()
     {
-        Debug.Log("Start CreateDeck....");
         ALLDelete();
         InitDeckData();
         if (partyNum < 0 || partyNum >= 7) partyNum = 0;
@@ -298,7 +290,6 @@ public class CardEditManager : MonoBehaviour
             }
         }
         PartyHpUpdate(nowDeckCard);
-        Debug.Log("End SetUpObcect....");
     }
     void PartyHpUpdate(List<CardController> cards)
     {
@@ -330,7 +321,7 @@ public class CardEditManager : MonoBehaviour
                 card = Instantiate(cardNothave, cardListUp);
                 card.CardlistInit(i, 0);
                
-                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
+                if (card.model.stageNum != -1 && !DataManager.stages[card.model.stageNum].clear)
                 {
                    
                     Destroy(card.gameObject);
@@ -345,7 +336,7 @@ public class CardEditManager : MonoBehaviour
                 card = Instantiate(cardList, cardListUp);
                 card.DeckEdiInit(i, cardLv[i].Lv);
               
-                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
+                if (card.model.stageNum != -1 && !DataManager.stages[card.model.stageNum].clear)
                 {
                    
                     Destroy(card.gameObject);
@@ -389,7 +380,7 @@ public class CardEditManager : MonoBehaviour
                 card = Instantiate(cardNothave, cardListDown);
                 card.CardlistInit(i, 0);
                 
-                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
+                if (card.model.stageNum != -1 && !DataManager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
@@ -399,7 +390,8 @@ public class CardEditManager : MonoBehaviour
             {
                 card = Instantiate(cardList, cardListDown);
                 card.DeckEdiInit(i, cardLv[i].Lv);
-                if (card.model.stageNum != -1 && !dmanager.stages[card.model.stageNum].clear)
+                if (card.model.stageNum != -1 && !DataManager.stages[card.model.stageNum].clear)
+                if (card.model.stageNum != -1 && !DataManager.stages[card.model.stageNum].clear)
                 {
                     Destroy(card.gameObject);
                     nextCardListButton.SetActive(false);
@@ -422,7 +414,6 @@ public class CardEditManager : MonoBehaviour
 
 
         }
-        Debug.Log("End CreateCardList....");
     }
 
     public void SetPopUpcard()
@@ -546,11 +537,10 @@ public class CardEditManager : MonoBehaviour
             editButton.SetActive(false);
             deleateButton.SetActive(false);
         }
-        else if(partyNum != cmanager.sortiePartyNum)
+        else if(partyNum != CharacterDataManager.sortiePartyNum)
         {
             sortieButton.SetActive(true);
         }
-        Debug.Log("End InitView");
     }
 
 

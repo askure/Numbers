@@ -5,13 +5,9 @@ using UnityEngine.UI;
 
 public class StatusReset : MonoBehaviour
 {
-    //GameManger gameManger;
     public void PanelView()
     {
-        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        var cmanager = new CharacterDataManager(cfilepath);
-
-        var  card = cmanager.cardLvs[CharacterManager.SerctedCard.model.cardID];
+        var  card = CharacterDataManager.cardLvs[CharacterManager.SerctedCard.model.cardID];
         var  bufSum = card.atbuf +
                  card.dfbuf +
                  card.hpbuf;
@@ -23,26 +19,21 @@ public class StatusReset : MonoBehaviour
 
     public void StatusResetScript()
     {
-        var cfilepath = Application.persistentDataPath + "/" + ".charactersavedata.json";
-        var cmanager = new CharacterDataManager(cfilepath);
-        var dfilepath = Application.persistentDataPath + "/" + ".savedata.json";
-        var dmanager = new DataManager(dfilepath);
-        var card = cmanager.cardLvs[CharacterManager.SerctedCard.model.cardID];
-
+        var card = CharacterDataManager.cardLvs[CharacterManager.SerctedCard.model.cardID];
         var bufSum = card.atbuf +
                  card.dfbuf +
                  card.hpbuf;
 
 
-        dmanager.Stone += ( (bufSum*4) + 1) / 3;
+        DataManager.Stone += ( (bufSum*4) + 1) / 3;
       
         card.hpbuf = 0;
         card.atbuf = 0;
         card.dfbuf = 0;
-        cmanager.Datasave(cfilepath);
-        CharacterManager character = new CharacterManager();
+        CharacterDataManager.DataSave(false);
+        DataManager.DataSave();
+        CharacterManager character = new CharacterManager();  
         character.SetText();
-
         
         Destroy(gameObject);
 

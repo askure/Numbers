@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: New Data Changer
   m_EditorClassIdentifier: 
   Rank: 1
-  Stone: 0
-  Exp: 10000
+  Stone: 10000
+  Exp: 100000000
   Multi: 1
   Diviser: 1
   Prime: 1
-  CardLv: 80
+  CardLv: 100
   Hpbuf: 0
   Atbuf: 0
   Dfbuf: 0

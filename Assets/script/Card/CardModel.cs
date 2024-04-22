@@ -64,6 +64,8 @@ public class CardModel
 
     }
 
+
+
     public double  CardHp(int cardId,int lv,int hpuf)
     {
         CardEntity cardEntity = Resources.Load<CardEntity>("CardEntityList/Card " + cardId);

@@ -21,7 +21,7 @@ public class CardView : MonoBehaviour
     public void GachaView(CardModel card)
     {
         iconImage.sprite = card.icon;
-        rareText.text = card.rare;
+        numText.text = card.rare;
         SetPanel(card.rare);
     }
     public void ChacterView(CardModel card)

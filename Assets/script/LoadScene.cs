@@ -17,18 +17,21 @@ public class LoadScene : MonoBehaviour
     public void LoadSecne()
     {
        
-        if (bgm == null)
-        {
-            var SEManager = GameObject.Find("BGM");
-            bgm = SEManager.GetComponent<BGMManager>();
-        }
-       
-        bgm.PlaySE(se,2f);
+        
         var gameObject = Resources.Load<GameObject>("LoadPanel");
         var canva = GameObject.Find("Canvas").transform;
         var pane = Instantiate(gameObject, canva);
         _slider = pane.transform.GetChild(1).GetComponent<Slider>();
         StartCoroutine(LoadSceneUI());
+        if (bgm == null)
+        {
+            var SEManager = GameObject.Find("BGM");
+            if (SEManager == null)
+                return;
+            bgm = SEManager.GetComponent<BGMManager>();
+        }
+
+        bgm.PlaySE(se, 2f);
 
     }
 

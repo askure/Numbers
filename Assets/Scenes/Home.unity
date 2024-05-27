@@ -544,6 +544,7 @@ GameObject:
   - component: {fileID: 411360504}
   - component: {fileID: 411360503}
   - component: {fileID: 411360506}
+  - component: {fileID: 411360507}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -564,7 +565,7 @@ RectTransform:
   m_Children:
   - {fileID: 1296477437}
   m_Father: {fileID: 1827998514}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -615,9 +616,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 411360506}
-        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
-        m_MethodName: ApllicationQuit
+      - m_Target: {fileID: 411360507}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: LoadSecne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -677,6 +678,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec529b9a6ebeae41be2905f7c9ba427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &411360507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411360501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf84cabe777d53d4ab5370bfe06dbe42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Gacha
+  changeBGM: 1
+  se: {fileID: 8300000, guid: 6238b4728608eb94b96c4ba95d318b8d, type: 3}
 --- !u!1 &457351193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,7 +2118,7 @@ RectTransform:
   m_Children:
   - {fileID: 661237903}
   m_Father: {fileID: 1827998514}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2669,7 +2685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7D42\u4E86"
+  m_text: "\u30AC\u30C1\u30E3"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 312644f9a797b164591e035fcbcfe4fe, type: 2}
   m_sharedMaterial: {fileID: 2347195313746495334, guid: 312644f9a797b164591e035fcbcfe4fe, type: 2}
@@ -4031,8 +4047,8 @@ RectTransform:
   - {fileID: 907210317}
   - {fileID: 810920349}
   - {fileID: 1426612403}
-  - {fileID: 1003266739}
   - {fileID: 411360502}
+  - {fileID: 1003266739}
   m_Father: {fileID: 2069015800}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -180,37 +180,23 @@ public class CharacterManager : MonoBehaviour
 
     private int LimitBuf(string rare)
     {
-        switch (rare)
+        return rare switch
         {
-            case "A":
-                return 10;
-                
-            case "S":
-                return 15;
-                
-            case "SS":
-                return 30;
-                
-            default:
-                return 0;
-        }
+            "A" => 10,
+            "S" => 15,
+            "SS" => 30,
+            _ => 0,
+        };
     }
     private int LimitConvex(string rare)
     {
-        switch (rare)
+        return rare switch
         {
-            case "A":
-                return 8;
-
-            case "S":
-                return 6;
-
-            case "SS":
-                return 4;
-
-            default:
-                return 0;
-        }
+            "A" => 8,
+            "S" => 6,
+            "SS" => 4,
+            _ => 0,
+        };
     }
     void SetExpText()
     {

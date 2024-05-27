@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15726db10fcba32448a341c015c5d7b0, type: 3}
+  m_Name: ChangeAutoSkill
+  m_EditorClassIdentifier: 
+  GachaName: "\u30C1\u30A7\u30F3\u30B8\u30AA\u30FC\u30C8\u30B9\u30AD\u30EB\u30AC\u30C1\u30E3"
+  PickUpCards: []
+  ProbabilityA: 87
+  A: {fileID: 11400000, guid: efcc77a6b9c1c0a4b966e3050f193b73, type: 2}
+  ProbabilityS: 10
+  S: {fileID: 11400000, guid: 7b97cc14ad9ee1b4788d95f2f3b165d5, type: 2}
+  ProbabilitySS: 3
+  SS: {fileID: 11400000, guid: 94537dab5cb74a241a3a85227ae8bde2, type: 2}

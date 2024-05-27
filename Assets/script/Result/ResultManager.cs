@@ -28,13 +28,13 @@ public class ResultManager : MonoBehaviour
         if (SelectMapManager.MapManager == null || SelectMapManager.stage == null) return;
         mapNameText.text = SelectMapManager.MapManager.stageName;
         stageNameText.text = SelectMapManager.stage.stageName;
-        expText.text = "経験値:"+GameManger.enemysexp.ToString("N0");
-        DataManager.Exp += GameManger.enemysexp;
-        MaxDamageText.text = "最大ダメージ:"+GameManger.maxDamage.ToString("N0");
-        MaxNumText.text = "最大数値:"+GameManger.maxNum.ToString("N0");
-        var averageTurn = (GameManger.aveTurn / SelectMapManager.enemy.Count);
+        expText.text = "経験値:"+GameManger.EnemysExp.ToString("N0");
+        DataManager.Exp += GameManger.EnemysExp;
+        MaxDamageText.text = "最大ダメージ:"+GameManger.MaxDamage.ToString("N0");
+        MaxNumText.text = "最大数値:"+GameManger.MaxNum.ToString("N0");
+        var averageTurn = (GameManger.AveTurn / SelectMapManager.enemy.Count);
         AveTurnText.text = "平均ターン:"+ averageTurn.ToString("N0");
-        var score = GameManger.maxDamage / 10 + GameManger.maxNum * averageTurn * 1000 + GameManger.enemysexp/10;
+        var score = GameManger.MaxDamage / 10 + GameManger.MaxNum * averageTurn * 1000 + GameManger.EnemysExp / 10;
         ScoreText.text = "スコア:"+ score.ToString("N0");
        
         if (SelectMapManager.Gift != null)

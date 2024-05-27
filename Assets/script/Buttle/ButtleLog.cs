@@ -9,10 +9,9 @@ public class ButtleLog : MonoBehaviour
     public void OpenLog()
     {
         var g = Resources.Load<GameObject>("BattlePrehub/LogTrigger"); 
-        var maneger = GameObject.Find("GameManager").GetComponent<GameManger>();
         var text = g.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         text.text = "";
-        foreach (string s in maneger.GetLog())
+        foreach (string s in GameManger.LogText)
         {
             text.text += s + "\n";
         }

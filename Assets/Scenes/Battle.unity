@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: 264655201}
   - component: {fileID: 264655200}
   m_Layer: 5
-  m_Name: Image
+  m_Name: NumPower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,7 +1095,7 @@ GameObject:
   - component: {fileID: 367292691}
   - component: {fileID: 367292693}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1704,7 +1704,7 @@ GameObject:
   - component: {fileID: 530004894}
   - component: {fileID: 530004893}
   m_Layer: 5
-  m_Name: Trigger
+  m_Name: OptionPanelTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2004,17 +2004,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2191f5ef50ee76c4aa400a46785a0d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvaspos: {fileID: 1239435168}
+  Canvaspos: {fileID: 1239435168}
   Card: {fileID: 6183310653914326617, guid: 80d63f1aafe6b9e4187cf74c8024ccd7, type: 3}
-  Hand: {fileID: 641450681}
+  HandPos: {fileID: 641450681}
   Enemy: {fileID: 4838628577706830281, guid: 46096faf41bf31d4b90baf23cf3b68fa, type: 3}
   Enemys: {fileID: 536003707}
   pstatusdf: {fileID: 631297557387908583, guid: af26c22e4ccf58849a9ac31bfda212b5, type: 3}
   pstatusat: {fileID: 4138772669648189265, guid: 9112230db161cce47a9d63ef972baee5, type: 3}
-  gameView: {fileID: 814453525}
+  GameView: {fileID: 814453525}
   BattleNumText: {fileID: 2073113328}
-  gameOverPanel: {fileID: 5627129285687246129, guid: 9b80574a834a9ef4f8b76b93ca09abc2, type: 3}
-  gameOverPanelTrance: {fileID: 1239435168}
+  GameOverPanel: {fileID: 5627129285687246129, guid: 9b80574a834a9ef4f8b76b93ca09abc2, type: 3}
   damageAnimation: {fileID: 1027952961049578990, guid: 4c915a521801c264d981bc38913a8bdc, type: 3}
   enemyturnAnimation: {fileID: 20961028091804597, guid: ed0597378e0914042b6adf4e638a801d, type: 3}
   partyturnAnimation: {fileID: 2162195748323905902, guid: ec47ead9902d17245860df3a3c26e2e3, type: 3}
@@ -2041,14 +2040,12 @@ MonoBehaviour:
   damageLow: {fileID: 8300000, guid: b7a98217fdd91034cac2488bef3a717f, type: 3}
   damageMid: {fileID: 8300000, guid: 5e214a50cca9d454bbb6506c8fece681, type: 3}
   damageHigh: {fileID: 8300000, guid: 7015f115638b8724b812db55a0492a36, type: 3}
-  _hand: []
-  decklist: 
+  HandCard: []
+  DeckCard: 
   UpCard: []
   UpCardObj: []
   ReaderCard: {fileID: 0}
-  sortiePartyNum: 0
-  allStage: 0
-  stages: []
+  SortiePartyNum: 0
   viewNode: {fileID: 2397202396580583837, guid: 9289bdc99c968884588a8f97f1f0e93e, type: 3}
   SkillViewPanel: {fileID: 2117020058}
   SkillViewButton: {fileID: 1299767892}
@@ -2485,7 +2482,7 @@ GameObject:
   - component: {fileID: 760761332}
   - component: {fileID: 760761331}
   m_Layer: 5
-  m_Name: Text
+  m_Name: MenuText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2825,7 +2822,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1672936408}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
-  m_MinValue: 1
+  m_MinValue: 31.45
   m_MaxValue: 1000
   m_WholeNumbers: 0
   m_Value: 1000
@@ -2844,9 +2841,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31635be31c479b49a0e1e0a81137956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: {fileID: 1642628526}
-  nowHp: {fileID: 147152312}
-  Numpower: {fileID: 906345137}
+  MaxHp: {fileID: 1642628526}
+  NowHp: {fileID: 147152312}
+  NumPower: {fileID: 906345137}
   hpbar: {fileID: 814453524}
 --- !u!1 &863739254
 GameObject:
@@ -3010,7 +3007,7 @@ GameObject:
   - component: {fileID: 906345140}
   - component: {fileID: 906345137}
   m_Layer: 5
-  m_Name: Numpower
+  m_Name: NumpowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5177,7 +5174,7 @@ GameObject:
   - component: {fileID: 1502859437}
   - component: {fileID: 1502859436}
   m_Layer: 5
-  m_Name: Image
+  m_Name: LogBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6112,7 +6109,7 @@ GameObject:
   - component: {fileID: 2007350216}
   - component: {fileID: 2007350215}
   m_Layer: 0
-  m_Name: Background
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6576,7 +6573,7 @@ GameObject:
   - component: {fileID: 2073113334}
   - component: {fileID: 2073113330}
   m_Layer: 5
-  m_Name: ButtleNum
+  m_Name: BattleNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

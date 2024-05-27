@@ -50,7 +50,7 @@ public class CardInformation : MonoBehaviour
     int AutoSKillFlag(List<CardController> cards, CardController card)
     {
         List<int> nums = new List<int>();
-        GameManger gameManger = new GameManger();
+        GameManger gameManger = GameObject.Find("GameManager").GetComponent<GameManger>();
 
         foreach (CardController x in cards)
         {
@@ -70,7 +70,7 @@ public class CardInformation : MonoBehaviour
             var conditionNum = _Origin.condition_num;
             var conditons = _Origin.conditons;
             var effect = _Origin.effect_size;
-            autoInvocation[index] = gameManger.AutoSkillCheck(conditonKind, conditionNum, conditons, nums, GameManger.hpSum, GameManger.sum);
+            autoInvocation[index] = gameManger.AutoSkillCheck(conditonKind, conditionNum, conditons, nums);
             index++;
 
         }

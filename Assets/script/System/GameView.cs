@@ -6,19 +6,17 @@ using UnityEngine.UI;
 
 public class GameView : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI maxHp, nowHp,Numpower;
+    [SerializeField] TextMeshProUGUI MaxHp, NowHp,NumPower;
     [SerializeField] Slider hpbar;
     static TextMeshProUGUI logText;
-    private void Start()
+    public void Init()
     {
-        
-    }
-    public void Init(int max,int now,int df)
-    {
-        maxHp.text = max.ToString();
-        nowHp.text = now.ToString();
-        hpbar.maxValue = max;
-        hpbar.value = now;
+        var maxHp = GameManger.MAX_HP;
+        var nowHp = GameManger.PartyHp;
+        MaxHp.text = maxHp.ToString();
+        NowHp.text = nowHp.ToString();
+        hpbar.maxValue = maxHp;
+        hpbar.value = nowHp;
         if(logText == null) logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
         logText.text = "";
         int[] x = { 0, 0 };
@@ -27,12 +25,12 @@ public class GameView : MonoBehaviour
 
     private void Update()
     {
-        if (GameManger.hpSum < 0) GameManger.hpSum = 0;
-        updateView(GameManger.hpSum,0, 0);
+        if (GameManger.PartyHp < 0) GameManger.PartyHp = 0;
+        UpdateView(GameManger.PartyHp, 0, 0);
     }
-    public void updateView(int now,int Turn,int df)
+    public void UpdateView(int now,int Turn,int df)
     {
-        nowHp.text = now.ToString();
+        NowHp.text = now.ToString();
         hpbar.value = now;
     }
     
@@ -51,6 +49,6 @@ public class GameView : MonoBehaviour
 
     public void NumPowerText(int[] x)
     {
-        Numpower.text = x[0].ToString();
+        NumPower.text = x[0].ToString();
     }
 }

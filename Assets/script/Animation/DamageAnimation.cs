@@ -9,7 +9,7 @@ public class DamageAnimation : MonoBehaviour
     int damage;
     public void changeHp()
     {
-        GameManger.hpSum -= damage;
+        GameManger.PartyHp -= damage;
     }
 
     public int startAnimation(int damage)

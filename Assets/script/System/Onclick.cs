@@ -58,7 +58,7 @@ public class Onclick : MonoBehaviour
 
         if (Color_obj.alpha == 0f)
         {
-            if (GameManger.decide_num == 4) return;
+            if (GameManger.DecideNum == 4) return;
             var x =transform.position.x;
             var y = transform.position.y;
             transform.position = new Vector3(x, y + 70, 0);
@@ -67,7 +67,7 @@ public class Onclick : MonoBehaviour
             var card = GetComponent<CardController>();
             GameManger.instnce.SetUpCard(card);
             GameManger.instnce.SetUpCardObj(this.gameObject);
-            GameManger.decide_num++;
+            GameManger.DecideNum++;
             sesource.PlaySE(charse);
         }
         else
@@ -80,7 +80,7 @@ public class Onclick : MonoBehaviour
             var card = GetComponent<CardController>();
             GameManger.instnce.RemoveCard(card);
             GameManger.instnce.RemoveCardObj(this.gameObject);
-            GameManger.decide_num--;
+            GameManger.DecideNum--;
            
         }
 
@@ -138,7 +138,7 @@ public class Onclick : MonoBehaviour
             _hand.Add(card);
         }
         int index = 0;
-        var sum = GameManger.sum;
+        var sum = GameManger.SumNum;
         foreach (GameObject card in _hand)
         {   
             if(card.CompareTag("status")) continue;
@@ -175,7 +175,7 @@ public class Onclick : MonoBehaviour
     int AutoSKillFlag(List<CardController> cards,CardController card)
     {
         List<int> nums = new List<int>();
-        GameManger gameManger = new GameManger();
+        GameManger gameManger = GameObject.Find("GameManager").GetComponent<GameManger>();
 
         foreach (CardController x in cards)
         {
@@ -195,7 +195,7 @@ public class Onclick : MonoBehaviour
             var conditionNum = _Origin.condition_num;
             var conditons = _Origin.conditons;
             var effect = _Origin.effect_size;
-            autoInvocation[index] = gameManger.AutoSkillCheck( conditonKind, conditionNum, conditons, nums, GameManger.hpSum, GameManger.sum);
+            autoInvocation[index] = gameManger.AutoSkillCheck( conditonKind, conditionNum, conditons, nums);
             index++;
 
         }

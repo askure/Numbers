@@ -6,14 +6,19 @@ using UnityEngine;
 
 public class GachaManager : MonoBehaviour
 {
-    [SerializeField] GameObject ShortagePanel, CheckPanel,OneMoerButton,StopButton,SkipButton,OneGachaButton,TenGachaButton,ToHomeButton;
+    [SerializeField] GameObject ShortagePanel, CheckPanel,OneMoreButton,StopButton,SkipButton,OneGachaButton,TenGachaButton,ToHomeButton,StopAnimationTrigger;
     [SerializeField] GachaListEntity Gacha;
     [SerializeField] TextMeshProUGUI GachaName,StoneNum;
     [SerializeField] Transform CardUp, CardDown;
     [SerializeField] GachaCardView GachaCard;
+    [SerializeField] AudioClip SkipSE_A, SkipSE_S;
     List<CardEntity> GachaResulttmp ;
     bool isten = false;
     Coroutine coroutine = null;
+    Coroutine playingAnim = null;
+    Animator playingAnimation = null;
+    public static bool stop;
+    public static string rare;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +26,15 @@ public class GachaManager : MonoBehaviour
         CharacterDataManager.DataLoad();
         ShortagePanel.SetActive(false);
         CheckPanel.SetActive(false);
-        OneMoerButton.SetActive(false);
+        OneMoreButton.SetActive(false);
         StopButton.SetActive(false);
         SkipButton.SetActive(false);
+        StopAnimationTrigger.SetActive(false);
         OneGachaButton.SetActive(true);
         TenGachaButton.SetActive(true);
         ToHomeButton.SetActive(true);
         GachaName.text = Gacha.GachaName;
+        stop = false;
     }
 
     public void Update()
@@ -47,7 +54,10 @@ public class GachaManager : MonoBehaviour
         TenGachaButton.SetActive(false);
         ToHomeButton.SetActive(false);
         CheckPanel.SetActive(false);
+        OneMoreButton.SetActive(false);
+        StopButton.SetActive(false);
         SkipButton.SetActive(true);
+        StopAnimationTrigger.SetActive(true);
         AllDestroy();
         List<GachaCardView> list = new List<GachaCardView>();
         GachaResulttmp = new List<CardEntity>();
@@ -88,7 +98,7 @@ public class GachaManager : MonoBehaviour
     {
         ShortagePanel.SetActive(false);
         CheckPanel.SetActive(false);
-        OneMoerButton.SetActive(false);
+        OneMoreButton.SetActive(false);
         StopButton.SetActive(false);
         SkipButton.SetActive(false);
         OneGachaButton.SetActive(true);
@@ -151,6 +161,9 @@ public class GachaManager : MonoBehaviour
         TenGachaButton.SetActive(false);
         ToHomeButton.SetActive(false);
         CheckPanel.SetActive(false);
+        OneMoreButton.SetActive(false);
+        StopButton.SetActive(false);
+        StopAnimationTrigger.SetActive(true);
         AllDestroy();
         SkipButton.SetActive(true);
         List<GachaCardView> list = new List<GachaCardView>();
@@ -279,9 +292,10 @@ public class GachaManager : MonoBehaviour
     public void Skip()
     {
         AllDestroy();
-        if(coroutine != null)
+        if(coroutine != null && playingAnim != null)
         {
             StopCoroutine(coroutine);
+            StopCoroutine(playingAnim);
         }
         for (int i = 0, len = GachaResulttmp.Count;  i < len; i++)
         {   
@@ -301,9 +315,10 @@ public class GachaManager : MonoBehaviour
             }
         }
         SkipButton.SetActive(false);
-        OneMoerButton.SetActive(true);
+        OneMoreButton.SetActive(true);
         StopButton.SetActive(true);
         ToHomeButton.SetActive(true);
+        StopAnimationTrigger.SetActive(false);
     }
 
     private void AllDestroy()
@@ -326,15 +341,47 @@ public class GachaManager : MonoBehaviour
     {   
         for(int i= 0; i < gachaCards.Count; i++)
         {
-           
-            yield return new WaitForSeconds(gachaCards[i].StartAnimation());
+            stop = false;
+            playingAnim = StartCoroutine(PlayAnimation(gachaCards[i].StartAnimation()));
+
+            while (playingAnim != null || stop)
+                yield return null;           
         }
         Debug.Log("End Animation");
-        OneMoerButton.SetActive(true);
+        OneMoreButton.SetActive(true);
         StopButton.SetActive(true);
         SkipButton.SetActive(false);
         ToHomeButton.SetActive(true);
+        StopAnimationTrigger.SetActive(false);
 
+    }
+
+    IEnumerator PlayAnimation(Animator animator)
+    {
+        playingAnimation = animator;
+        animator.enabled = true;
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length + 1.3f);
+        playingAnim = null;
+    }
+
+    public void StopAnimation()
+    {
+        stop = !stop;
+        if (playingAnimation == null)
+            return;
+        AnimationSkip.Skip(playingAnimation);
+        if (rare.Equals("A"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(SkipSE_A);
+        }
+        else if(rare.Equals("S"))
+        {
+            GetComponent<AudioSource>().PlayOneShot(SkipSE_S);
+        }
+        playingAnimation = null;
+        StopCoroutine(playingAnim);
+        playingAnim= null;
+        
     }
 
 

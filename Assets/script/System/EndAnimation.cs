@@ -6,7 +6,7 @@ public class EndAnimation : MonoBehaviour
 {
     public void ButtleAnimatoinEnd()
     {
-        GameManger x = new GameManger();
+        GameManger x = GameObject.Find("GameManager").GetComponent<GameManger>();
         x.EnemyEntryAnimation();
         Destroy(gameObject);
     }
